@@ -260,8 +260,10 @@ body{background:radial-gradient(circle at 82% 0%,#ede7ff 0,transparent 28%),line
 
 <section id="plans" class="section">
   <div class="panel">
-    <h2 style="margin:0">Choose your VisaPilot plan</h2>
-    <div class="muted" style="margin-top:6px">Start free, then upgrade when you need deeper sponsorship and application intelligence.</div>
+    <div class="row">
+      <div><h2 style="margin:0">Choose your VisaPilot plan</h2><div class="muted" style="margin-top:6px">Start free, then upgrade when you need deeper sponsorship and application intelligence.</div></div>
+      <button id="managePlanButton" class="btn" type="button" style="display:none" onclick="openCustomerPortal(this)">Upgrade, downgrade or cancel</button>
+    </div>
   </div>
 
   <div class="pricing-grid">
@@ -382,6 +384,30 @@ async function startStripeCheckout(planKey,btn){
  }catch(e){
   if(status)status.textContent="Checkout could not start: "+String(e?.message||e);
   if(btn){btn.disabled=false;btn.textContent=original||"Choose plan"}
+ }
+}
+
+async function openCustomerPortal(btn){
+ const status=$("checkoutStatus");
+ const signedIn=await ensureCandidateSession();
+ if(!signedIn){
+  if(status)status.textContent="Please sign in before managing your plan.";
+  return;
+ }
+ const original=btn?.textContent;
+ if(btn){btn.disabled=true;btn.textContent="Opening secure billing portal…"}
+ if(status)status.textContent="Opening your secure Stripe billing portal…";
+ try{
+  const result=await req(S+"/functions/v1/create-customer-portal",{
+   method:"POST",
+   headers:ah(),
+   body:JSON.stringify({})
+  });
+  if(!result?.url)throw new Error("Stripe did not return a billing portal link.");
+  window.location.assign(result.url);
+ }catch(e){
+  if(status)status.textContent="Billing portal could not open: "+String(e?.message||e);
+  if(btn){btn.disabled=false;btn.textContent=original||"Upgrade, downgrade or cancel"}
  }
 }
 
@@ -1328,6 +1354,7 @@ function renderBillingIdentity(){
  const plan=currentBillingPlan();
  const planEl=$("candidatePlan");if(planEl)planEl.textContent=plan.label+" plan";
  const upgrade=$("upgradeButton");if(upgrade)upgrade.textContent=plan.active?"View plan":"Upgrade";
+ const manage=$("managePlanButton");if(manage)manage.style.display=plan.active?"inline-block":"none";
  const explorer=$("explorerPlanButton");
  if(explorer)explorer.textContent=plan.active?`Included with ${plan.label}`:"Current free access";
  document.querySelectorAll("[data-plan]").forEach(btn=>{
@@ -3494,6 +3521,8 @@ async function candidatePublicStart(){
      const checkout=new URLSearchParams(location.search).get("checkout");
      if(checkout==="success")setTimeout(()=>alert("Payment received. VisaPilot is confirming your access now."),250);
      if(checkout==="cancel")setTimeout(()=>alert("Checkout was cancelled. Your current plan has not changed."),250);
+     const billingReturn=new URLSearchParams(location.search).get("billing");
+     if(billingReturn==="return")setTimeout(()=>alert("Welcome back. VisaPilot is refreshing your latest billing plan."),250);
      return;
    }
  }catch(e){
