@@ -361,7 +361,10 @@ function showAuth(){$("authPanel").scrollIntoView({behavior:"smooth"})}
 
 async function startStripeCheckout(planKey,btn){
  const status=$("checkoutStatus");
- if(!USER||!TOKEN){
+ // Restore a valid saved Supabase session before deciding the candidate is signed out.
+ // This prevents checkout from being blocked after a refresh or navigation.
+ const signedIn=await ensureCandidateSession();
+ if(!signedIn){
   if(status)status.textContent="Please sign in before choosing a paid plan.";
   return;
  }
