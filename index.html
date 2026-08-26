@@ -91,10 +91,10 @@ body{background:radial-gradient(circle at 82% 0%,#ede7ff 0,transparent 28%),line
     <div id="pageSub" class="muted">Your sponsorship-focused job search in one place.</div>
   </div>
   <div class="top-tools">
-    <button class="btn btn2" type="button" onclick="go('plans',document.querySelector('[data-page=plans]'))">Upgrade</button>
+    <button id="upgradeButton" class="btn btn2" type="button" onclick="go('plans',document.querySelector('[data-page=plans]'))">Upgrade</button>
     <div class="candidate-chip">
       <div id="candidateAvatar" class="candidate-avatar">V</div>
-      <div><div id="candidateChipName" class="candidate-name">Your workspace</div><div class="candidate-plan">Explorer plan</div></div>
+      <div><div id="candidateChipName" class="candidate-name">Your workspace</div><div id="candidatePlan" class="candidate-plan">Explorer plan</div></div>
     </div>
     <button class="btn btn2" type="button" onclick="signOut()">Sign out</button>
   </div>
@@ -276,7 +276,7 @@ body{background:radial-gradient(circle at 82% 0%,#ede7ff 0,transparent 28%),line
         <li>3 AI job analyses each month</li>
         <li>Save up to 10 jobs</li>
       </ul>
-      <div class="price-actions"><button class="btn btn2" type="button" disabled>Current free access</button></div>
+      <div class="price-actions"><button id="explorerPlanButton" class="btn btn2" type="button" disabled>Current free access</button></div>
     </div>
 
     <div class="price-card featured">
@@ -292,8 +292,8 @@ body{background:radial-gradient(circle at 82% 0%,#ede7ff 0,transparent 28%),line
         <li>Interview preparation</li>
       </ul>
       <div class="price-actions">
-        <button class="btn" type="button" onclick="startStripeCheckout('copilot_monthly',this)">Choose monthly · £19.99</button>
-        <button class="btn btn2" type="button" onclick="startStripeCheckout('copilot_quarterly',this)">3 months · £49.99</button>
+        <button class="btn" data-plan="copilot_monthly" type="button" onclick="startStripeCheckout('copilot_monthly',this)">Choose monthly · £19.99</button>
+        <button class="btn btn2" data-plan="copilot_quarterly" type="button" onclick="startStripeCheckout('copilot_quarterly',this)">3 months · £49.99</button>
         <div class="small billing-saving">Save £9.98 every three months</div>
       </div>
     </div>
@@ -310,8 +310,8 @@ body{background:radial-gradient(circle at 82% 0%,#ede7ff 0,transparent 28%),line
         <li>Advanced interview preparation</li>
       </ul>
       <div class="price-actions">
-        <button class="btn" type="button" onclick="startStripeCheckout('pro_monthly',this)">Choose monthly · £34.99</button>
-        <button class="btn btn2" type="button" onclick="startStripeCheckout('pro_quarterly',this)">3 months · £89.99</button>
+        <button class="btn" data-plan="pro_monthly" type="button" onclick="startStripeCheckout('pro_monthly',this)">Choose monthly · £34.99</button>
+        <button class="btn btn2" data-plan="pro_quarterly" type="button" onclick="startStripeCheckout('pro_quarterly',this)">3 months · £89.99</button>
         <div class="small billing-saving">Save £14.98 every three months</div>
       </div>
     </div>
@@ -322,7 +322,7 @@ body{background:radial-gradient(circle at 82% 0%,#ede7ff 0,transparent 28%),line
       <div class="price-name">7-Day Copilot Pass</div>
       <div class="muted" style="margin-top:5px">Seven days of Copilot access with one payment and no automatic renewal.</div>
     </div>
-    <button class="btn" type="button" onclick="startStripeCheckout('copilot_pass_7d',this)">Get 7 days · £7.99</button>
+    <button class="btn" data-plan="copilot_pass_7d" type="button" onclick="startStripeCheckout('copilot_pass_7d',this)">Get 7 days · £7.99</button>
   </div>
 
   <div id="checkoutStatus" class="checkout-status small" role="status" aria-live="polite"></div>
@@ -332,7 +332,7 @@ body{background:radial-gradient(circle at 82% 0%,#ede7ff 0,transparent 28%),line
 <script>
 const S="https://cjdgqbmjsqwruooexzid.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY="sb_publishable_J5Tn260dr5mYdU0RtW4HnA_jjFeAQh5";
-let TOKEN=null,USER=null,PROFILE=null,SAVED=[],CVS=[],TAILORED=[],LETTERS=[],ANSWERS=[],INTERVIEW=[],ANALYSES=[],JOBS=[],SPONSORS=[],CLASSES=[],SIGNALS=[],ACTIVITY=[],SUBMISSIONS=[],FOLLOWUPS=[],DIGEST=null,JOB_PRIORITY=[],SPONSOR_INTEL=[],APP_INTEL=[],AGENT_PREFS=null,AGENT_RECS=[],OUTCOME_INSIGHTS=[],CONVERSION_SUMMARY=null,ADAPTIVE_PRIORITY=[],ADAPTIVE_AGENT_RUN=null,ACTION_QUEUE=[],WORKFLOW_STATE=[],WORKFLOW_DEADLINES=[],ALERT_PREFS=null,DEADLINE_ALERTS=[],COMMAND_CENTRE=[],INTERVIEW_INTEL=[],OFFER_INTEL=[],SYSTEM_HEALTH=null;
+let TOKEN=null,USER=null,PROFILE=null,BILLING=null,SAVED=[],CVS=[],TAILORED=[],LETTERS=[],ANSWERS=[],INTERVIEW=[],ANALYSES=[],JOBS=[],SPONSORS=[],CLASSES=[],SIGNALS=[],ACTIVITY=[],SUBMISSIONS=[],FOLLOWUPS=[],DIGEST=null,JOB_PRIORITY=[],SPONSOR_INTEL=[],APP_INTEL=[],AGENT_PREFS=null,AGENT_RECS=[],OUTCOME_INSIGHTS=[],CONVERSION_SUMMARY=null,ADAPTIVE_PRIORITY=[],ADAPTIVE_AGENT_RUN=null,ACTION_QUEUE=[],WORKFLOW_STATE=[],WORKFLOW_DEADLINES=[],ALERT_PREFS=null,DEADLINE_ALERTS=[],COMMAND_CENTRE=[],INTERVIEW_INTEL=[],OFFER_INTEL=[],SYSTEM_HEALTH=null;
 const $=id=>document.getElementById(id);
 function applyAdminMode(){
  const params=new URLSearchParams(location.search);
@@ -356,7 +356,7 @@ function clearSession(){TOKEN=null;USER=null;const badge=$("authBadge");if(badge
 async function refresh(){const rt=localStorage.getItem("vp_refresh_token");if(!rt||!key())return false;try{const r=await fetch(S+"/auth/v1/token?grant_type=refresh_token",{method:"POST",headers:{apikey:key(),"Content-Type":"application/json"},body:JSON.stringify({refresh_token:rt})});if(!r.ok)return false;setSession(await r.json());showSignedIn();return true}catch{return false}}
 function showSignedIn(){const badge=$("authBadge");if(badge){badge.textContent="Signed in";badge.className="badge good"}const status=$("authStatus");if(status)status.textContent="Signed in as "+USER.email;applyAdminMode();renderCandidateIdentity()}
 async function signIn(){try{const b=await req(S+"/auth/v1/token?grant_type=password",{method:"POST",headers:{apikey:key(),"Content-Type":"application/json"},body:JSON.stringify({email:$("email").value.trim(),password:$("password").value})});setSession(b);showSignedIn();await loadAll()}catch(e){$("err").textContent=e.message}}
-function signOut(){clearSession();localStorage.removeItem("vp_refresh_token");localStorage.removeItem("vp_access_token");PROFILE=null;SAVED=[];CVS=[];TAILORED=[];LETTERS=[];ANSWERS=[];INTERVIEW=[];ANALYSES=[];renderAll()}
+function signOut(){clearSession();localStorage.removeItem("vp_refresh_token");localStorage.removeItem("vp_access_token");PROFILE=null;BILLING=null;SAVED=[];CVS=[];TAILORED=[];LETTERS=[];ANSWERS=[];INTERVIEW=[];ANALYSES=[];renderAll()}
 function showAuth(){$("authPanel").scrollIntoView({behavior:"smooth"})}
 
 async function startStripeCheckout(planKey,btn){
@@ -450,8 +450,9 @@ async function loadAll(){
  if(!USER)return;
  const uid=USER.id;
  $("authStatus").textContent="Loading your workspace…";
- const [p,sj,cvs,tail,letters,answers,interview,analyses,sponsors,classes,signals,activity,submissions,followups,digest]=await Promise.all([
+ const [p,billing,sj,cvs,tail,letters,answers,interview,analyses,sponsors,classes,signals,activity,submissions,followups,digest]=await Promise.all([
   safe(S+"/rest/v1/candidate_profiles?select=*&user_id=eq."+uid,{headers:ah()}),
+  safe(S+"/rest/v1/billing_subscriptions?select=*&user_id=eq."+uid+"&limit=1",{headers:ah()}),
   safe(S+"/rest/v1/saved_jobs?select=id,job_id,status,notes,applied_at,interview_at,offer_at,follow_up_at,last_activity_at,jobs(id,title,location,description,application_url,source_url,employer_id,employers(name))&user_id=eq."+uid+"&order=updated_at.desc",{headers:ah()}),
   safe(S+"/rest/v1/candidate_cvs?select=id,cv_name,original_filename,cv_text,storage_bucket,storage_path,updated_at,created_at&user_id=eq."+uid+"&order=updated_at.desc",{headers:ah()}),
   safe(S+"/rest/v1/tailored_cv_versions?select=id,job_id,cv_id,version_name,ats_score,tailored_text,file_bucket,file_path,file_name,updated_at,created_at&user_id=eq."+uid+"&order=updated_at.desc",{headers:ah()}),
@@ -468,6 +469,7 @@ async function loadAll(){
   safe(S+"/rest/v1/action_digest_preferences?select=*&user_id=eq."+uid,{headers:ah()})
  ]);
  PROFILE=Array.isArray(p)?p[0]||null:null;
+ BILLING=Array.isArray(billing)?billing[0]||null:null;
  SAVED=Array.isArray(sj)?sj:[];CVS=Array.isArray(cvs)?cvs:[];TAILORED=Array.isArray(tail)?tail:[];
  LETTERS=Array.isArray(letters)?letters:[];ANSWERS=Array.isArray(answers)?answers:[];
  INTERVIEW=Array.isArray(interview)?interview:[];ANALYSES=Array.isArray(analyses)?analyses:[];
@@ -1300,11 +1302,51 @@ function candidateFirstName(){
  const full=String(PROFILE?.full_name||USER?.user_metadata?.full_name||"").trim();
  return full?full.split(/\s+/)[0]:"there";
 }
+const BILLING_PLANS={
+ "price_1U8NJv2MpjlYziXhFvFSUmmf":{key:"copilot_monthly",label:"Copilot monthly"},
+ "price_1U8Ng32MpjlYziXho9C7LOUU":{key:"copilot_quarterly",label:"Copilot · 3 months"},
+ "price_1U8NjP2MpjlYziXhw7aiSV15":{key:"pro_monthly",label:"Pro monthly"},
+ "price_1U8NkI2MpjlYziXhpecurry4":{key:"pro_quarterly",label:"Pro · 3 months"},
+ "price_1U8NlP2MpjlYziXh6Bt7MPBY":{key:"copilot_pass_7d",label:"Copilot · 7-day pass"}
+};
+const PLAN_BUTTON_LABELS={
+ copilot_monthly:"Choose monthly · £19.99",
+ copilot_quarterly:"3 months · £49.99",
+ pro_monthly:"Choose monthly · £34.99",
+ pro_quarterly:"3 months · £89.99",
+ copilot_pass_7d:"Get 7 days · £7.99"
+};
+function currentBillingPlan(){
+ const status=String(BILLING?.status||"").toLowerCase();
+ const end=BILLING?.current_period_end?new Date(BILLING.current_period_end).getTime():null;
+ const unexpired=!end||Number.isNaN(end)||end>Date.now();
+ const active=["active","trialing"].includes(status)&&unexpired;
+ const plan=BILLING_PLANS[BILLING?.stripe_price_id]||null;
+ return active&&plan?{...plan,active:true,status,end}: {key:"explorer",label:"Explorer",active:false,status,end};
+}
+function renderBillingIdentity(){
+ const plan=currentBillingPlan();
+ const planEl=$("candidatePlan");if(planEl)planEl.textContent=plan.label+" plan";
+ const upgrade=$("upgradeButton");if(upgrade)upgrade.textContent=plan.active?"View plan":"Upgrade";
+ const explorer=$("explorerPlanButton");
+ if(explorer)explorer.textContent=plan.active?`Included with ${plan.label}`:"Current free access";
+ document.querySelectorAll("[data-plan]").forEach(btn=>{
+   const key=btn.dataset.plan;
+   btn.disabled=Boolean(plan.active);
+   btn.textContent=plan.active&&key===plan.key?"Current plan":plan.active?"Manage current plan first":PLAN_BUTTON_LABELS[key]||btn.textContent;
+ });
+ const status=$("checkoutStatus");
+ if(status&&plan.active){
+   const until=plan.end&&!Number.isNaN(plan.end)?` · Access until ${new Date(plan.end).toLocaleDateString()}`:"";
+   status.textContent=`Current plan: ${plan.label}${until}`;
+ }
+}
 function renderCandidateIdentity(){
  const first=candidateFirstName();
  const display=first==="there"?(USER?.email?.split("@")[0]||"Your workspace"):first;
  const chip=$("candidateChipName");if(chip)chip.textContent=display;
  const avatar=$("candidateAvatar");if(avatar)avatar.textContent=String(display).charAt(0).toUpperCase()||"V";
+ renderBillingIdentity();
 }
 function personalisedHomeState(){
  const hasProfile=Boolean(PROFILE?.target_roles&&PROFILE?.preferred_location&&PROFILE?.needs_sponsorship!==null&&PROFILE?.needs_sponsorship!==undefined);
