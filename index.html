@@ -75,6 +75,7 @@ body{background:radial-gradient(circle at 82% 0%,#ede7ff 0,transparent 28%),line
     <button class="active" data-page="home" onclick="go('home',this)">Home</button>
     <button data-page="jobs" onclick="go('jobs',this)">Find Jobs</button>
     <button data-page="applications" onclick="go('applications',this)">Applications</button>
+    <button data-page="intelligence" onclick="go('intelligence',this)">Intelligence</button>
     <button data-page="documents" onclick="go('documents',this)">Documents</button>
     <button data-page="interviews" onclick="go('interviews',this)">Interviews</button>
     <button data-page="profile" onclick="go('profile',this)">My Profile</button>
@@ -101,6 +102,7 @@ body{background:radial-gradient(circle at 82% 0%,#ede7ff 0,transparent 28%),line
 </div>
 
 <div id="authPanel" class="panel" style="display:none!important">
+  <span id="authBadge" class="badge" style="display:none">Not signed in</span>
   <div class="grid4">
     <input id="key" type="password" placeholder="Supabase publishable key">
     <input id="email" type="email" placeholder="Email">
@@ -206,6 +208,28 @@ body{background:radial-gradient(circle at 82% 0%,#ede7ff 0,transparent 28%),line
   </div>
   <div class="panel"><b>Apply inside VisaPilot</b><div class="small">For every saved vacancy, the candidate completes the application inside VisaPilot first. Where a supported ATS connection exists, VisaPilot can submit directly after final confirmation. Otherwise the application remains completed and Ready to submit while VisaPilot waits for a supported submission route.</div></div>
   <div id="appResults" class="cards"></div>
+</section>
+
+<section id="intelligence" class="section">
+  <div class="panel">
+    <div class="row"><div><h2 style="margin:0">Personalised Intelligence</h2><div class="small">Recommendations, workflows and outcome learning connected to your current VisaPilot plan.</div></div><span id="intelligencePlanBadge" class="badge purple">Your plan</span></div>
+  </div>
+  <div class="panel">
+    <div class="row"><div><h2 style="margin:0">Opportunity Agent</h2><div class="small">Find and prioritise fresh UK opportunities using your profile and sponsorship needs.</div></div><div class="toolbar"><button class="btn btn2" onclick="runOpportunityAgent(this)">Run Copilot agent</button><button class="btn" onclick="runAdaptiveOpportunityAgent(this)">Run Pro adaptive agent</button></div></div>
+    <div class="grid3" style="margin-top:14px"><div><label>Recommendations</label><select id="agentEnabled"><option value="yes">Enabled</option><option value="no">Paused</option></select></div><div><label>Minimum priority score</label><input id="agentMinScore" type="number" min="0" max="100" value="60"></div><div><label>Maximum jobs per alert</label><input id="agentMaxJobs" type="number" min="1" max="10" value="5"></div></div>
+    <div class="toolbar" style="margin-top:10px"><button class="btn btn2" onclick="saveAgentPrefs()">Save agent settings</button></div><div id="agentPrefStatus" class="small" style="margin-top:8px"></div><div id="agentStatus" class="small" style="margin-top:8px"></div><div id="agentResults" class="cards" style="margin-top:10px"></div><div id="adaptiveSummary" style="margin-top:12px"></div>
+  </div>
+  <div class="grid2">
+    <div class="panel"><div class="row"><div><h2 style="margin:0">Application workflows</h2><div class="small">Keep every application moving towards the next best action.</div></div><button class="btn btn2" onclick="runWorkflowOrchestrator(this)">Refresh workflows</button></div><div id="workflowStatus" class="small" style="margin-top:8px"></div><div id="workflowSummary" style="margin-top:10px"></div></div>
+    <div class="panel"><div class="row"><div><h2 style="margin:0">Today’s action queue</h2><div class="small">Prioritised actions across your active opportunities.</div></div><button class="btn btn2" onclick="buildApplicationQueue(this)">Build today’s queue</button></div><div id="queueStatus" class="small" style="margin-top:8px"></div><div id="actionQueue" class="cards" style="margin-top:10px"></div></div>
+  </div>
+  <div class="panel">
+    <div class="row"><div><h2 style="margin:0">Deadlines and alerts</h2><div class="small">Surface overdue, due-soon and follow-up actions before they are missed.</div></div><div class="toolbar"><button class="btn btn2" onclick="refreshWorkflowDeadlines(this)">Refresh deadlines</button><button class="btn" onclick="sendDeadlineAlertsNow(this)">Check alerts now</button></div></div>
+    <div class="grid3" style="margin-top:14px"><div><label>Deadline alerts</label><select id="deadlineAlertEnabled"><option value="yes">Enabled</option><option value="no">Paused</option></select></div><div><label>Due-soon window</label><select id="deadlineAlertHours"><option value="12">12 hours</option><option value="24">24 hours</option><option value="48">48 hours</option><option value="72">72 hours</option></select></div><div><label>Overdue alerts</label><select id="deadlineOverdue"><option value="yes">Enabled</option><option value="no">Disabled</option></select></div></div>
+    <div class="toolbar" style="margin-top:10px"><button class="btn btn2" onclick="saveDeadlineAlertPrefs()">Save alert settings</button></div><div id="deadlineAlertPrefStatus" class="small" style="margin-top:8px"></div><div id="deadlineStatus" class="small" style="margin-top:8px"></div><div id="deadlineSummary" style="margin-top:10px"></div>
+  </div>
+  <div class="panel"><div class="row"><div><h2 style="margin:0">Outcome learning</h2><div class="small">Learn which application patterns are improving your interview and offer outcomes.</div></div><button class="btn btn2" onclick="refreshOutcomeLearning(this)">Refresh insights</button></div><div id="conversionSummary" style="margin-top:10px"></div><div id="outcomeInsights" style="margin-top:10px"></div></div>
+  <div class="panel"><h2 style="margin-top:0">Daily action digest</h2><div class="grid2"><div><label>Daily digest</label><select id="digestEnabled"><option value="yes">Enabled</option><option value="no">Paused</option></select></div><div><label>Preferred hour</label><select id="digestHour"><option value="7">07:00</option><option value="8">08:00</option><option value="9">09:00</option><option value="12">12:00</option><option value="18">18:00</option></select></div></div><button class="btn btn2" style="margin-top:10px" onclick="saveDigestPrefs()">Save digest settings</button><div id="digestStatus" class="small" style="margin-top:8px"></div></div>
 </section>
 
 <section id="documents" class="section">
@@ -458,6 +482,7 @@ const titles={
  home:["Home","Your sponsorship-focused job search, with the next important action surfaced automatically."],
  jobs:["Find Jobs","Search current UK vacancies and focus on roles that fit your goals."],
  applications:["Applications","Prepare, apply and track every opportunity."],
+ intelligence:["Intelligence","Your personalised recommendations, priorities, deadlines and outcome learning."],
  documents:["Documents","Keep every CV and cover letter privately stored and ready for secure application delivery."],
  interviews:["Interviews","Prepare for interview-stage roles using your real CV evidence."],
  profile:["My Profile","Your personal information, job preferences and CV."],
@@ -471,6 +496,7 @@ function go(id,btn){
  $("pageTitle").textContent=titles[id][0];$("pageSub").textContent=titles[id][1];
  if(id==="jobs"){ $("jobResults").innerHTML=""; $("jobStatus").textContent="Enter a role to search live vacancies."; }
  if(id==="applications"&&USER)reloadSavedApplications().catch(()=>{});
+ if(id==="intelligence"){renderIntelligenceWorkspace();populateProfile()}
 }
 
 async function safe(url,opts){try{return await req(url,opts)}catch(e){console.warn(e);return[]}}
@@ -1416,6 +1442,16 @@ function requirePlanTier(required,feature){
 function planLockHtml(required,feature){
  const name=required==="pro"?"Pro":"Copilot";
  return `<div class="plan-lock"><b>${esc(feature)} is a ${name} feature</b><div class="muted">Upgrade to unlock this personalised intelligence in your workspace.</div><button class="btn" style="margin-top:12px" onclick="go('plans',document.querySelector('[data-page=plans]'))">View ${name}</button></div>`;
+}
+function renderIntelligenceWorkspace(){
+ const badge=$("intelligencePlanBadge");
+ if(badge)badge.textContent=`${currentBillingPlan().label} access`;
+ renderAgentResults();
+ renderAdaptiveSummary();
+ renderWorkflowSummary();
+ renderActionQueue();
+ renderDeadlineSummary();
+ renderConversionInsights();
 }
 function renderBillingIdentity(){
  const plan=currentBillingPlan();
@@ -3206,6 +3242,7 @@ function renderInterviews(){
  if($("digestHour"))$("digestHour").value=String(DIGEST?.preferred_hour??8);
 }
 async function refreshOutcomeLearning(btn){
+ if(!requirePlanTier("pro","Outcome learning"))return;
  if(!USER)return;
  const old=btn?.textContent;if(btn){btn.disabled=true;btn.textContent="Learning…"}
  try{
@@ -3218,6 +3255,7 @@ async function refreshOutcomeLearning(btn){
 }
 function renderAdaptiveSummary(){
  const el=$("adaptiveSummary");if(!el)return;
+ if(!hasPlanTier("pro")){el.innerHTML=planLockHtml("pro","Adaptive ranking summary");return}
  const rows=Array.isArray(ADAPTIVE_PRIORITY)?ADAPTIVE_PRIORITY:[];
  if(!rows.length){el.innerHTML='<div class="empty">No adaptive ranking data yet. Recalculate a job after outcome learning has been refreshed.</div>';return}
  const boosts=rows.filter(x=>Number(x.learning_adjustment||0)>0).length;
@@ -3228,6 +3266,7 @@ function renderAdaptiveSummary(){
 function renderConversionInsights(){
  const sum=CONVERSION_SUMMARY||{};
  const box=$("conversionSummary"),list=$("outcomeInsights");
+ if(!hasPlanTier("pro")){if(box)box.innerHTML=planLockHtml("pro","Outcome learning");if(list)list.innerHTML="";return}
  if(box){
   box.innerHTML=`<div class="convgrid">
     <div class="convstat"><span class="small">Applications</span><b>${sum.total_applications||0}</b></div>
@@ -3245,6 +3284,7 @@ function renderConversionInsights(){
  }
 }
 async function saveAgentPrefs(){
+ if(!requirePlanTier("copilot","Opportunity Agent settings"))return;
  if(!USER)return;
  const body={user_id:USER.id,enabled:$("agentEnabled").value==="yes",minimum_priority_score:Math.max(0,Math.min(100,Number($("agentMinScore").value||60))),max_jobs_per_alert:Math.max(1,Math.min(10,Number($("agentMaxJobs").value||5))),updated_at:new Date().toISOString()};
  try{
@@ -3297,6 +3337,7 @@ async function refreshWorkflowDeadlines(btn){
 }
 function renderDeadlineSummary(){
  const el=$("deadlineSummary");if(!el)return;
+ if(!hasPlanTier("pro")){el.innerHTML=planLockHtml("pro","Deadline intelligence");return}
  const rows=Array.isArray(WORKFLOW_DEADLINES)?WORKFLOW_DEADLINES:[];
  if(!rows.length){el.innerHTML='<div class="empty">No active workflow deadlines yet.</div>';return}
  el.innerHTML=rows.slice(0,8).map(d=>{
@@ -3341,6 +3382,7 @@ function workflowLabel(step){
 }
 function renderWorkflowSummary(){
  const el=$("workflowSummary");if(!el)return;
+ if(!hasPlanTier("pro")){el.innerHTML=planLockHtml("pro","Application workflows");return}
  const rows=(Array.isArray(WORKFLOW_STATE)?WORKFLOW_STATE:[]).filter(Boolean);
  if(!rows.length){el.innerHTML='<div class="empty">No workflow state yet. Refresh workflows after saving or preparing an application.</div>';return}
  const active=rows.filter(x=>x.current_step!=="closed");
@@ -3369,6 +3411,7 @@ async function buildApplicationQueue(btn){
 }
 function renderActionQueue(){
  const el=$("actionQueue");if(!el)return;
+ if(!hasPlanTier("pro")){el.innerHTML=planLockHtml("pro","Personalised action queue");return}
  const rows=Array.isArray(ACTION_QUEUE)?ACTION_QUEUE:[];
  el.innerHTML=rows.length?rows.slice(0,10).map(q=>`<div class="card">
    <div class="row">
@@ -3430,11 +3473,13 @@ async function runOpportunityAgent(btn){
 }
 function renderAgentResults(){
  const el=$("agentResults");if(!el)return;const rows=(Array.isArray(AGENT_RECS)?AGENT_RECS:[]).filter(x=>!x.dismissed_at).slice(0,8);
+ if(!hasPlanTier("copilot")){el.innerHTML=planLockHtml("copilot","Opportunity Agent");return}
  el.innerHTML=rows.length?rows.map(r=>`<div class="card"><div class="row"><div><b>${esc(r.jobs?.title||"Opportunity")}</b><div class="small">${esc(r.jobs?.employers?.name||"")} · ${esc(r.jobs?.location||"")}</div><span class="badge good">${r.priority_score}/100 ${r.used_adaptive_score?"adaptive":"priority"}</span><span class="badge">${r.sponsorship_score}/100 sponsorship evidence</span>${r.learning_adjustment?`<span class="badge purple">${Number(r.learning_adjustment)>=0?"+":""}${r.learning_adjustment} learned adjustment</span>`:""}</div><div class="toolbar"><button class="btn btn2" onclick="openAgentJob('${r.job_id}')">Open job</button><button class="btn btn2" onclick="dismissAgentRec('${r.id}')">Dismiss</button></div></div><div class="next"><b>Why:</b> ${esc(r.reason_summary||"Recommended based on your profile and sponsorship evidence.")}</div></div>`).join(""):'<div class="empty">No fresh recommendations yet. Run the agent after new jobs are discovered.</div>';
 }
 function openAgentJob(jobId){const btn=document.querySelector('.nav button[data-page="jobs"]');go("jobs",btn);if($("jobSearch"))$("jobSearch").value="";renderJobs();setTimeout(()=>document.querySelector(`[data-job-id="${jobId}"]`)?.scrollIntoView({behavior:"smooth",block:"center"}),50)}
 async function dismissAgentRec(id){if(!USER)return;try{await req(S+"/rest/v1/opportunity_agent_recommendations?id=eq."+id+"&user_id=eq."+USER.id,{method:"PATCH",headers:ah(),body:JSON.stringify({dismissed_at:new Date().toISOString()})});const r=AGENT_RECS.find(x=>String(x.id)===String(id));if(r)r.dismissed_at=new Date().toISOString();renderAgentResults()}catch(e){alert("Could not dismiss recommendation: "+e.message)}}
 async function saveDeadlineAlertPrefs(){
+ if(!requirePlanTier("pro","Deadline alert settings"))return;
  if(!USER)return;
  const body={
    user_id:USER.id,
@@ -3465,6 +3510,7 @@ async function sendDeadlineAlertsNow(btn){
  finally{if(btn){btn.disabled=false;btn.textContent=old||"Check alerts now"}}
 }
 async function saveDigestPrefs(){
+ if(!requirePlanTier("copilot","Daily action digest"))return;
  if(!USER){$("digestStatus").textContent="Please sign in first.";return}
  const body={
   user_id:USER.id,
@@ -3492,7 +3538,7 @@ async function saveProfile(){
   PROFILE=Array.isArray(rows)&&rows[0]?rows[0]:{...PROFILE,...body};$("profileStatus").textContent="Profile saved.";renderHome()
  }catch(e){$("profileStatus").textContent=e.message}
 }
-function renderAll(){renderHome();renderApplications();renderDocuments();renderInterviews();populateProfile()}
+function renderAll(){renderHome();renderApplications();renderDocuments();renderInterviews();renderIntelligenceWorkspace();populateProfile()}
 document.addEventListener("DOMContentLoaded",()=>{
   try{applyAdminMode()}catch(e){console.warn("Admin mode unavailable",e)}
   candidatePublicStart();
