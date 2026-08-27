@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://cjdgqbmjsqwruooexzid.supabase.co wss://cjdgqbmjsqwruooexzid.supabase.co; frame-src https://checkout.stripe.com https://billing.stripe.com; form-action 'self' https://checkout.stripe.com https://billing.stripe.com; media-src 'none'; worker-src 'none'; upgrade-insecure-requests">
 <title>VisaPilot — Candidate App</title>
 <style>
 :root{--bg:#f7f7fc;--ink:#17172b;--m:#6f7287;--line:#e8e7f1;--purple:#6d28d9;--purple2:#ede9fe;--green:#067647;--amber:#b54708;--red:#b42318;--blue:#175cd3}
@@ -380,6 +383,20 @@ function applyAdminMode(){
 }
 
 const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+function safeExternalUrl(value){
+ try{
+  const url=new URL(String(value||""));
+  if(!["https:","http:"].includes(url.protocol)||url.username||url.password)return"";
+  return url.href;
+ }catch{return""}
+}
+function safeStripeUrl(value){
+ const url=safeExternalUrl(value);
+ if(!url)throw new Error("Stripe returned an invalid redirect URL.");
+ const host=new URL(url).hostname.toLowerCase();
+ if(host!=="stripe.com"&&!host.endsWith(".stripe.com"))throw new Error("Stripe returned an untrusted redirect URL.");
+ return url;
+}
 function key(){return SUPABASE_PUBLISHABLE_KEY}
 function ah(){return{apikey:key(),Authorization:"Bearer "+TOKEN,"Content-Type":"application/json","Prefer":"return=representation"}}
 function ph(){return{apikey:key(),Authorization:"Bearer "+key(),"Content-Type":"application/json"}}
@@ -387,14 +404,14 @@ async function req(url,opt={}){const r=await fetch(url,opt);let b;try{b=await r.
 function setSession(b){
  TOKEN=b.access_token;
  USER=b.user;
- if(TOKEN)localStorage.setItem("vp_access_token",TOKEN);
- if(b.refresh_token)localStorage.setItem("vp_refresh_token",b.refresh_token);
+ if(TOKEN)sessionStorage.setItem("vp_access_token",TOKEN);
+ if(b.refresh_token)sessionStorage.setItem("vp_refresh_token",b.refresh_token);
 }
 function clearSession(){TOKEN=null;USER=null;const badge=$("authBadge");if(badge){badge.textContent="Not signed in";badge.className="badge"}const status=$("authStatus");if(status)status.textContent="Sign in to load your workspace."}
-async function refresh(){const rt=localStorage.getItem("vp_refresh_token");if(!rt||!key())return false;try{const r=await fetch(S+"/auth/v1/token?grant_type=refresh_token",{method:"POST",headers:{apikey:key(),"Content-Type":"application/json"},body:JSON.stringify({refresh_token:rt})});if(!r.ok)return false;setSession(await r.json());showSignedIn();return true}catch{return false}}
+async function refresh(){const rt=sessionStorage.getItem("vp_refresh_token");if(!rt||!key())return false;try{const r=await fetch(S+"/auth/v1/token?grant_type=refresh_token",{method:"POST",headers:{apikey:key(),"Content-Type":"application/json"},body:JSON.stringify({refresh_token:rt})});if(!r.ok)return false;setSession(await r.json());showSignedIn();return true}catch{return false}}
 function showSignedIn(){const badge=$("authBadge");if(badge){badge.textContent="Signed in";badge.className="badge good"}const status=$("authStatus");if(status)status.textContent="Signed in as "+USER.email;applyAdminMode();renderCandidateIdentity()}
 async function signIn(){try{const b=await req(S+"/auth/v1/token?grant_type=password",{method:"POST",headers:{apikey:key(),"Content-Type":"application/json"},body:JSON.stringify({email:$("email").value.trim(),password:$("password").value})});setSession(b);showSignedIn();await loadAll()}catch(e){$("err").textContent=e.message}}
-function signOut(){clearSession();localStorage.removeItem("vp_refresh_token");localStorage.removeItem("vp_access_token");PROFILE=null;BILLING=null;SAVED=[];CVS=[];TAILORED=[];LETTERS=[];ANSWERS=[];INTERVIEW=[];ANALYSES=[];renderAll()}
+function signOut(){clearSession();sessionStorage.removeItem("vp_refresh_token");sessionStorage.removeItem("vp_access_token");localStorage.removeItem("vp_refresh_token");localStorage.removeItem("vp_access_token");PROFILE=null;BILLING=null;SAVED=[];CVS=[];TAILORED=[];LETTERS=[];ANSWERS=[];INTERVIEW=[];ANALYSES=[];renderAll()}
 function showAuth(){$("authPanel").scrollIntoView({behavior:"smooth"})}
 
 async function startStripeCheckout(planKey,btn){
@@ -416,7 +433,7 @@ async function startStripeCheckout(planKey,btn){
    body:JSON.stringify({plan:planKey})
   });
   if(!result?.url)throw new Error("Stripe Checkout did not return a payment link.");
-  window.location.assign(result.url);
+  window.location.assign(safeStripeUrl(result.url));
  }catch(e){
   if(status)status.textContent="Checkout could not start: "+String(e?.message||e);
   if(btn){btn.disabled=false;btn.textContent=original||"Choose plan"}
@@ -440,7 +457,7 @@ async function openCustomerPortal(btn){
    body:JSON.stringify({})
   });
   if(!result?.url)throw new Error("Stripe did not return a billing portal link.");
-  window.location.assign(result.url);
+  window.location.assign(safeStripeUrl(result.url));
  }catch(e){
   if(status)status.textContent="Billing portal could not open: "+String(e?.message||e);
   if(btn){btn.disabled=false;btn.textContent=original||"Billing & cancellation"}
@@ -464,7 +481,7 @@ async function changeSubscriptionPlan(planKey,btn){
    body:JSON.stringify({plan:planKey})
   });
   if(!result?.url)throw new Error("Stripe did not return a plan confirmation link.");
-  window.location.assign(result.url);
+  window.location.assign(safeStripeUrl(result.url));
  }catch(e){
   if(status)status.textContent="Plan change could not start: "+String(e?.message||e);
   if(btn){btn.disabled=false;btn.textContent=original||"Choose plan"}
@@ -1907,7 +1924,7 @@ async function refreshAdaptivePriority(jobId,btn){
 async function ensureCandidateSession(){
  if(USER && TOKEN)return true;
 
- const stored=localStorage.getItem("vp_access_token");
+ const stored=sessionStorage.getItem("vp_access_token");
  if(stored){
    TOKEN=stored;
    try{
@@ -1923,7 +1940,7 @@ async function ensureCandidateSession(){
    }
  }
 
- const rt=localStorage.getItem("vp_refresh_token");
+ const rt=sessionStorage.getItem("vp_refresh_token");
  if(rt){
    try{
      const r=await fetch(S+"/auth/v1/token?grant_type=refresh_token",{
@@ -1935,8 +1952,8 @@ async function ensureCandidateSession(){
        const b=await r.json();
        TOKEN=b.access_token;
        USER=b.user;
-       localStorage.setItem("vp_access_token",TOKEN);
-       if(b.refresh_token)localStorage.setItem("vp_refresh_token",b.refresh_token);
+       sessionStorage.setItem("vp_access_token",TOKEN);
+       if(b.refresh_token)sessionStorage.setItem("vp_refresh_token",b.refresh_token);
        return !!USER?.id;
      }
    }catch(e){
@@ -2017,7 +2034,7 @@ function renderCandidateLiveJobs(rows){
      ${j.salary_text?`<div class="small" style="margin-top:8px">${esc(j.salary_text)}</div>`:""}
      <p class="small">${esc(String(j.description||"").slice(0,420))}${String(j.description||"").length>420?"…":""}</p>
      <div class="toolbar">
-       ${j.application_url||j.source_url?`<a class="btn btn2" href="${esc(j.application_url||j.source_url)}" target="_blank" rel="noopener">View live vacancy</a>`:""}
+       ${safeExternalUrl(j.application_url||j.source_url)?`<a class="btn btn2" href="${esc(safeExternalUrl(j.application_url||j.source_url))}" target="_blank" rel="noopener noreferrer">View live vacancy</a>`:""}
        <button class="btn" type="button" data-live-id="${esc(j.external_id||j.id||"")}" onclick="window.saveCandidateLiveJob && window.saveCandidateLiveJob(this); return false;">Save to VisaPilot</button>
        <span class="small live-save-status"></span>
      </div>
@@ -2199,7 +2216,7 @@ function renderJobs(){
  </div>`;
 
  $("jobResults").innerHTML=rows.slice(0,120).map((o,i)=>{
-   const j=o.j,x=o.x,fit=o.fit,p=o.persisted,app=j.application_url||j.source_url||"#",id="sintel"+i;
+   const j=o.j,x=o.x,fit=o.fit,p=o.persisted,app=safeExternalUrl(j.application_url||j.source_url),id="sintel"+i;
 
    let label,cls,explanation;
    if(o.tier==="strong"){
@@ -2261,7 +2278,7 @@ function renderJobs(){
         ${savedForJob(j.id)
           ? `<span class="badge good">Saved · ${esc(stage(savedForJob(j.id).status))}</span><button class="btn btn2" onclick="startPreparing('${j.id}')">Open application</button>`
           : `<button class="btn btn2" onclick="saveJob('${j.id}')">Save job</button><button class="btn" onclick="startPreparing('${j.id}')">Prepare application</button>`}
-        ${app!=="#"?`<a class="btn btn2" target="_blank" rel="noopener" href="${esc(app)}">View source</a>`:""}
+        ${app?`<a class="btn btn2" target="_blank" rel="noopener noreferrer" href="${esc(app)}">View source</a>`:""}
       </div>
     </div>
 
@@ -2398,6 +2415,12 @@ async function saveGreenhouseAnswers(savedId){
 }
 async function storageUpload(file,folder){
  if(!USER||!file)throw new Error("Sign in and choose a file.");
+ const maxBytes=10*1024*1024;
+ const allowedExtensions=new Set(["pdf","doc","docx","txt","rtf"]);
+ const extension=String(file.name||"").split(".").pop().toLowerCase();
+ if(!file.name||!allowedExtensions.has(extension))throw new Error("Choose a PDF, DOC, DOCX, TXT, or RTF document.");
+ if(!Number.isFinite(file.size)||file.size<=0)throw new Error("The selected file is empty or invalid.");
+ if(file.size>maxBytes)throw new Error("The selected file is larger than the 10 MB limit.");
  const clean=file.name.replace(/[^a-zA-Z0-9._-]+/g,"_");
  const path=`${USER.id}/${folder}/${Date.now()}_${clean}`;
  const r=await fetch(`${S}/storage/v1/object/visapilot-documents/${path}`,{
@@ -2861,7 +2884,7 @@ function applicationWorkspaceHtml(s){
  const totalCount=Number(r?.totalCount||5);
  const canAnalyse=!!r?.canAnalyse;
  const canApply=!!r?.canApply;
- const app=j?.application_url||j?.source_url||"#";
+ const app=safeExternalUrl(j?.application_url||j?.source_url);
  const sp=safeSponsorshipForWorkspace(j);
  const labelResult=sp?.status!=="exclude"
    ? safeWorkspaceSection(()=>intelLabel(sp),["Sponsorship evidence available","purple"])
@@ -2899,8 +2922,8 @@ function applicationWorkspaceHtml(s){
       <div class="card"><b>Sponsorship</b><div><span class="badge ${spClass}">${esc(spLabel)}</span></div><div class="small">${Number(sp?.score||0)>0?`Evidence score ${Number(sp?.score||0)}/100 · This is evidence, not a guarantee of sponsorship.`:"Sponsorship evidence has not been assessed for this vacancy yet. Run Analyse my application first."}</div></div>
     </div>
     <div class="next"><b>Next:</b> ${esc(safeWorkspaceSection(()=>nextAction(s),"Continue preparing your application"))}</div>
-    ${app!=="#"?`<div class="toolbar" style="margin-top:10px">${canApply && app!=="#"
-?`<a class="btn" target="_blank" rel="noopener" href="${esc(app)}">Apply now</a>`
+    ${app?`<div class="toolbar" style="margin-top:10px">${canApply && app
+?`<a class="btn" target="_blank" rel="noopener noreferrer" href="${esc(app)}">Apply now</a>`
 :`<button class="btn" type="button" disabled title="Complete all 5 preparation steps first">Apply now</button>`}</div>`:""}
    </div>
 
@@ -3079,7 +3102,7 @@ function renderApplications(){
  for(const s of rows){
    try{
      const j=s?.jobs||{};
-     const app=j?.application_url||j?.source_url||"#";
+     const app=safeExternalUrl(j?.application_url||j?.source_url);
      const r=applicationReadiness(s);
      const steps=Array.isArray(r?.steps)?r.steps:[];
      const pct=Number(r?.pct||0);
@@ -3110,7 +3133,7 @@ function renderApplications(){
          </div>
          <div class="toolbar">
            <button class="btn btn2" onclick="openApplicationWorkspace('${esc(s?.id||"")}')">${OPEN_APP?.id===s?.id?"Workspace open":"Open workspace"}</button>
-           ${app!=="#"?`<a class="btn btn2" target="_blank" rel="noopener" href="${esc(app)}">View source</a>`:""}
+           ${app?`<a class="btn btn2" target="_blank" rel="noopener noreferrer" href="${esc(app)}">View source</a>`:""}
          </div>
        </div>
 
@@ -3138,7 +3161,7 @@ function renderApplications(){
        </div>
        <div class="toolbar" style="margin-top:10px">
          <button class="btn btn2" onclick="openApplicationWorkspace('${esc(s?.id||"")}')">Open workspace</button>
-         ${(j?.application_url||j?.source_url)?`<a class="btn btn2" target="_blank" rel="noopener" href="${esc(j.application_url||j.source_url)}">View source</a>`:""}
+         ${safeExternalUrl(j?.application_url||j?.source_url)?`<a class="btn btn2" target="_blank" rel="noopener noreferrer" href="${esc(safeExternalUrl(j.application_url||j.source_url))}">View source</a>`:""}
        </div>
      </div>`);
    }
@@ -3539,7 +3562,16 @@ async function saveProfile(){
  }catch(e){$("profileStatus").textContent=e.message}
 }
 function renderAll(){renderHome();renderApplications();renderDocuments();renderInterviews();renderIntelligenceWorkspace();populateProfile()}
+function migrateLegacyTokenStorage(){
+ const access=localStorage.getItem("vp_access_token");
+ const refreshToken=localStorage.getItem("vp_refresh_token");
+ if(access&&!sessionStorage.getItem("vp_access_token"))sessionStorage.setItem("vp_access_token",access);
+ if(refreshToken&&!sessionStorage.getItem("vp_refresh_token"))sessionStorage.setItem("vp_refresh_token",refreshToken);
+ localStorage.removeItem("vp_access_token");
+ localStorage.removeItem("vp_refresh_token");
+}
 document.addEventListener("DOMContentLoaded",()=>{
+  migrateLegacyTokenStorage();
   try{applyAdminMode()}catch(e){console.warn("Admin mode unavailable",e)}
   candidatePublicStart();
 });
@@ -3589,8 +3621,8 @@ async function submitCandidateAuth(){
        body:JSON.stringify({email,password})
      });
      if(r?.access_token){
-       localStorage.setItem("vp_access_token",r.access_token);
-       localStorage.setItem("vp_refresh_token",r.refresh_token||"");
+       sessionStorage.setItem("vp_access_token",r.access_token);
+       sessionStorage.setItem("vp_refresh_token",r.refresh_token||"");
        await enterCandidateApp(true);
      }else{
        msg.textContent="Account created. Check your email to confirm your address, then return here and sign in.";
@@ -3604,8 +3636,8 @@ async function submitCandidateAuth(){
        body:JSON.stringify({email,password})
      });
      if(!r?.access_token)throw new Error("Sign in failed.");
-     localStorage.setItem("vp_access_token",r.access_token);
-     localStorage.setItem("vp_refresh_token",r.refresh_token||"");
+     sessionStorage.setItem("vp_access_token",r.access_token);
+     sessionStorage.setItem("vp_refresh_token",r.refresh_token||"");
      await enterCandidateApp(false);
    }
  }catch(e){
@@ -3621,7 +3653,7 @@ async function enterCandidateApp(isNew){
  $("candidateAppShell").style.display="block";
 
  try{
-   const token=localStorage.getItem("vp_access_token");
+   const token=sessionStorage.getItem("vp_access_token");
    if(token){
      TOKEN=token;
      const ur=await fetch(S+"/auth/v1/user",{headers:{"apikey":key(),"Authorization":"Bearer "+token}});
@@ -3648,8 +3680,8 @@ async function candidatePublicStart(){
  $("candidateAuthGate").style.display="flex";
  $("candidateAppShell").style.display="none";
 
- const storedToken=localStorage.getItem("vp_access_token");
- const storedRefresh=localStorage.getItem("vp_refresh_token");
+ const storedToken=sessionStorage.getItem("vp_access_token");
+ const storedRefresh=sessionStorage.getItem("vp_refresh_token");
  try{
    if(storedToken){
      TOKEN=storedToken;
@@ -3673,6 +3705,8 @@ async function candidatePublicStart(){
  }catch(e){
    console.warn("Could not restore candidate session",e);
  }
+ sessionStorage.removeItem("vp_access_token");
+ sessionStorage.removeItem("vp_refresh_token");
  localStorage.removeItem("vp_access_token");
  localStorage.removeItem("vp_refresh_token");
  TOKEN="";USER=null;
