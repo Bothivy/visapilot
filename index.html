@@ -2,9 +2,6 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="referrer" content="no-referrer">
-<meta name="robots" content="noindex,nofollow,noarchive">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' https://cjdgqbmjsqwruooexzid.supabase.co wss://cjdgqbmjsqwruooexzid.supabase.co; frame-src https://checkout.stripe.com https://billing.stripe.com; form-action 'self' https://checkout.stripe.com https://billing.stripe.com; media-src 'none'; worker-src 'none'; upgrade-insecure-requests">
 <title>VisaPilot — Candidate App</title>
 <style>
 :root{--bg:#f7f7fc;--ink:#17172b;--m:#6f7287;--line:#e8e7f1;--purple:#6d28d9;--purple2:#ede9fe;--green:#067647;--amber:#b54708;--red:#b42318;--blue:#175cd3}
@@ -13,7 +10,7 @@
 .main{padding:24px;max-width:1400px;width:100%}.top{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;flex-wrap:wrap}.eyebrow{font-size:11px;font-weight:900;letter-spacing:1px;color:var(--purple)}h1{font-size:38px;margin:5px 0}.muted,.small{color:var(--m)}.small{font-size:11px}.panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:17px;margin:12px 0}.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.stat{font-size:29px;font-weight:900}.section{display:none}.section.active{display:block}
 input,select,textarea{width:100%;padding:10px;border:1px solid #ddd9e8;border-radius:9px;background:#fff}textarea{min-height:110px}.btn{border:0;background:var(--purple);color:#fff;border-radius:9px;padding:10px 14px;font-weight:800;cursor:pointer;text-decoration:none;display:inline-block}.btn2{background:#fff;color:var(--purple);border:1px solid #d8ccfa}.toolbar{display:flex;gap:8px;flex-wrap:wrap}.cards{display:grid;gap:10px}.card{border:1px solid var(--line);border-radius:12px;padding:13px}.row{display:grid;grid-template-columns:1fr auto;gap:12px}.badge{display:inline-block;font-size:10px;font-weight:900;padding:5px 7px;border-radius:999px;margin:3px;background:#fff3df;color:var(--amber)}.good{background:#eaf8ef;color:var(--green)}.bad{background:#fdecec;color:var(--red)}.blue{background:#e8f1ff;color:var(--blue)}.purple{background:#f0e9ff;color:var(--purple)}.next{background:#fbf9ff;border-left:4px solid var(--purple);padding:10px;border-radius:8px;margin-top:8px}.intel{display:none;background:#fbf9ff;padding:12px;border-radius:10px;margin-top:10px}.prep{margin-top:10px;padding:12px;border:1px solid var(--line);border-radius:10px;background:#fcfcff}.step{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid #eee}.step:last-child{border-bottom:0}.workspace{margin-top:12px;border-top:1px solid var(--line);padding-top:12px}.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}.tab{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 10px;font-size:11px;font-weight:800;cursor:pointer}.tab.active{background:var(--purple);color:#fff}.tabpane{display:none}.tabpane.active{display:block}.previewbox{white-space:pre-wrap;background:#fbfbfd;border:1px solid var(--line);border-radius:10px;padding:12px;max-height:420px;overflow:auto;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:1.5}.coachq{border:1px solid var(--line);border-radius:11px;padding:12px;margin:9px 0}.evidence{background:#fbf9ff;border-left:4px solid var(--purple);padding:10px;border-radius:8px;margin-top:8px}.star{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:8px}.star div{background:#f5f4f8;border-radius:8px;padding:8px;font-size:11px}.done{color:var(--green);font-weight:800}.todo{color:var(--purple);font-weight:800}.intel.open{display:block}.signal{padding:5px 0;border-bottom:1px solid #eee}.signal:last-child{border-bottom:0}.empty{text-align:center;padding:28px;color:var(--m)}.progress{height:9px;background:#eee;border-radius:20px;overflow:hidden}.fill{height:100%;background:var(--purple)}
 @media(max-width:980px){.app{grid-template-columns:1fr}.side{position:relative;height:auto}.foot{display:none}.nav{grid-template-columns:repeat(3,1fr)}.grid4,.grid3,.grid2{grid-template-columns:1fr 1fr}}@media(max-width:650px){.nav,.grid4,.grid3,.grid2,.row{grid-template-columns:1fr}.main{padding:16px}}
-.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:stretch}.price-card{display:flex;flex-direction:column;border:1px solid #e5ddf5;border-radius:20px;padding:23px;background:linear-gradient(180deg,#fff 0%,#fefcff 100%);box-shadow:0 14px 34px rgba(66,42,118,.07);transition:.2s}.price-card:hover{transform:translateY(-2px);box-shadow:0 18px 42px rgba(66,42,118,.11)}.price-card.featured{border:2px solid var(--purple);box-shadow:0 16px 42px rgba(109,40,217,.13)}.price-card.current-plan-card{border:2px solid #7c50ed;background:linear-gradient(180deg,#f8f4ff,#fff);box-shadow:0 18px 45px rgba(109,40,217,.16)}.price-name{font-size:22px;font-weight:900}.price{font-size:34px;font-weight:900;margin:10px 0 2px}.price-note{font-size:12px;color:var(--m);min-height:18px}.plan-promise{margin:12px 0 0;padding:11px 12px;border-radius:11px;background:#f5f1ff;color:#4d3580;font-size:13px;line-height:1.45;font-weight:700}.feature-list{margin:17px 0;padding:0;list-style:none;color:#36364a;line-height:1.45;font-size:14px}.feature-list li{position:relative;padding:7px 0 7px 27px;border-bottom:1px solid #f0ecf6}.feature-list li:last-child{border-bottom:0}.feature-list li:before{content:"✓";position:absolute;left:0;top:7px;display:grid;place-items:center;width:19px;height:19px;border-radius:50%;background:#e8defe;color:#6334d4;font-size:11px;font-weight:900}.feature-list li b{color:#241b3b}.price-actions{margin-top:auto;display:grid;gap:8px}.price-actions .btn{width:100%;text-align:center}.price-actions .btn.current-choice{background:#ede6ff;color:#5e32ce;border:1px solid #cbb9fb;box-shadow:none;opacity:1;filter:none}.pass-card{margin-top:18px;display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center;background:linear-gradient(120deg,#fff,#faf7ff)}.billing-saving{color:var(--green);font-weight:800}.checkout-status{margin-top:14px;min-height:20px}.billing-notice{display:none;margin:0 0 18px;padding:15px 17px;border:1px solid #d9cbfb;border-radius:14px;background:linear-gradient(110deg,#f3edff,#fff);color:#4a3473;line-height:1.5}.billing-notice.warning{border-color:#f0cd92;background:#fff8e8;color:#7a4308}.plan-lock{padding:22px;border:1px solid #d9cbfb;border-radius:14px;background:linear-gradient(120deg,#f5f0ff,#fff);text-align:center}.plan-lock b{display:block;font-size:18px;margin-bottom:6px}.sponsorship-disclaimer{margin-top:16px;padding:11px;border-radius:9px;background:#fbf9ff;border-left:4px solid var(--purple)}@media(max-width:900px){.pricing-grid{grid-template-columns:1fr}.pass-card{grid-template-columns:1fr}}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;align-items:stretch}.price-card{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:16px;padding:20px;background:#fff}.price-card.featured{border:2px solid var(--purple);box-shadow:0 10px 30px rgba(109,40,217,.1)}.price-name{font-size:20px;font-weight:900}.price{font-size:31px;font-weight:900;margin:10px 0 2px}.price-note{font-size:11px;color:var(--m);min-height:18px}.feature-list{margin:16px 0;padding-left:20px;color:#36364a;line-height:1.65;font-size:13px}.price-actions{margin-top:auto;display:grid;gap:8px}.price-actions .btn{width:100%;text-align:center}.pass-card{margin-top:14px;display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center}.billing-saving{color:var(--green);font-weight:800}.checkout-status{margin-top:14px;min-height:20px}.sponsorship-disclaimer{margin-top:16px;padding:11px;border-radius:9px;background:#fbf9ff;border-left:4px solid var(--purple)}@media(max-width:900px){.pricing-grid{grid-template-columns:1fr}.pass-card{grid-template-columns:1fr}}
 .prioritybox{border:1px solid var(--line);border-radius:10px;padding:9px 11px;margin-top:8px;background:#fff}.priorityscore{font-size:20px;font-weight:900}.fresh{font-size:10px;color:var(--m)}.prioritywhy{margin-top:5px;font-size:11px;color:var(--m)}.appintel{border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:10px;background:#fff}.decision-apply{background:#ecfdf3;border-color:#abefc6}.decision-improve{background:#fff8e8;border-color:#f5d38a}.decision-low{background:#fff8f8;border-color:#f4b8b8}.metricgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px}.metric{border:1px solid var(--line);border-radius:8px;padding:8px}.metric b{display:block;font-size:18px}.gapitem{padding:7px 0;border-bottom:1px solid #eee}.gapitem:last-child{border-bottom:0}@media(max-width:760px){.metricgrid{grid-template-columns:1fr 1fr}}.convgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.convstat{border:1px solid var(--line);border-radius:10px;padding:10px;background:#fff}.convstat b{font-size:24px;display:block}.insightcard{border:1px solid var(--line);border-radius:10px;padding:10px;background:#fff;margin-top:8px}.lift{font-weight:900;color:var(--green)}.drag{font-weight:900;color:var(--red)}@media(max-width:760px){.convgrid{grid-template-columns:1fr 1fr}}.deadlinecard{border:1px solid var(--line);border-radius:10px;padding:10px;margin-top:8px;background:#fff}.overdue{border-left:5px solid var(--red)}.due-soon{border-left:5px solid var(--amber)}.on-track{border-left:5px solid var(--green)}.deadline-date{font-weight:900}.commandgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.commandstat{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff;cursor:pointer}.commandstat b{display:block;font-size:25px}.commanditem{border:1px solid var(--line);border-radius:12px;padding:11px;background:#fff;margin-top:9px}.commanditem.critical{border-left:5px solid var(--red)}.commanditem.attention{border-left:5px solid var(--amber)}.commanditem.goodstate{border-left:5px solid var(--green)}@media(max-width:760px){.commandgrid{grid-template-columns:1fr 1fr}}.interviewintel{border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:10px;background:#fff}.iq{border:1px solid var(--line);border-radius:10px;padding:10px;margin-top:8px;background:#fff}.readinessgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px}.readinessmetric{border:1px solid var(--line);border-radius:9px;padding:9px}.readinessmetric b{font-size:20px;display:block}.promptbox{background:#f8fafc;border:1px solid var(--line);border-radius:8px;padding:9px;margin-top:6px}.sponsorprep{border-left:4px solid var(--purple);padding-left:10px;margin-top:8px}@media(max-width:760px){.readinessgrid{grid-template-columns:1fr 1fr}}.offerintel{border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:10px;background:#fff}.offergrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px}.offermetric{border:1px solid var(--line);border-radius:9px;padding:9px}.offermetric b{display:block;font-size:20px}.offerflag{padding:8px 0;border-bottom:1px solid #eee}.offerflag:last-child{border-bottom:0}.negobox{border-left:4px solid var(--amber);padding-left:10px;margin-top:8px}.decisionbox{border:1px solid var(--line);border-radius:10px;padding:10px;margin-top:10px}@media(max-width:760px){.offergrid{grid-template-columns:1fr 1fr}}.healthgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.healthmetric{border:1px solid var(--line);border-radius:11px;padding:11px;background:#fff}.healthmetric b{display:block;font-size:23px}.healthissue{border:1px solid var(--line);border-radius:10px;padding:10px;margin-top:8px}.healthissue.critical{border-left:5px solid var(--red)}.healthissue.warning{border-left:5px solid var(--amber)}.healthissue.healthy{border-left:5px solid var(--green)}@media(max-width:760px){.healthgrid{grid-template-columns:1fr 1fr}}#runSystemHealthBtn{cursor:pointer;pointer-events:auto;position:relative;z-index:2}#runSystemHealthBtn:disabled{cursor:wait;opacity:.65}.maintenanceTools summary::-webkit-details-marker{display:none}.maintenanceTools summary:after{content:" ▾";font-weight:700}.maintenanceTools[open] summary:after{content:" ▴"}#liveSearchBtn{cursor:pointer;pointer-events:auto;position:relative;z-index:2}#liveSearchBtn:disabled{opacity:.65;cursor:wait}.btn:disabled{opacity:.5;cursor:not-allowed;filter:grayscale(.15)}</style>
 <style>
 /* Build 109 — personalised candidate experience */
@@ -78,7 +75,6 @@ body{background:radial-gradient(circle at 82% 0%,#ede7ff 0,transparent 28%),line
     <button class="active" data-page="home" onclick="go('home',this)">Home</button>
     <button data-page="jobs" onclick="go('jobs',this)">Find Jobs</button>
     <button data-page="applications" onclick="go('applications',this)">Applications</button>
-    <button data-page="intelligence" onclick="go('intelligence',this)">Intelligence</button>
     <button data-page="documents" onclick="go('documents',this)">Documents</button>
     <button data-page="interviews" onclick="go('interviews',this)">Interviews</button>
     <button data-page="profile" onclick="go('profile',this)">My Profile</button>
@@ -95,17 +91,16 @@ body{background:radial-gradient(circle at 82% 0%,#ede7ff 0,transparent 28%),line
     <div id="pageSub" class="muted">Your sponsorship-focused job search in one place.</div>
   </div>
   <div class="top-tools">
-    <button id="upgradeButton" class="btn btn2" type="button" onclick="go('plans',document.querySelector('[data-page=plans]'))">Upgrade</button>
+    <button class="btn btn2" type="button" onclick="go('plans',document.querySelector('[data-page=plans]'))">Upgrade</button>
     <div class="candidate-chip">
       <div id="candidateAvatar" class="candidate-avatar">V</div>
-      <div><div id="candidateChipName" class="candidate-name">Your workspace</div><div id="candidatePlan" class="candidate-plan">Explorer plan</div></div>
+      <div><div id="candidateChipName" class="candidate-name">Your workspace</div><div class="candidate-plan">Explorer plan</div></div>
     </div>
     <button class="btn btn2" type="button" onclick="signOut()">Sign out</button>
   </div>
 </div>
 
 <div id="authPanel" class="panel" style="display:none!important">
-  <span id="authBadge" class="badge" style="display:none">Not signed in</span>
   <div class="grid4">
     <input id="key" type="password" placeholder="Supabase publishable key">
     <input id="email" type="email" placeholder="Email">
@@ -213,28 +208,6 @@ body{background:radial-gradient(circle at 82% 0%,#ede7ff 0,transparent 28%),line
   <div id="appResults" class="cards"></div>
 </section>
 
-<section id="intelligence" class="section">
-  <div class="panel">
-    <div class="row"><div><h2 style="margin:0">Personalised Intelligence</h2><div class="small">Recommendations, workflows and outcome learning connected to your current VisaPilot plan.</div></div><span id="intelligencePlanBadge" class="badge purple">Your plan</span></div>
-  </div>
-  <div class="panel">
-    <div class="row"><div><h2 style="margin:0">Opportunity Agent</h2><div class="small">Find and prioritise fresh UK opportunities using your profile and sponsorship needs.</div></div><div class="toolbar"><button class="btn btn2" onclick="runOpportunityAgent(this)">Run Copilot agent</button><button class="btn" onclick="runAdaptiveOpportunityAgent(this)">Run Pro adaptive agent</button></div></div>
-    <div class="grid3" style="margin-top:14px"><div><label>Recommendations</label><select id="agentEnabled"><option value="yes">Enabled</option><option value="no">Paused</option></select></div><div><label>Minimum priority score</label><input id="agentMinScore" type="number" min="0" max="100" value="60"></div><div><label>Maximum jobs per alert</label><input id="agentMaxJobs" type="number" min="1" max="10" value="5"></div></div>
-    <div class="toolbar" style="margin-top:10px"><button class="btn btn2" onclick="saveAgentPrefs()">Save agent settings</button></div><div id="agentPrefStatus" class="small" style="margin-top:8px"></div><div id="agentStatus" class="small" style="margin-top:8px"></div><div id="agentResults" class="cards" style="margin-top:10px"></div><div id="adaptiveSummary" style="margin-top:12px"></div>
-  </div>
-  <div class="grid2">
-    <div class="panel"><div class="row"><div><h2 style="margin:0">Application workflows</h2><div class="small">Keep every application moving towards the next best action.</div></div><button class="btn btn2" onclick="runWorkflowOrchestrator(this)">Refresh workflows</button></div><div id="workflowStatus" class="small" style="margin-top:8px"></div><div id="workflowSummary" style="margin-top:10px"></div></div>
-    <div class="panel"><div class="row"><div><h2 style="margin:0">Today’s action queue</h2><div class="small">Prioritised actions across your active opportunities.</div></div><button class="btn btn2" onclick="buildApplicationQueue(this)">Build today’s queue</button></div><div id="queueStatus" class="small" style="margin-top:8px"></div><div id="actionQueue" class="cards" style="margin-top:10px"></div></div>
-  </div>
-  <div class="panel">
-    <div class="row"><div><h2 style="margin:0">Deadlines and alerts</h2><div class="small">Surface overdue, due-soon and follow-up actions before they are missed.</div></div><div class="toolbar"><button class="btn btn2" onclick="refreshWorkflowDeadlines(this)">Refresh deadlines</button><button class="btn" onclick="sendDeadlineAlertsNow(this)">Check alerts now</button></div></div>
-    <div class="grid3" style="margin-top:14px"><div><label>Deadline alerts</label><select id="deadlineAlertEnabled"><option value="yes">Enabled</option><option value="no">Paused</option></select></div><div><label>Due-soon window</label><select id="deadlineAlertHours"><option value="12">12 hours</option><option value="24">24 hours</option><option value="48">48 hours</option><option value="72">72 hours</option></select></div><div><label>Overdue alerts</label><select id="deadlineOverdue"><option value="yes">Enabled</option><option value="no">Disabled</option></select></div></div>
-    <div class="toolbar" style="margin-top:10px"><button class="btn btn2" onclick="saveDeadlineAlertPrefs()">Save alert settings</button></div><div id="deadlineAlertPrefStatus" class="small" style="margin-top:8px"></div><div id="deadlineStatus" class="small" style="margin-top:8px"></div><div id="deadlineSummary" style="margin-top:10px"></div>
-  </div>
-  <div class="panel"><div class="row"><div><h2 style="margin:0">Outcome learning</h2><div class="small">Learn which application patterns are improving your interview and offer outcomes.</div></div><button class="btn btn2" onclick="refreshOutcomeLearning(this)">Refresh insights</button></div><div id="conversionSummary" style="margin-top:10px"></div><div id="outcomeInsights" style="margin-top:10px"></div></div>
-  <div class="panel"><h2 style="margin-top:0">Daily action digest</h2><div class="grid2"><div><label>Daily digest</label><select id="digestEnabled"><option value="yes">Enabled</option><option value="no">Paused</option></select></div><div><label>Preferred hour</label><select id="digestHour"><option value="7">07:00</option><option value="8">08:00</option><option value="9">09:00</option><option value="12">12:00</option><option value="18">18:00</option></select></div></div><button class="btn btn2" style="margin-top:10px" onclick="saveDigestPrefs()">Save digest settings</button><div id="digestStatus" class="small" style="margin-top:8px"></div></div>
-</section>
-
 <section id="documents" class="section">
   <div class="grid2">
     <div class="panel"><h2 style="margin-top:0">CVs</h2><div id="cvAssets" class="cards"></div></div>
@@ -287,16 +260,12 @@ body{background:radial-gradient(circle at 82% 0%,#ede7ff 0,transparent 28%),line
 
 <section id="plans" class="section">
   <div class="panel">
-    <div class="row">
-      <div><h2 style="margin:0">Choose your VisaPilot plan</h2><div class="muted" style="margin-top:6px">Start free, then upgrade when you need deeper sponsorship and application intelligence.</div></div>
-      <button id="managePlanButton" class="btn btn2" type="button" style="display:none" onclick="openCustomerPortal(this)">Billing & cancellation</button>
-    </div>
+    <h2 style="margin:0">Choose your VisaPilot plan</h2>
+    <div class="muted" style="margin-top:6px">Start free, then upgrade when you need deeper sponsorship and application intelligence.</div>
   </div>
 
-  <div id="billingNotice" class="billing-notice" role="status" aria-live="polite"></div>
-
   <div class="pricing-grid">
-    <div class="price-card" data-plan-card="explorer">
+    <div class="price-card">
       <div class="price-name">Explorer</div>
       <div class="price">£0</div>
       <div class="price-note">Free</div>
@@ -307,52 +276,42 @@ body{background:radial-gradient(circle at 82% 0%,#ede7ff 0,transparent 28%),line
         <li>3 AI job analyses each month</li>
         <li>Save up to 10 jobs</li>
       </ul>
-      <div class="price-actions"><button id="explorerPlanButton" class="btn btn2" type="button" disabled onclick="openCustomerPortal(this)">Current free access</button></div>
+      <div class="price-actions"><button class="btn btn2" type="button" disabled>Current free access</button></div>
     </div>
 
-    <div class="price-card featured" data-plan-card="copilot">
+    <div class="price-card featured">
       <span class="badge purple" style="width:max-content">MOST POPULAR</span>
       <div class="price-name">Copilot</div>
       <div class="price">£19.99</div>
       <div class="price-note">per month</div>
-      <div class="plan-promise">Your AI application copilot—from stronger sponsorship decisions through interview preparation.</div>
       <ul class="feature-list">
-        <li><b>Everything in Explorer</b>, with unlimited saved opportunities</li>
-        <li>Full employer sponsorship evidence, confidence scores and signal explanations</li>
-        <li>Unlimited <b>“Should I Apply?”</b> job and CV-match analysis</li>
-        <li>AI-supported application packs with tailored CV and cover-letter preparation</li>
-        <li>Application-question guidance grounded in your real experience</li>
-        <li>Application tracking from preparation through employer response</li>
-        <li>Unlimited opportunity alerts, reminders and follow-up support</li>
-        <li>Role-specific interview coaching using your CV evidence</li>
-        <li>Sponsorship-focused interview preparation and saved practice answers</li>
+        <li>Full sponsorship evidence and confidence details</li>
+        <li>Unlimited “Should I Apply?” analysis</li>
+        <li>AI application preparation</li>
+        <li>Unlimited job alerts and follow-up support</li>
+        <li>Interview preparation</li>
       </ul>
       <div class="price-actions">
-        <button class="btn" data-plan="copilot_monthly" type="button" onclick="selectBillingPlan('copilot_monthly',this)">Choose monthly · £19.99</button>
-        <button class="btn btn2" data-plan="copilot_quarterly" type="button" onclick="selectBillingPlan('copilot_quarterly',this)">3 months · £49.99</button>
+        <button class="btn" type="button" onclick="startStripeCheckout('copilot_monthly',this)">Choose monthly · £19.99</button>
+        <button class="btn btn2" type="button" onclick="startStripeCheckout('copilot_quarterly',this)">3 months · £49.99</button>
         <div class="small billing-saving">Save £9.98 every three months</div>
       </div>
     </div>
 
-    <div class="price-card" data-plan-card="pro">
+    <div class="price-card">
       <div class="price-name">Pro</div>
       <div class="price">£34.99</div>
       <div class="price-note">per month</div>
-      <div class="plan-promise">Your advanced job-search command centre for prioritisation, deadlines and stronger decisions through offer.</div>
       <ul class="feature-list">
-        <li><b>Everything in Copilot</b></li>
-        <li>Adaptive opportunity ranking based on your profile, CV and application outcomes</li>
-        <li>Advanced application intelligence with strengths, gaps and next-best-action guidance</li>
-        <li>Application Command Centre across every active opportunity</li>
-        <li>Workflow and deadline intelligence with overdue and due-soon priorities</li>
-        <li>Advanced AI-tailored CV, cover-letter and application support</li>
-        <li>Interview-readiness scoring, likely questions and structured answer frameworks</li>
-        <li>Follow-up timing intelligence and employer-response tracking</li>
-        <li>Offer-stage review covering role fit, sponsorship evidence and compensation visibility</li>
+        <li>Everything in Copilot</li>
+        <li>Advanced application and opportunity intelligence</li>
+        <li>AI-tailored application support</li>
+        <li>Application workflow and deadline intelligence</li>
+        <li>Advanced interview preparation</li>
       </ul>
       <div class="price-actions">
-        <button class="btn" data-plan="pro_monthly" type="button" onclick="selectBillingPlan('pro_monthly',this)">Choose monthly · £34.99</button>
-        <button class="btn btn2" data-plan="pro_quarterly" type="button" onclick="selectBillingPlan('pro_quarterly',this)">3 months · £89.99</button>
+        <button class="btn" type="button" onclick="startStripeCheckout('pro_monthly',this)">Choose monthly · £34.99</button>
+        <button class="btn btn2" type="button" onclick="startStripeCheckout('pro_quarterly',this)">3 months · £89.99</button>
         <div class="small billing-saving">Save £14.98 every three months</div>
       </div>
     </div>
@@ -363,7 +322,7 @@ body{background:radial-gradient(circle at 82% 0%,#ede7ff 0,transparent 28%),line
       <div class="price-name">7-Day Copilot Pass</div>
       <div class="muted" style="margin-top:5px">Seven days of Copilot access with one payment and no automatic renewal.</div>
     </div>
-    <button class="btn" data-plan="copilot_pass_7d" type="button" onclick="selectBillingPlan('copilot_pass_7d',this)">Get 7 days · £7.99</button>
+    <button class="btn" type="button" onclick="startStripeCheckout('copilot_pass_7d',this)">Get 7 days · £7.99</button>
   </div>
 
   <div id="checkoutStatus" class="checkout-status small" role="status" aria-live="polite"></div>
@@ -373,7 +332,7 @@ body{background:radial-gradient(circle at 82% 0%,#ede7ff 0,transparent 28%),line
 <script>
 const S="https://cjdgqbmjsqwruooexzid.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY="sb_publishable_J5Tn260dr5mYdU0RtW4HnA_jjFeAQh5";
-let TOKEN=null,USER=null,PROFILE=null,BILLING=null,SAVED=[],CVS=[],TAILORED=[],LETTERS=[],ANSWERS=[],INTERVIEW=[],ANALYSES=[],JOBS=[],SPONSORS=[],CLASSES=[],SIGNALS=[],ACTIVITY=[],SUBMISSIONS=[],FOLLOWUPS=[],DIGEST=null,JOB_PRIORITY=[],SPONSOR_INTEL=[],APP_INTEL=[],AGENT_PREFS=null,AGENT_RECS=[],OUTCOME_INSIGHTS=[],CONVERSION_SUMMARY=null,ADAPTIVE_PRIORITY=[],ADAPTIVE_AGENT_RUN=null,ACTION_QUEUE=[],WORKFLOW_STATE=[],WORKFLOW_DEADLINES=[],ALERT_PREFS=null,DEADLINE_ALERTS=[],COMMAND_CENTRE=[],INTERVIEW_INTEL=[],OFFER_INTEL=[],SYSTEM_HEALTH=null;
+let TOKEN=null,USER=null,PROFILE=null,SAVED=[],CVS=[],TAILORED=[],LETTERS=[],ANSWERS=[],INTERVIEW=[],ANALYSES=[],JOBS=[],SPONSORS=[],CLASSES=[],SIGNALS=[],ACTIVITY=[],SUBMISSIONS=[],FOLLOWUPS=[],DIGEST=null,JOB_PRIORITY=[],SPONSOR_INTEL=[],APP_INTEL=[],AGENT_PREFS=null,AGENT_RECS=[],OUTCOME_INSIGHTS=[],CONVERSION_SUMMARY=null,ADAPTIVE_PRIORITY=[],ADAPTIVE_AGENT_RUN=null,ACTION_QUEUE=[],WORKFLOW_STATE=[],WORKFLOW_DEADLINES=[],ALERT_PREFS=null,DEADLINE_ALERTS=[],COMMAND_CENTRE=[],INTERVIEW_INTEL=[],OFFER_INTEL=[],SYSTEM_HEALTH=null;
 const $=id=>document.getElementById(id);
 function applyAdminMode(){
  const params=new URLSearchParams(location.search);
@@ -383,20 +342,6 @@ function applyAdminMode(){
 }
 
 const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
-function safeExternalUrl(value){
- try{
-  const url=new URL(String(value||""));
-  if(!["https:","http:"].includes(url.protocol)||url.username||url.password)return"";
-  return url.href;
- }catch{return""}
-}
-function safeStripeUrl(value){
- const url=safeExternalUrl(value);
- if(!url)throw new Error("Stripe returned an invalid redirect URL.");
- const host=new URL(url).hostname.toLowerCase();
- if(host!=="stripe.com"&&!host.endsWith(".stripe.com"))throw new Error("Stripe returned an untrusted redirect URL.");
- return url;
-}
 function key(){return SUPABASE_PUBLISHABLE_KEY}
 function ah(){return{apikey:key(),Authorization:"Bearer "+TOKEN,"Content-Type":"application/json","Prefer":"return=representation"}}
 function ph(){return{apikey:key(),Authorization:"Bearer "+key(),"Content-Type":"application/json"}}
@@ -404,14 +349,14 @@ async function req(url,opt={}){const r=await fetch(url,opt);let b;try{b=await r.
 function setSession(b){
  TOKEN=b.access_token;
  USER=b.user;
- if(TOKEN)sessionStorage.setItem("vp_access_token",TOKEN);
- if(b.refresh_token)sessionStorage.setItem("vp_refresh_token",b.refresh_token);
+ if(TOKEN)localStorage.setItem("vp_access_token",TOKEN);
+ if(b.refresh_token)localStorage.setItem("vp_refresh_token",b.refresh_token);
 }
 function clearSession(){TOKEN=null;USER=null;const badge=$("authBadge");if(badge){badge.textContent="Not signed in";badge.className="badge"}const status=$("authStatus");if(status)status.textContent="Sign in to load your workspace."}
-async function refresh(){const rt=sessionStorage.getItem("vp_refresh_token");if(!rt||!key())return false;try{const r=await fetch(S+"/auth/v1/token?grant_type=refresh_token",{method:"POST",headers:{apikey:key(),"Content-Type":"application/json"},body:JSON.stringify({refresh_token:rt})});if(!r.ok)return false;setSession(await r.json());showSignedIn();return true}catch{return false}}
+async function refresh(){const rt=localStorage.getItem("vp_refresh_token");if(!rt||!key())return false;try{const r=await fetch(S+"/auth/v1/token?grant_type=refresh_token",{method:"POST",headers:{apikey:key(),"Content-Type":"application/json"},body:JSON.stringify({refresh_token:rt})});if(!r.ok)return false;setSession(await r.json());showSignedIn();return true}catch{return false}}
 function showSignedIn(){const badge=$("authBadge");if(badge){badge.textContent="Signed in";badge.className="badge good"}const status=$("authStatus");if(status)status.textContent="Signed in as "+USER.email;applyAdminMode();renderCandidateIdentity()}
 async function signIn(){try{const b=await req(S+"/auth/v1/token?grant_type=password",{method:"POST",headers:{apikey:key(),"Content-Type":"application/json"},body:JSON.stringify({email:$("email").value.trim(),password:$("password").value})});setSession(b);showSignedIn();await loadAll()}catch(e){$("err").textContent=e.message}}
-function signOut(){clearSession();sessionStorage.removeItem("vp_refresh_token");sessionStorage.removeItem("vp_access_token");localStorage.removeItem("vp_refresh_token");localStorage.removeItem("vp_access_token");PROFILE=null;BILLING=null;SAVED=[];CVS=[];TAILORED=[];LETTERS=[];ANSWERS=[];INTERVIEW=[];ANALYSES=[];renderAll()}
+function signOut(){clearSession();localStorage.removeItem("vp_refresh_token");localStorage.removeItem("vp_access_token");PROFILE=null;SAVED=[];CVS=[];TAILORED=[];LETTERS=[];ANSWERS=[];INTERVIEW=[];ANALYSES=[];renderAll()}
 function showAuth(){$("authPanel").scrollIntoView({behavior:"smooth"})}
 
 async function startStripeCheckout(planKey,btn){
@@ -433,73 +378,17 @@ async function startStripeCheckout(planKey,btn){
    body:JSON.stringify({plan:planKey})
   });
   if(!result?.url)throw new Error("Stripe Checkout did not return a payment link.");
-  window.location.assign(safeStripeUrl(result.url));
+  window.location.assign(result.url);
  }catch(e){
   if(status)status.textContent="Checkout could not start: "+String(e?.message||e);
   if(btn){btn.disabled=false;btn.textContent=original||"Choose plan"}
  }
 }
 
-async function openCustomerPortal(btn){
- const status=$("checkoutStatus");
- const signedIn=await ensureCandidateSession();
- if(!signedIn){
-  if(status)status.textContent="Please sign in before managing your plan.";
-  return;
- }
- const original=btn?.textContent;
- if(btn){btn.disabled=true;btn.textContent="Opening secure billing portal…"}
- if(status)status.textContent="Opening your secure Stripe billing portal…";
- try{
-  const result=await req(S+"/functions/v1/create-customer-portal",{
-   method:"POST",
-   headers:ah(),
-   body:JSON.stringify({})
-  });
-  if(!result?.url)throw new Error("Stripe did not return a billing portal link.");
-  window.location.assign(safeStripeUrl(result.url));
- }catch(e){
-  if(status)status.textContent="Billing portal could not open: "+String(e?.message||e);
-  if(btn){btn.disabled=false;btn.textContent=original||"Billing & cancellation"}
- }
-}
-
-async function changeSubscriptionPlan(planKey,btn){
- const status=$("checkoutStatus");
- const signedIn=await ensureCandidateSession();
- if(!signedIn){
-  if(status)status.textContent="Please sign in before changing your plan.";
-  return;
- }
- const original=btn?.textContent;
- if(btn){btn.disabled=true;btn.textContent="Opening secure confirmation…"}
- if(status)status.textContent="Preparing your secure Stripe plan-change confirmation…";
- try{
-  const result=await req(S+"/functions/v1/change-subscription-plan",{
-   method:"POST",
-   headers:ah(),
-   body:JSON.stringify({plan:planKey})
-  });
-  if(!result?.url)throw new Error("Stripe did not return a plan confirmation link.");
-  window.location.assign(safeStripeUrl(result.url));
- }catch(e){
-  if(status)status.textContent="Plan change could not start: "+String(e?.message||e);
-  if(btn){btn.disabled=false;btn.textContent=original||"Choose plan"}
- }
-}
-
-async function selectBillingPlan(planKey,btn){
- const current=currentBillingPlan();
- const recurring=current.active&&!current.isPass;
- if(recurring)return changeSubscriptionPlan(planKey,btn);
- return startStripeCheckout(planKey,btn);
-}
-
 const titles={
  home:["Home","Your sponsorship-focused job search, with the next important action surfaced automatically."],
  jobs:["Find Jobs","Search current UK vacancies and focus on roles that fit your goals."],
  applications:["Applications","Prepare, apply and track every opportunity."],
- intelligence:["Intelligence","Your personalised recommendations, priorities, deadlines and outcome learning."],
  documents:["Documents","Keep every CV and cover letter privately stored and ready for secure application delivery."],
  interviews:["Interviews","Prepare for interview-stage roles using your real CV evidence."],
  profile:["My Profile","Your personal information, job preferences and CV."],
@@ -513,7 +402,6 @@ function go(id,btn){
  $("pageTitle").textContent=titles[id][0];$("pageSub").textContent=titles[id][1];
  if(id==="jobs"){ $("jobResults").innerHTML=""; $("jobStatus").textContent="Enter a role to search live vacancies."; }
  if(id==="applications"&&USER)reloadSavedApplications().catch(()=>{});
- if(id==="intelligence"){renderIntelligenceWorkspace();populateProfile()}
 }
 
 async function safe(url,opts){try{return await req(url,opts)}catch(e){console.warn(e);return[]}}
@@ -562,9 +450,8 @@ async function loadAll(){
  if(!USER)return;
  const uid=USER.id;
  $("authStatus").textContent="Loading your workspace…";
- const [p,billing,sj,cvs,tail,letters,answers,interview,analyses,sponsors,classes,signals,activity,submissions,followups,digest]=await Promise.all([
+ const [p,sj,cvs,tail,letters,answers,interview,analyses,sponsors,classes,signals,activity,submissions,followups,digest]=await Promise.all([
   safe(S+"/rest/v1/candidate_profiles?select=*&user_id=eq."+uid,{headers:ah()}),
-  safe(S+"/rest/v1/billing_subscriptions?select=*&user_id=eq."+uid+"&limit=1",{headers:ah()}),
   safe(S+"/rest/v1/saved_jobs?select=id,job_id,status,notes,applied_at,interview_at,offer_at,follow_up_at,last_activity_at,jobs(id,title,location,description,application_url,source_url,employer_id,employers(name))&user_id=eq."+uid+"&order=updated_at.desc",{headers:ah()}),
   safe(S+"/rest/v1/candidate_cvs?select=id,cv_name,original_filename,cv_text,storage_bucket,storage_path,updated_at,created_at&user_id=eq."+uid+"&order=updated_at.desc",{headers:ah()}),
   safe(S+"/rest/v1/tailored_cv_versions?select=id,job_id,cv_id,version_name,ats_score,tailored_text,file_bucket,file_path,file_name,updated_at,created_at&user_id=eq."+uid+"&order=updated_at.desc",{headers:ah()}),
@@ -581,7 +468,6 @@ async function loadAll(){
   safe(S+"/rest/v1/action_digest_preferences?select=*&user_id=eq."+uid,{headers:ah()})
  ]);
  PROFILE=Array.isArray(p)?p[0]||null:null;
- BILLING=Array.isArray(billing)?billing[0]||null:null;
  SAVED=Array.isArray(sj)?sj:[];CVS=Array.isArray(cvs)?cvs:[];TAILORED=Array.isArray(tail)?tail:[];
  LETTERS=Array.isArray(letters)?letters:[];ANSWERS=Array.isArray(answers)?answers:[];
  INTERVIEW=Array.isArray(interview)?interview:[];ANALYSES=Array.isArray(analyses)?analyses:[];
@@ -1414,105 +1300,11 @@ function candidateFirstName(){
  const full=String(PROFILE?.full_name||USER?.user_metadata?.full_name||"").trim();
  return full?full.split(/\s+/)[0]:"there";
 }
-const BILLING_PLANS={
- "price_1U8NJv2MpjlYziXhFvFSUmmf":{key:"copilot_monthly",label:"Copilot monthly"},
- "price_1U8Ng32MpjlYziXho9C7LOUU":{key:"copilot_quarterly",label:"Copilot · 3 months"},
- "price_1U8NjP2MpjlYziXhw7aiSV15":{key:"pro_monthly",label:"Pro monthly"},
- "price_1U8NkI2MpjlYziXhpecurry4":{key:"pro_quarterly",label:"Pro · 3 months"},
- "price_1U8NlP2MpjlYziXh6Bt7MPBY":{key:"copilot_pass_7d",label:"Copilot · 7-day pass"}
-};
-const PLAN_BUTTON_LABELS={
- copilot_monthly:"Choose monthly · £19.99",
- copilot_quarterly:"3 months · £49.99",
- pro_monthly:"Choose monthly · £34.99",
- pro_quarterly:"3 months · £89.99",
- copilot_pass_7d:"Get 7 days · £7.99"
-};
-function currentBillingPlan(){
- const status=String(BILLING?.status||"").toLowerCase();
- const end=BILLING?.current_period_end?new Date(BILLING.current_period_end).getTime():null;
- const unexpired=!end||Number.isNaN(end)||end>Date.now();
- const active=["active","trialing"].includes(status)&&unexpired;
- const plan=BILLING_PLANS[BILLING?.stripe_price_id]||null;
- const isPass=plan?.key==="copilot_pass_7d"||String(BILLING?.stripe_subscription_id||"").startsWith("pass:");
- const cancelAtPeriodEnd=Boolean(BILLING?.cancel_at_period_end);
- const cancelAtRaw=BILLING?.cancel_at||BILLING?.current_period_end||null;
- const cancelAt=cancelAtRaw?new Date(cancelAtRaw).getTime():null;
- return active&&plan?{...plan,active:true,status,end,isPass,cancelAtPeriodEnd,cancelAt}: {key:"explorer",label:"Explorer",active:false,status,end,isPass:false,cancelAtPeriodEnd:false,cancelAt:null};
-}
-function currentPlanTier(){
- const plan=currentBillingPlan();
- if(!plan.active)return"explorer";
- return plan.key.startsWith("pro_")?"pro":"copilot";
-}
-function hasPlanTier(required){
- const rank={explorer:0,copilot:1,pro:2};
- return (rank[currentPlanTier()]||0)>=(rank[required]||0);
-}
-function requirePlanTier(required,feature){
- if(hasPlanTier(required))return true;
- const name=required==="pro"?"VisaPilot Pro":"VisaPilot Copilot";
- alert(`${feature||"This feature"} is included with ${name}. You can review or change your plan on the Plans page.`);
- go("plans",document.querySelector('[data-page="plans"]'));
- return false;
-}
-function planLockHtml(required,feature){
- const name=required==="pro"?"Pro":"Copilot";
- return `<div class="plan-lock"><b>${esc(feature)} is a ${name} feature</b><div class="muted">Upgrade to unlock this personalised intelligence in your workspace.</div><button class="btn" style="margin-top:12px" onclick="go('plans',document.querySelector('[data-page=plans]'))">View ${name}</button></div>`;
-}
-function renderIntelligenceWorkspace(){
- const badge=$("intelligencePlanBadge");
- if(badge)badge.textContent=`${currentBillingPlan().label} access`;
- renderAgentResults();
- renderAdaptiveSummary();
- renderWorkflowSummary();
- renderActionQueue();
- renderDeadlineSummary();
- renderConversionInsights();
-}
-function renderBillingIdentity(){
- const plan=currentBillingPlan();
- const planEl=$("candidatePlan");if(planEl)planEl.textContent=plan.label+" plan";
- const upgrade=$("upgradeButton");if(upgrade)upgrade.textContent=plan.active?"View plan":"Upgrade";
- const manage=$("managePlanButton");if(manage){manage.style.display=plan.active&&!plan.isPass?"inline-block":"none";manage.textContent="Billing & cancellation"}
- const explorer=$("explorerPlanButton");
- if(explorer){
-  explorer.classList.remove("current-choice");
-  if(!plan.active){explorer.disabled=true;explorer.textContent="Current free plan";explorer.classList.add("current-choice")}
-  else if(plan.isPass){explorer.disabled=true;explorer.textContent="Explorer resumes after your pass"}
-  else{explorer.disabled=false;explorer.textContent="Cancel and return to Explorer"}
- }
- document.querySelectorAll("[data-plan-card]").forEach(card=>card.classList.remove("current-plan-card"));
- const family=plan.key.startsWith("copilot_")?"copilot":plan.key.startsWith("pro_")?"pro":"explorer";
- const currentCard=document.querySelector(`[data-plan-card="${family}"]`);if(currentCard)currentCard.classList.add("current-plan-card");
- document.querySelectorAll("[data-plan]").forEach(btn=>{
-   const key=btn.dataset.plan;
-   btn.classList.remove("current-choice");
-   if(plan.active&&key===plan.key){btn.disabled=true;btn.textContent="Current plan";btn.classList.add("current-choice");return}
-   if(plan.active&&key==="copilot_pass_7d"){btn.disabled=true;btn.textContent="Available without a subscription";return}
-   if(plan.cancelAtPeriodEnd){btn.disabled=true;btn.textContent="Resume subscription before switching";return}
-   btn.disabled=false;
-   btn.textContent=plan.active?`Switch to ${PLAN_BUTTON_LABELS[key]||"this plan"}`:PLAN_BUTTON_LABELS[key]||btn.textContent;
- });
- const status=$("checkoutStatus");
- if(status)status.textContent=plan.active?`Current plan: ${plan.label}`:"Explorer is free. Choose a paid plan whenever you need more support.";
- const notice=$("billingNotice");
- if(notice){
-  notice.classList.remove("warning");
-  if(plan.cancelAtPeriodEnd){
-   const when=plan.cancelAt&&!Number.isNaN(plan.cancelAt)?new Date(plan.cancelAt).toLocaleDateString(undefined,{day:"numeric",month:"long",year:"numeric"}):"the end of your billing period";
-   notice.style.display="block";notice.classList.add("warning");notice.innerHTML=`<b>Your cancellation is scheduled.</b> You still have ${esc(plan.label)} access until ${esc(when)}. After that, VisaPilot will automatically return you to Explorer.`;
-  }else if(plan.active){
-   notice.style.display="block";notice.innerHTML=`<b>You’re on ${esc(plan.label)}.</b> Choose another monthly or three-month option below to switch securely. Use <b>Billing & cancellation</b> only to cancel or manage payment details.`;
-  }else{notice.style.display="none";notice.textContent=""}
- }
-}
 function renderCandidateIdentity(){
  const first=candidateFirstName();
  const display=first==="there"?(USER?.email?.split("@")[0]||"Your workspace"):first;
  const chip=$("candidateChipName");if(chip)chip.textContent=display;
  const avatar=$("candidateAvatar");if(avatar)avatar.textContent=String(display).charAt(0).toUpperCase()||"V";
- renderBillingIdentity();
 }
 function personalisedHomeState(){
  const hasProfile=Boolean(PROFILE?.target_roles&&PROFILE?.preferred_location&&PROFILE?.needs_sponsorship!==null&&PROFILE?.needs_sponsorship!==undefined);
@@ -1870,7 +1662,6 @@ function priorityBand(n){
  return n>=80?"Top opportunity":n>=65?"High priority":n>=45?"Worth considering":"Lower priority";
 }
 async function refreshJobPriority(jobId,btn){
- if(!requirePlanTier("pro","Advanced opportunity prioritisation"))return;
  if(!USER)return;
  const old=btn?.textContent;
  if(btn){btn.disabled=true;btn.textContent="Recalculating…"}
@@ -1924,7 +1715,7 @@ async function refreshAdaptivePriority(jobId,btn){
 async function ensureCandidateSession(){
  if(USER && TOKEN)return true;
 
- const stored=sessionStorage.getItem("vp_access_token");
+ const stored=localStorage.getItem("vp_access_token");
  if(stored){
    TOKEN=stored;
    try{
@@ -1940,7 +1731,7 @@ async function ensureCandidateSession(){
    }
  }
 
- const rt=sessionStorage.getItem("vp_refresh_token");
+ const rt=localStorage.getItem("vp_refresh_token");
  if(rt){
    try{
      const r=await fetch(S+"/auth/v1/token?grant_type=refresh_token",{
@@ -1952,8 +1743,8 @@ async function ensureCandidateSession(){
        const b=await r.json();
        TOKEN=b.access_token;
        USER=b.user;
-       sessionStorage.setItem("vp_access_token",TOKEN);
-       if(b.refresh_token)sessionStorage.setItem("vp_refresh_token",b.refresh_token);
+       localStorage.setItem("vp_access_token",TOKEN);
+       if(b.refresh_token)localStorage.setItem("vp_refresh_token",b.refresh_token);
        return !!USER?.id;
      }
    }catch(e){
@@ -2034,7 +1825,7 @@ function renderCandidateLiveJobs(rows){
      ${j.salary_text?`<div class="small" style="margin-top:8px">${esc(j.salary_text)}</div>`:""}
      <p class="small">${esc(String(j.description||"").slice(0,420))}${String(j.description||"").length>420?"…":""}</p>
      <div class="toolbar">
-       ${safeExternalUrl(j.application_url||j.source_url)?`<a class="btn btn2" href="${esc(safeExternalUrl(j.application_url||j.source_url))}" target="_blank" rel="noopener noreferrer">View live vacancy</a>`:""}
+       ${j.application_url||j.source_url?`<a class="btn btn2" href="${esc(j.application_url||j.source_url)}" target="_blank" rel="noopener">View live vacancy</a>`:""}
        <button class="btn" type="button" data-live-id="${esc(j.external_id||j.id||"")}" onclick="window.saveCandidateLiveJob && window.saveCandidateLiveJob(this); return false;">Save to VisaPilot</button>
        <span class="small live-save-status"></span>
      </div>
@@ -2216,7 +2007,7 @@ function renderJobs(){
  </div>`;
 
  $("jobResults").innerHTML=rows.slice(0,120).map((o,i)=>{
-   const j=o.j,x=o.x,fit=o.fit,p=o.persisted,app=safeExternalUrl(j.application_url||j.source_url),id="sintel"+i;
+   const j=o.j,x=o.x,fit=o.fit,p=o.persisted,app=j.application_url||j.source_url||"#",id="sintel"+i;
 
    let label,cls,explanation;
    if(o.tier==="strong"){
@@ -2278,7 +2069,7 @@ function renderJobs(){
         ${savedForJob(j.id)
           ? `<span class="badge good">Saved · ${esc(stage(savedForJob(j.id).status))}</span><button class="btn btn2" onclick="startPreparing('${j.id}')">Open application</button>`
           : `<button class="btn btn2" onclick="saveJob('${j.id}')">Save job</button><button class="btn" onclick="startPreparing('${j.id}')">Prepare application</button>`}
-        ${app?`<a class="btn btn2" target="_blank" rel="noopener noreferrer" href="${esc(app)}">View source</a>`:""}
+        ${app!=="#"?`<a class="btn btn2" target="_blank" rel="noopener" href="${esc(app)}">View source</a>`:""}
       </div>
     </div>
 
@@ -2415,12 +2206,6 @@ async function saveGreenhouseAnswers(savedId){
 }
 async function storageUpload(file,folder){
  if(!USER||!file)throw new Error("Sign in and choose a file.");
- const maxBytes=10*1024*1024;
- const allowedExtensions=new Set(["pdf","doc","docx","txt","rtf"]);
- const extension=String(file.name||"").split(".").pop().toLowerCase();
- if(!file.name||!allowedExtensions.has(extension))throw new Error("Choose a PDF, DOC, DOCX, TXT, or RTF document.");
- if(!Number.isFinite(file.size)||file.size<=0)throw new Error("The selected file is empty or invalid.");
- if(file.size>maxBytes)throw new Error("The selected file is larger than the 10 MB limit.");
  const clean=file.name.replace(/[^a-zA-Z0-9._-]+/g,"_");
  const path=`${USER.id}/${folder}/${Date.now()}_${clean}`;
  const r=await fetch(`${S}/storage/v1/object/visapilot-documents/${path}`,{
@@ -2701,7 +2486,6 @@ function followupDraft(s){const j=s.jobs||{},company=j.employers?.name||"the hir
 async function saveFollowup(savedId){if(!USER)return;const s=SAVED.find(x=>String(x.id)===String(savedId));if(!s)return;const body={user_id:USER.id,saved_job_id:savedId,job_id:s.job_id,follow_up_date:$("fu_date_"+savedId)?.value||null,contact_name:$("fu_contact_"+savedId)?.value||null,contact_email:$("fu_email_"+savedId)?.value||null,message_text:$("fu_message_"+savedId)?.value||null,status:"planned",created_at:new Date().toISOString(),updated_at:new Date().toISOString()};try{const rows=await req(S+"/rest/v1/application_followups",{method:"POST",headers:ah(),body:JSON.stringify(body)});if(rows?.[0])FOLLOWUPS.unshift(rows[0]);$("fu_status_"+savedId).textContent="Follow-up saved.";renderApplications()}catch(e){$("fu_status_"+savedId).textContent="Could not save follow-up: "+e.message}}
 async function markFollowupSent(id){if(!USER)return;try{const now=new Date().toISOString();await req(S+"/rest/v1/application_followups?id=eq."+id+"&user_id=eq."+USER.id,{method:"PATCH",headers:ah(),body:JSON.stringify({status:"sent",sent_at:now,updated_at:now})});const f=FOLLOWUPS.find(x=>String(x.id)===String(id));if(f){f.status="sent";f.sent_at=now}renderApplications()}catch(e){alert("Could not update follow-up: "+e.message)}}
 async function sendFollowupEmail(savedId){
- if(!requirePlanTier("copilot","Email follow-up support"))return;
  const s=SAVED.find(x=>String(x.id)===String(savedId));if(!s||!USER)return;
  const to=$("fu_email_"+savedId)?.value.trim();
  const body=$("fu_message_"+savedId)?.value.trim();
@@ -2737,7 +2521,6 @@ function decisionLabel(d){
  return["Lower priority","bad","decision-low"];
 }
 async function refreshApplicationIntel(savedId,btn){
- if(!requirePlanTier("pro","Advanced application intelligence"))return;
  const s=SAVED.find(x=>String(x.id)===String(savedId));if(!s||!USER)return;
  const old=btn?.textContent;if(btn){btn.disabled=true;btn.textContent="Analysing…"}
  try{
@@ -2772,7 +2555,6 @@ function applicationIntelHtml(s){
 }
 function interviewIntelFor(jobId){return (Array.isArray(INTERVIEW_INTEL)?INTERVIEW_INTEL:[]).find(x=>String(x.job_id)===String(jobId))||null}
 async function buildInterviewIntelligence(savedId,btn){
- if(!requirePlanTier("copilot","Interview Intelligence"))return;
  const s=(Array.isArray(SAVED)?SAVED:[]).find(x=>String(x.id)===String(savedId));if(!s||!USER)return;
  const old=btn?.textContent;if(btn){btn.disabled=true;btn.textContent="Preparing interview…"}
  try{
@@ -2800,7 +2582,6 @@ function offerIntelFor(jobId){
  return (Array.isArray(OFFER_INTEL)?OFFER_INTEL:[]).find(x=>String(x.job_id)===String(jobId))||null;
 }
 async function buildOfferIntelligence(savedId,btn){
- if(!requirePlanTier("pro","Offer-stage intelligence"))return;
  const s=(Array.isArray(SAVED)?SAVED:[]).find(x=>String(x.id)===String(savedId));
  if(!s||!USER)return;
  const old=btn?.textContent;if(btn){btn.disabled=true;btn.textContent="Reviewing offer…"}
@@ -2884,7 +2665,7 @@ function applicationWorkspaceHtml(s){
  const totalCount=Number(r?.totalCount||5);
  const canAnalyse=!!r?.canAnalyse;
  const canApply=!!r?.canApply;
- const app=safeExternalUrl(j?.application_url||j?.source_url);
+ const app=j?.application_url||j?.source_url||"#";
  const sp=safeSponsorshipForWorkspace(j);
  const labelResult=sp?.status!=="exclude"
    ? safeWorkspaceSection(()=>intelLabel(sp),["Sponsorship evidence available","purple"])
@@ -2922,8 +2703,8 @@ function applicationWorkspaceHtml(s){
       <div class="card"><b>Sponsorship</b><div><span class="badge ${spClass}">${esc(spLabel)}</span></div><div class="small">${Number(sp?.score||0)>0?`Evidence score ${Number(sp?.score||0)}/100 · This is evidence, not a guarantee of sponsorship.`:"Sponsorship evidence has not been assessed for this vacancy yet. Run Analyse my application first."}</div></div>
     </div>
     <div class="next"><b>Next:</b> ${esc(safeWorkspaceSection(()=>nextAction(s),"Continue preparing your application"))}</div>
-    ${app?`<div class="toolbar" style="margin-top:10px">${canApply && app
-?`<a class="btn" target="_blank" rel="noopener noreferrer" href="${esc(app)}">Apply now</a>`
+    ${app!=="#"?`<div class="toolbar" style="margin-top:10px">${canApply && app!=="#"
+?`<a class="btn" target="_blank" rel="noopener" href="${esc(app)}">Apply now</a>`
 :`<button class="btn" type="button" disabled title="Complete all 5 preparation steps first">Apply now</button>`}</div>`:""}
    </div>
 
@@ -3102,7 +2883,7 @@ function renderApplications(){
  for(const s of rows){
    try{
      const j=s?.jobs||{};
-     const app=safeExternalUrl(j?.application_url||j?.source_url);
+     const app=j?.application_url||j?.source_url||"#";
      const r=applicationReadiness(s);
      const steps=Array.isArray(r?.steps)?r.steps:[];
      const pct=Number(r?.pct||0);
@@ -3133,7 +2914,7 @@ function renderApplications(){
          </div>
          <div class="toolbar">
            <button class="btn btn2" onclick="openApplicationWorkspace('${esc(s?.id||"")}')">${OPEN_APP?.id===s?.id?"Workspace open":"Open workspace"}</button>
-           ${app?`<a class="btn btn2" target="_blank" rel="noopener noreferrer" href="${esc(app)}">View source</a>`:""}
+           ${app!=="#"?`<a class="btn btn2" target="_blank" rel="noopener" href="${esc(app)}">View source</a>`:""}
          </div>
        </div>
 
@@ -3161,7 +2942,7 @@ function renderApplications(){
        </div>
        <div class="toolbar" style="margin-top:10px">
          <button class="btn btn2" onclick="openApplicationWorkspace('${esc(s?.id||"")}')">Open workspace</button>
-         ${safeExternalUrl(j?.application_url||j?.source_url)?`<a class="btn btn2" target="_blank" rel="noopener noreferrer" href="${esc(safeExternalUrl(j.application_url||j.source_url))}">View source</a>`:""}
+         ${(j?.application_url||j?.source_url)?`<a class="btn btn2" target="_blank" rel="noopener" href="${esc(j.application_url||j.source_url)}">View source</a>`:""}
        </div>
      </div>`);
    }
@@ -3265,7 +3046,6 @@ function renderInterviews(){
  if($("digestHour"))$("digestHour").value=String(DIGEST?.preferred_hour??8);
 }
 async function refreshOutcomeLearning(btn){
- if(!requirePlanTier("pro","Outcome learning"))return;
  if(!USER)return;
  const old=btn?.textContent;if(btn){btn.disabled=true;btn.textContent="Learning…"}
  try{
@@ -3278,7 +3058,6 @@ async function refreshOutcomeLearning(btn){
 }
 function renderAdaptiveSummary(){
  const el=$("adaptiveSummary");if(!el)return;
- if(!hasPlanTier("pro")){el.innerHTML=planLockHtml("pro","Adaptive ranking summary");return}
  const rows=Array.isArray(ADAPTIVE_PRIORITY)?ADAPTIVE_PRIORITY:[];
  if(!rows.length){el.innerHTML='<div class="empty">No adaptive ranking data yet. Recalculate a job after outcome learning has been refreshed.</div>';return}
  const boosts=rows.filter(x=>Number(x.learning_adjustment||0)>0).length;
@@ -3289,7 +3068,6 @@ function renderAdaptiveSummary(){
 function renderConversionInsights(){
  const sum=CONVERSION_SUMMARY||{};
  const box=$("conversionSummary"),list=$("outcomeInsights");
- if(!hasPlanTier("pro")){if(box)box.innerHTML=planLockHtml("pro","Outcome learning");if(list)list.innerHTML="";return}
  if(box){
   box.innerHTML=`<div class="convgrid">
     <div class="convstat"><span class="small">Applications</span><b>${sum.total_applications||0}</b></div>
@@ -3307,7 +3085,6 @@ function renderConversionInsights(){
  }
 }
 async function saveAgentPrefs(){
- if(!requirePlanTier("copilot","Opportunity Agent settings"))return;
  if(!USER)return;
  const body={user_id:USER.id,enabled:$("agentEnabled").value==="yes",minimum_priority_score:Math.max(0,Math.min(100,Number($("agentMinScore").value||60))),max_jobs_per_alert:Math.max(1,Math.min(10,Number($("agentMaxJobs").value||5))),updated_at:new Date().toISOString()};
  try{
@@ -3320,14 +3097,12 @@ async function saveAgentPrefs(){
 let COMMAND_FILTER="attention";
 function commandCategoryLabel(c){return({attention:"Needs attention",due_soon:"Due soon",ready:"Ready to submit",waiting:"Awaiting employer",interview:"Interviews",offer:"Offers",overdue:"Overdue",preparing:"Preparing"})[c]||c||"Other"}
 async function refreshCommandCentre(btn){
- if(!requirePlanTier("pro","Application Command Centre"))return;
  if(!USER)return;const old=btn?.textContent;if(btn){btn.disabled=true;btn.textContent="Building…"}const st=$("commandStatus");if(st)st.textContent="Consolidating workflows, deadlines and outcomes…";
  try{const r=await req(S+"/functions/v1/build-command-centre",{method:"POST",headers:ah(),body:JSON.stringify({})});COMMAND_CENTRE=await safe(S+"/rest/v1/application_command_centre?select=*,jobs(id,title,location,employers(name)),saved_jobs(id,status)&user_id=eq."+USER.id+"&order=attention_score.desc",{headers:ah()})||[];if(st)st.textContent=`${r.items||0} active application${Number(r.items||0)===1?"":"s"} consolidated.`;renderCommandCentre()}catch(e){if(st)st.textContent="Command centre refresh failed: "+e.message}finally{if(btn){btn.disabled=false;btn.textContent=old||"Refresh command centre"}}
 }
 function setCommandFilter(f){COMMAND_FILTER=f;renderCommandCentre()}
 function renderCommandCentre(){
  const metrics=$("commandMetrics"),filters=$("commandFilters"),el=$("commandItems");if(!metrics||!filters||!el)return;
- if(!hasPlanTier("pro")){metrics.innerHTML=planLockHtml("pro","Application Command Centre");filters.innerHTML="";el.innerHTML="";return}
  const rows=Array.isArray(COMMAND_CENTRE)?COMMAND_CENTRE:[],count=c=>rows.filter(x=>x.category===c).length,attention=rows.filter(x=>["attention","overdue"].includes(x.category)).length;
  metrics.innerHTML=`<div class="commandgrid"><div class="commandstat" onclick="setCommandFilter('attention')"><span class="small">Needs attention</span><b>${attention}</b></div><div class="commandstat" onclick="setCommandFilter('ready')"><span class="small">Ready to submit</span><b>${count("ready")}</b></div><div class="commandstat" onclick="setCommandFilter('waiting')"><span class="small">Awaiting employer</span><b>${count("waiting")}</b></div><div class="commandstat" onclick="setCommandFilter('interview')"><span class="small">Interviews</span><b>${count("interview")}</b></div><div class="commandstat" onclick="setCommandFilter('offer')"><span class="small">Offers</span><b>${count("offer")}</b></div><div class="commandstat" onclick="setCommandFilter('due_soon')"><span class="small">Due soon</span><b>${count("due_soon")}</b></div><div class="commandstat" onclick="setCommandFilter('overdue')"><span class="small">Overdue</span><b>${count("overdue")}</b></div><div class="commandstat" onclick="setCommandFilter('all')"><span class="small">Active total</span><b>${rows.length}</b></div></div>`;
  const opts=["attention","ready","waiting","interview","offer","due_soon","overdue","all"];filters.innerHTML=opts.map(f=>`<button class="btn ${COMMAND_FILTER===f?"":"btn2"}" onclick="setCommandFilter('${f}')">${f==="all"?"All":commandCategoryLabel(f)}</button>`).join("");
@@ -3345,7 +3120,6 @@ function deadlineState(dueAt){
  return[`Due in ${days} day${days===1?"":"s"}`,"on-track"];
 }
 async function refreshWorkflowDeadlines(btn){
- if(!requirePlanTier("pro","Workflow and deadline intelligence"))return;
  if(!USER)return;
  const old=btn?.textContent;if(btn){btn.disabled=true;btn.textContent="Calculating…"}
  const st=$("deadlineStatus");if(st)st.textContent="Calculating workflow deadlines…";
@@ -3360,7 +3134,6 @@ async function refreshWorkflowDeadlines(btn){
 }
 function renderDeadlineSummary(){
  const el=$("deadlineSummary");if(!el)return;
- if(!hasPlanTier("pro")){el.innerHTML=planLockHtml("pro","Deadline intelligence");return}
  const rows=Array.isArray(WORKFLOW_DEADLINES)?WORKFLOW_DEADLINES:[];
  if(!rows.length){el.innerHTML='<div class="empty">No active workflow deadlines yet.</div>';return}
  el.innerHTML=rows.slice(0,8).map(d=>{
@@ -3375,7 +3148,6 @@ function renderDeadlineSummary(){
  }).join("");
 }
 async function runWorkflowOrchestrator(btn){
- if(!requirePlanTier("pro","Application workflow intelligence"))return;
  if(!USER)return;
  const old=btn?.textContent;if(btn){btn.disabled=true;btn.textContent="Orchestrating…"}
  const st=$("workflowStatus");if(st)st.textContent="Checking application states and next steps…";
@@ -3405,7 +3177,6 @@ function workflowLabel(step){
 }
 function renderWorkflowSummary(){
  const el=$("workflowSummary");if(!el)return;
- if(!hasPlanTier("pro")){el.innerHTML=planLockHtml("pro","Application workflows");return}
  const rows=(Array.isArray(WORKFLOW_STATE)?WORKFLOW_STATE:[]).filter(Boolean);
  if(!rows.length){el.innerHTML='<div class="empty">No workflow state yet. Refresh workflows after saving or preparing an application.</div>';return}
  const active=rows.filter(x=>x.current_step!=="closed");
@@ -3420,7 +3191,6 @@ function renderWorkflowSummary(){
  ${active.slice(0,6).map(w=>`<div class="insightcard"><div class="row"><div><b>${esc(w.jobs?.title||"Application")}</b><div class="small">${esc(w.jobs?.employers?.name||"")} · ${esc(w.jobs?.location||"")}</div></div><span class="badge purple">${esc(workflowLabel(w.current_step))}</span></div><div class="small">${esc(w.step_reason||"VisaPilot selected the next workflow step from the current application state.")}</div></div>`).join("")}`;
 }
 async function buildApplicationQueue(btn){
- if(!requirePlanTier("pro","Personalised application action queue"))return;
  if(!USER)return;
  const old=btn?.textContent;if(btn){btn.disabled=true;btn.textContent="Prioritising…"}
  const st=$("queueStatus");if(st)st.textContent="Building your highest-value application actions…";
@@ -3434,7 +3204,6 @@ async function buildApplicationQueue(btn){
 }
 function renderActionQueue(){
  const el=$("actionQueue");if(!el)return;
- if(!hasPlanTier("pro")){el.innerHTML=planLockHtml("pro","Personalised action queue");return}
  const rows=Array.isArray(ACTION_QUEUE)?ACTION_QUEUE:[];
  el.innerHTML=rows.length?rows.slice(0,10).map(q=>`<div class="card">
    <div class="row">
@@ -3466,7 +3235,6 @@ async function completeQueueItem(id){
  }catch(e){alert("Could not complete action: "+e.message)}
 }
 async function runAdaptiveOpportunityAgent(btn){
- if(!requirePlanTier("pro","Adaptive Opportunity Agent"))return;
  if(!USER)return;
  const old=btn?.textContent;if(btn){btn.disabled=true;btn.textContent="Learning & ranking…"}
  const st=$("agentStatus");if(st)st.textContent="Reviewing fresh UK jobs with adaptive ranking…";
@@ -3483,7 +3251,6 @@ async function runAdaptiveOpportunityAgent(btn){
  }
 }
 async function runOpportunityAgent(btn){
- if(!requirePlanTier("copilot","Opportunity alerts and recommendations"))return;
  if(!USER)return;const old=btn?.textContent;if(btn){btn.disabled=true;btn.textContent="Reviewing jobs…"}
  const st=$("agentStatus");if(st)st.textContent="Checking fresh UK opportunities…";
  try{
@@ -3496,13 +3263,11 @@ async function runOpportunityAgent(btn){
 }
 function renderAgentResults(){
  const el=$("agentResults");if(!el)return;const rows=(Array.isArray(AGENT_RECS)?AGENT_RECS:[]).filter(x=>!x.dismissed_at).slice(0,8);
- if(!hasPlanTier("copilot")){el.innerHTML=planLockHtml("copilot","Opportunity Agent");return}
  el.innerHTML=rows.length?rows.map(r=>`<div class="card"><div class="row"><div><b>${esc(r.jobs?.title||"Opportunity")}</b><div class="small">${esc(r.jobs?.employers?.name||"")} · ${esc(r.jobs?.location||"")}</div><span class="badge good">${r.priority_score}/100 ${r.used_adaptive_score?"adaptive":"priority"}</span><span class="badge">${r.sponsorship_score}/100 sponsorship evidence</span>${r.learning_adjustment?`<span class="badge purple">${Number(r.learning_adjustment)>=0?"+":""}${r.learning_adjustment} learned adjustment</span>`:""}</div><div class="toolbar"><button class="btn btn2" onclick="openAgentJob('${r.job_id}')">Open job</button><button class="btn btn2" onclick="dismissAgentRec('${r.id}')">Dismiss</button></div></div><div class="next"><b>Why:</b> ${esc(r.reason_summary||"Recommended based on your profile and sponsorship evidence.")}</div></div>`).join(""):'<div class="empty">No fresh recommendations yet. Run the agent after new jobs are discovered.</div>';
 }
 function openAgentJob(jobId){const btn=document.querySelector('.nav button[data-page="jobs"]');go("jobs",btn);if($("jobSearch"))$("jobSearch").value="";renderJobs();setTimeout(()=>document.querySelector(`[data-job-id="${jobId}"]`)?.scrollIntoView({behavior:"smooth",block:"center"}),50)}
 async function dismissAgentRec(id){if(!USER)return;try{await req(S+"/rest/v1/opportunity_agent_recommendations?id=eq."+id+"&user_id=eq."+USER.id,{method:"PATCH",headers:ah(),body:JSON.stringify({dismissed_at:new Date().toISOString()})});const r=AGENT_RECS.find(x=>String(x.id)===String(id));if(r)r.dismissed_at=new Date().toISOString();renderAgentResults()}catch(e){alert("Could not dismiss recommendation: "+e.message)}}
 async function saveDeadlineAlertPrefs(){
- if(!requirePlanTier("pro","Deadline alert settings"))return;
  if(!USER)return;
  const body={
    user_id:USER.id,
@@ -3523,7 +3288,6 @@ async function saveDeadlineAlertPrefs(){
  }catch(e){$("deadlineAlertPrefStatus").textContent="Could not save alert settings: "+e.message}
 }
 async function sendDeadlineAlertsNow(btn){
- if(!requirePlanTier("pro","Deadline alerts"))return;
  if(!USER)return;
  const old=btn?.textContent;if(btn){btn.disabled=true;btn.textContent="Checking…"}
  try{
@@ -3533,7 +3297,6 @@ async function sendDeadlineAlertsNow(btn){
  finally{if(btn){btn.disabled=false;btn.textContent=old||"Check alerts now"}}
 }
 async function saveDigestPrefs(){
- if(!requirePlanTier("copilot","Daily action digest"))return;
  if(!USER){$("digestStatus").textContent="Please sign in first.";return}
  const body={
   user_id:USER.id,
@@ -3561,17 +3324,8 @@ async function saveProfile(){
   PROFILE=Array.isArray(rows)&&rows[0]?rows[0]:{...PROFILE,...body};$("profileStatus").textContent="Profile saved.";renderHome()
  }catch(e){$("profileStatus").textContent=e.message}
 }
-function renderAll(){renderHome();renderApplications();renderDocuments();renderInterviews();renderIntelligenceWorkspace();populateProfile()}
-function migrateLegacyTokenStorage(){
- const access=localStorage.getItem("vp_access_token");
- const refreshToken=localStorage.getItem("vp_refresh_token");
- if(access&&!sessionStorage.getItem("vp_access_token"))sessionStorage.setItem("vp_access_token",access);
- if(refreshToken&&!sessionStorage.getItem("vp_refresh_token"))sessionStorage.setItem("vp_refresh_token",refreshToken);
- localStorage.removeItem("vp_access_token");
- localStorage.removeItem("vp_refresh_token");
-}
+function renderAll(){renderHome();renderApplications();renderDocuments();renderInterviews();populateProfile()}
 document.addEventListener("DOMContentLoaded",()=>{
-  migrateLegacyTokenStorage();
   try{applyAdminMode()}catch(e){console.warn("Admin mode unavailable",e)}
   candidatePublicStart();
 });
@@ -3621,8 +3375,8 @@ async function submitCandidateAuth(){
        body:JSON.stringify({email,password})
      });
      if(r?.access_token){
-       sessionStorage.setItem("vp_access_token",r.access_token);
-       sessionStorage.setItem("vp_refresh_token",r.refresh_token||"");
+       localStorage.setItem("vp_access_token",r.access_token);
+       localStorage.setItem("vp_refresh_token",r.refresh_token||"");
        await enterCandidateApp(true);
      }else{
        msg.textContent="Account created. Check your email to confirm your address, then return here and sign in.";
@@ -3636,8 +3390,8 @@ async function submitCandidateAuth(){
        body:JSON.stringify({email,password})
      });
      if(!r?.access_token)throw new Error("Sign in failed.");
-     sessionStorage.setItem("vp_access_token",r.access_token);
-     sessionStorage.setItem("vp_refresh_token",r.refresh_token||"");
+     localStorage.setItem("vp_access_token",r.access_token);
+     localStorage.setItem("vp_refresh_token",r.refresh_token||"");
      await enterCandidateApp(false);
    }
  }catch(e){
@@ -3653,7 +3407,7 @@ async function enterCandidateApp(isNew){
  $("candidateAppShell").style.display="block";
 
  try{
-   const token=sessionStorage.getItem("vp_access_token");
+   const token=localStorage.getItem("vp_access_token");
    if(token){
      TOKEN=token;
      const ur=await fetch(S+"/auth/v1/user",{headers:{"apikey":key(),"Authorization":"Bearer "+token}});
@@ -3680,8 +3434,8 @@ async function candidatePublicStart(){
  $("candidateAuthGate").style.display="flex";
  $("candidateAppShell").style.display="none";
 
- const storedToken=sessionStorage.getItem("vp_access_token");
- const storedRefresh=sessionStorage.getItem("vp_refresh_token");
+ const storedToken=localStorage.getItem("vp_access_token");
+ const storedRefresh=localStorage.getItem("vp_refresh_token");
  try{
    if(storedToken){
      TOKEN=storedToken;
@@ -3698,15 +3452,11 @@ async function candidatePublicStart(){
      const checkout=new URLSearchParams(location.search).get("checkout");
      if(checkout==="success")setTimeout(()=>alert("Payment received. VisaPilot is confirming your access now."),250);
      if(checkout==="cancel")setTimeout(()=>alert("Checkout was cancelled. Your current plan has not changed."),250);
-     const billingReturn=new URLSearchParams(location.search).get("billing");
-     if(billingReturn==="return")setTimeout(()=>alert("Welcome back. VisaPilot is refreshing your latest billing plan."),250);
      return;
    }
  }catch(e){
    console.warn("Could not restore candidate session",e);
  }
- sessionStorage.removeItem("vp_access_token");
- sessionStorage.removeItem("vp_refresh_token");
  localStorage.removeItem("vp_access_token");
  localStorage.removeItem("vp_refresh_token");
  TOKEN="";USER=null;
