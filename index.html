@@ -64,36 +64,71 @@ body{background:radial-gradient(circle at 82% 0%,#ede7ff 0,transparent 28%),line
 .public-seo{width:min(1180px,100%);display:grid;grid-template-columns:1fr 1fr;gap:14px;color:#fff}.public-seo article{padding:20px;border:1px solid rgba(255,255,255,.16);border-radius:18px;background:rgba(255,255,255,.09);backdrop-filter:blur(7px)}.public-seo h2{font-size:18px;margin:0 0 8px}.public-seo p{font-size:12px;line-height:1.65;color:#e9e2f8;margin:0}.audience-chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:13px}.audience-chips span{padding:7px 9px;border-radius:999px;background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.14);font-size:10px;font-weight:800}.public-faq{grid-column:1/-1}.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:13px}.faq-grid details{padding:12px 13px;border-radius:12px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.11)}.faq-grid summary{cursor:pointer;font-size:12px;font-weight:900}.faq-grid details p{padding-top:8px}.public-trust-note{grid-column:1/-1;text-align:center!important;background:transparent!important;border:0!important;padding:4px 16px!important}.public-trust-note p{font-size:11px;color:#d8cdf0}@media(max-width:760px){.public-seo,.faq-grid{grid-template-columns:1fr}.public-faq,.public-trust-note{grid-column:auto}}
 </style>
 <style>#candidateAuthGate{flex-direction:column;gap:34px}</style>
+<style>
+/* Build 127 — calm public homepage */
+#candidateAuthGate.vp-public{display:block!important;padding:0!important;min-height:100vh!important;background:radial-gradient(circle at 82% 4%,#e8ddff 0,transparent 27%),linear-gradient(180deg,#fbfaff 0%,#f4f0fd 100%)!important;color:#211a36}
+.vp-public-nav{height:82px;display:flex;align-items:center;justify-content:space-between;gap:22px;padding:0 max(5vw,28px);background:rgba(255,255,255,.94);border-bottom:1px solid #e9e4f4;position:relative;z-index:5}.vp-public-nav .vp-logo-lockup{font-size:25px}.vp-public-nav .vp-logo-lockup img{width:40px;height:40px}.vp-public-nav .vp-logo-lockup .vp-word{color:#211a36}.vp-public-nav .vp-logo-lockup .vp-pilot{color:#7445ee}.vp-public-links{display:flex;align-items:center;gap:22px}.vp-public-links a{font-size:13px;font-weight:800;color:#716b83;text-decoration:none}.vp-public-actions{display:flex;gap:9px}.vp-nav-btn{border:1px solid #d9cef5;border-radius:12px;background:#fff;color:#6737de;padding:11px 16px;font-weight:900;cursor:pointer}.vp-nav-btn.primary{border-color:#6737de;background:linear-gradient(135deg,#7445ee,#5d2ed8);color:#fff}
+.vp-public-main{width:min(1240px,calc(100% - 40px));margin:0 auto;padding:34px 0 52px}.vp-public-hero{position:relative;overflow:hidden;text-align:center;padding:70px 26px 66px;border-radius:30px;background:linear-gradient(135deg,#241640,#563197 64%,#7445ee);color:#fff;box-shadow:0 24px 60px rgba(48,25,99,.2)}.vp-public-hero:after{content:"";position:absolute;width:360px;height:360px;border-radius:50%;right:-90px;top:-180px;background:rgba(255,255,255,.07)}.vp-public-hero>*{position:relative;z-index:1}.vp-hero-kicker{display:inline-flex;padding:7px 11px;border:1px solid rgba(255,255,255,.22);border-radius:999px;background:rgba(255,255,255,.1);font-size:10px;font-weight:900;letter-spacing:1px}.vp-public-hero h1{font-size:clamp(38px,5.4vw,66px);line-height:1.02;letter-spacing:-2px;max-width:900px;margin:24px auto 17px}.vp-public-hero p{max-width:730px;margin:auto;color:#e7def9;font-size:17px;line-height:1.65}.vp-hero-actions{display:flex;justify-content:center;gap:11px;flex-wrap:wrap;margin-top:28px}.vp-hero-btn{border:1px solid rgba(255,255,255,.45);border-radius:14px;padding:14px 21px;background:transparent;color:#fff;font-weight:900;cursor:pointer}.vp-hero-btn.primary{background:#fff;color:#5d2ed8;border-color:#fff}
+.vp-section{text-align:center;padding:66px 0 0}.vp-section h2{font-size:32px;letter-spacing:-1px;margin:0 0 9px}.vp-section-lead{margin:0;color:#716b83;font-size:15px}.vp-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:27px;text-align:left}.vp-step{background:#fff;border:1px solid #e7e0f3;border-radius:20px;padding:24px;box-shadow:0 10px 30px rgba(54,36,92,.06)}.vp-step-number{display:grid;place-items:center;width:38px;height:38px;border-radius:12px;background:#eee8ff;color:#6737de;font-weight:900;margin-bottom:18px}.vp-step h3{font-size:18px;margin:0 0 8px}.vp-step p{color:#716b83;font-size:13px;line-height:1.6;margin:0}.vp-distinction{display:flex;align-items:center;gap:14px;text-align:left;max-width:960px;margin:30px auto 0;padding:18px 21px;border-radius:17px;background:#291b48;color:#fff}.vp-distinction-icon{display:grid;place-items:center;flex:0 0 35px;height:35px;border-radius:50%;background:#8b64ee;font-weight:900}.vp-distinction b{display:block;margin-bottom:3px}.vp-distinction span{font-size:12px;color:#d9cef5;line-height:1.5}
+.vp-example{max-width:960px;margin:17px auto 0;text-align:left;border:1px solid #dfd5f5;border-radius:16px;background:#fff}.vp-example summary{cursor:pointer;padding:18px 21px;font-size:14px;font-weight:900;color:#2b2340}.vp-example-body{padding:0 21px 21px}.vp-example-card{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.vp-example-item{padding:14px;border-radius:12px;background:#f8f6fd;font-size:12px;line-height:1.55;color:#625b72}.vp-example-item b{display:block;color:#2b2340;margin-bottom:4px}.vp-example-note{margin-top:10px;font-size:11px;color:#716b83}
+.vp-signup{display:grid;grid-template-columns:1fr .78fr;gap:48px;align-items:center;margin-top:66px;padding:42px 50px;background:#fff;border:1px solid #e6dff2;border-radius:27px;box-shadow:0 18px 48px rgba(54,36,92,.08);text-align:left}.vp-signup-copy .eyebrow{margin-bottom:12px}.vp-signup-copy h2{font-size:34px;line-height:1.12;letter-spacing:-1px;margin:0 0 13px}.vp-signup-copy p{color:#716b83;line-height:1.65;margin:0}.vp-signup-promise{margin-top:22px;font-size:12px;color:#716b83;font-weight:800}.vp-signup .auth-form{padding:0;display:block}.vp-signup .auth-form-inner{max-width:none}.vp-signup .auth-mobile-brand{display:none!important}
+.vp-faq{padding:66px 0 12px}.vp-faq h2{text-align:center;font-size:31px;margin:0 0 24px}.vp-faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;max-width:960px;margin:auto}.vp-faq details{background:#fff;border:1px solid #e4ddf1;border-radius:15px;padding:16px 18px}.vp-faq summary{cursor:pointer;font-size:13px;font-weight:900}.vp-faq p{font-size:12px;line-height:1.65;color:#716b83;margin:11px 0 0}.vp-public-footer{text-align:center;padding:28px 20px;color:#716b83;font-size:11px}.vp-public-footer a{color:#6737de;font-weight:800;text-decoration:none}
+@media(max-width:850px){.vp-public-links{display:none}.vp-public-main{width:min(100% - 24px,720px);padding-top:16px}.vp-public-hero{padding:52px 20px}.vp-public-hero h1{letter-spacing:-1.3px}.vp-steps,.vp-example-card,.vp-signup,.vp-faq-grid{grid-template-columns:1fr}.vp-signup{padding:30px 23px;gap:30px}.vp-section{padding-top:48px}.vp-public-nav{padding:0 16px}.vp-nav-btn{padding:10px 12px}.vp-public-actions .vp-nav-btn.primary{display:none}}
+@media(max-width:480px){.vp-public-nav .vp-logo-lockup{font-size:21px}.vp-public-nav .vp-logo-lockup img{width:34px;height:34px}.vp-public-hero h1{font-size:39px}.vp-distinction{align-items:flex-start}.vp-public-actions{gap:5px}.vp-nav-btn{font-size:11px}.vp-signup-copy h2{font-size:29px}}
+</style>
 </head>
 <body>
-<div id="candidateAuthGate" style="min-height:100vh;display:flex;align-items:center;justify-content:center">
-  <div class="auth-shell">
-    <div class="auth-story">
-      <div class="auth-logo vp-logo-lockup"><img src="assets/logo/visapilot-mark-192.png" alt=""><span class="vp-word">Visa<span class="vp-pilot">Pilot</span></span></div>
-      <div class="auth-kicker">Made for sponsorship-focused jobseekers</div>
-      <h1>Stop guessing which jobs actually sponsor.</h1>
-      <p>VisaPilot helps you spend less time on dead ends. We bring employer licence information, vacancy-level signals and your own experience together—so you can decide where your next application is genuinely worth the effort.</p>
-      <div class="auth-proof">
-        <div><b>1 · Check the employer</b><span style="color:#d8cdf0">See whether the organisation has sponsor-licence capability.</span></div>
-        <div><b>2 · Read the vacancy</b><span style="color:#d8cdf0">Review role-specific sponsorship signals separately from the employer licence.</span></div>
-        <div><b>3 · Decide with context</b><span style="color:#d8cdf0">Compare the evidence with your CV, route, occupation and priorities.</span></div>
-      </div>
-      <div class="evidence-preview" aria-label="Example of VisaPilot sponsorship evidence">
-        <div class="evidence-preview-head">
-          <div><h2>What an evidence check looks like</h2><div class="role-meta">Illustrative vacancy · Support Worker · Glasgow</div></div>
-          <div class="evidence-score">Needs review</div>
-        </div>
-        <div class="evidence-lines">
-          <div class="evidence-line"><span class="evidence-icon">✓</span><span><b>Employer check</b><br>The organisation appears on the official UK register of licensed sponsors.</span></div>
-          <div class="evidence-line"><span class="evidence-icon">?</span><span><b>Vacancy check</b><br>The advert does not explicitly confirm sponsorship for this particular role.</span></div>
-          <div class="evidence-line"><span class="evidence-icon">→</span><span><b>Recommended next step</b><br>Verify with recruitment before investing time in a full application.</span></div>
-        </div>
-        <div class="evidence-note"><b>A licensed employer is not the same as a sponsored vacancy.</b> VisaPilot only treats sponsorship for a specific job as confirmed when vacancy-level evidence supports it.</div>
-      </div>
+<div id="candidateAuthGate" class="vp-public" style="min-height:100vh;display:flex;align-items:center;justify-content:center">
+  <nav class="vp-public-nav" aria-label="Public navigation">
+    <div class="vp-logo-lockup"><img src="assets/logo/visapilot-mark-192.png" alt=""><span class="vp-word">Visa<span class="vp-pilot">Pilot</span></span></div>
+    <div class="vp-public-links"><a href="#how-it-works">How it works</a><a href="#candidate-faq">Questions</a><a href="#candidate-access">Get started</a></div>
+    <div class="vp-public-actions">
+      <button class="vp-nav-btn" type="button" onclick="setCandidateAuthMode('signin');document.getElementById('candidate-access').scrollIntoView({behavior:'smooth'})">Sign in</button>
+      <button class="vp-nav-btn primary" type="button" onclick="setCandidateAuthMode('signup');document.getElementById('candidate-access').scrollIntoView({behavior:'smooth'})">Start free</button>
     </div>
-    <div class="auth-form">
+  </nav>
+  <main class="vp-public-main">
+    <section class="vp-public-hero">
+      <div class="vp-hero-kicker">UK SPONSORSHIP JOB INTELLIGENCE</div>
+      <h1>Stop guessing which jobs actually sponsor.</h1>
+      <p>Know the employer. Understand the vacancy. Focus your time on opportunities supported by clearer evidence—not hopeful labels.</p>
+      <div class="vp-hero-actions">
+        <button class="vp-hero-btn primary" type="button" onclick="setCandidateAuthMode('signup');document.getElementById('candidate-access').scrollIntoView({behavior:'smooth'})">Create free account</button>
+        <button class="vp-hero-btn" type="button" onclick="setCandidateAuthMode('signin');document.getElementById('candidate-access').scrollIntoView({behavior:'smooth'})">I already have an account</button>
+      </div>
+    </section>
+
+    <section id="how-it-works" class="vp-section">
+      <h2>A clearer decision in three steps</h2>
+      <p class="vp-section-lead">Quick evidence first. Application effort second.</p>
+      <div class="vp-steps">
+        <article class="vp-step"><div class="vp-step-number">1</div><h3>Check the employer</h3><p>See whether the organisation has sponsor-licence capability.</p></article>
+        <article class="vp-step"><div class="vp-step-number">2</div><h3>Read the vacancy</h3><p>Look separately for evidence that this particular role may offer sponsorship.</p></article>
+        <article class="vp-step"><div class="vp-step-number">3</div><h3>Decide with context</h3><p>Compare the evidence with your CV, route, occupation and priorities.</p></article>
+      </div>
+      <div class="vp-distinction"><div class="vp-distinction-icon">!</div><div><b>A licensed employer is not the same as a sponsored vacancy.</b><span>VisaPilot keeps employer capability and vacancy-level evidence clearly separate.</span></div></div>
+      <details class="vp-example">
+        <summary>See an example sponsorship evidence check</summary>
+        <div class="vp-example-body">
+          <div class="vp-example-card">
+            <div class="vp-example-item"><b>Employer check</b>The organisation appears on the official UK register of licensed sponsors.</div>
+            <div class="vp-example-item"><b>Vacancy check</b>The illustrative advert does not explicitly confirm sponsorship for the role.</div>
+            <div class="vp-example-item"><b>Recommended next step</b>Verify with recruitment before investing time in a full application.</div>
+          </div>
+          <div class="vp-example-note">Illustrative example only. VisaPilot shows the available evidence and uncertainty for each vacancy.</div>
+        </div>
+      </details>
+    </section>
+
+    <section id="candidate-access" class="vp-signup">
+      <div class="vp-signup-copy">
+        <div class="eyebrow">START WITH EXPLORER — FREE</div>
+        <h2>Ready to search with more confidence?</h2>
+        <p>Create your account, tell VisaPilot what you are looking for and keep your strongest opportunities organised in one place.</p>
+        <div class="vp-signup-promise">No card required · Upgrade only when you need deeper intelligence</div>
+      </div>
+      <div class="auth-form">
       <div class="auth-form-inner">
-        <div class="auth-mobile-brand vp-logo-lockup"><img src="assets/logo/visapilot-mark-192.png" alt=""><span class="vp-word">Visa<span class="vp-pilot">Pilot</span></span></div>
         <div class="eyebrow">YOUR UK SPONSORSHIP JOURNEY</div>
         <div id="candidateAuthTitle" style="font-size:28px;font-weight:900;letter-spacing:-.7px;margin:8px 0 5px">Welcome back</div>
         <div id="candidateAuthHelp" class="muted" style="margin-bottom:24px">Sign in to continue your personalised VisaPilot journey.</div>
@@ -116,21 +151,20 @@ body{background:radial-gradient(circle at 82% 0%,#ede7ff 0,transparent 28%),line
         <div class="small" style="margin-top:18px;text-align:center">Explorer is free. Upgrade only when you need deeper intelligence.</div>
         <div class="legal-links" style="margin-top:14px">By creating an account, you agree to our <a href="terms.html" target="_blank" rel="noopener">Terms</a> and acknowledge our <a href="privacy.html" target="_blank" rel="noopener">Privacy Notice</a>.<br><a href="mailto:support@visapilot-ai.com">support@visapilot-ai.com</a></div>
       </div>
-    </div>
-  </div>
-  <section class="public-seo" aria-label="About VisaPilot">
-    <article><h2>Your search, without the noise</h2><p>Discover UK opportunities across healthcare, technology, education, engineering, finance and other sectors. Match roles to your profile, save the promising ones and prepare each application in one calm workspace.</p><div class="audience-chips"><span>Graduate route</span><span>Skilled Worker</span><span>Time-limited visas</span><span>Applicants overseas</span><span>Career changers</span></div></article>
-    <article><h2>Support from search to offer</h2><p>Use sponsorship evidence, CV matching and job analysis to decide whether to apply. Then tailor an ATS-friendly CV, prepare a role-focused cover letter, track progress and practise for interviews—all while keeping the final decision in your hands.</p></article>
-    <article class="public-faq"><h2>Questions candidates understandably ask</h2><div class="faq-grid">
-      <details><summary>Will my employer know I am searching?</summary><p>No. VisaPilot does not notify your current employer or the employers whose vacancies you review. You decide when and where you apply.</p></details>
-      <details><summary>Is a licensed sponsor guaranteed to sponsor me?</summary><p>No. A sponsor licence shows employer-level capability, not a promise for every vacancy. VisaPilot displays vacancy evidence separately so that distinction stays clear.</p></details>
-      <details><summary>How current is the sponsorship information?</summary><p>VisaPilot combines official sponsor-register information with the evidence available in individual vacancy adverts. Because circumstances can change, we show uncertainty and recommend direct verification where evidence is incomplete.</p></details>
-      <details><summary>Are my CV and documents private?</summary><p>Your documents are linked to your account and used to provide the features you request. VisaPilot does not send an application or share your documents with an employer without your action.</p></details>
-      <details><summary>Is VisaPilot only for care roles?</summary><p>No. VisaPilot supports sponsorship-focused searches across UK sectors and regions. Healthcare and care are included, alongside technology, education, engineering, finance and more.</p></details>
-      <details><summary>Does VisaPilot guarantee a visa or job offer?</summary><p>No. VisaPilot provides evidence and application support, not immigration advice or a guarantee of sponsorship, employment or a visa decision.</p></details>
-    </div></article>
-    <article class="public-trust-note"><p>VisaPilot is designed to help you make better-informed choices—not to label uncertain vacancies as guaranteed sponsorship.</p></article>
-  </section>
+      </div>
+    </section>
+
+    <section id="candidate-faq" class="vp-faq">
+      <h2>A few honest answers</h2>
+      <div class="vp-faq-grid">
+        <details><summary>Will my employer know I am searching?</summary><p>No. VisaPilot does not notify your current employer or employers whose vacancies you review. You decide when and where you apply.</p></details>
+        <details><summary>Is a licensed sponsor guaranteed to sponsor me?</summary><p>No. A sponsor licence shows employer-level capability, not a promise for every vacancy. Vacancy evidence is displayed separately.</p></details>
+        <details><summary>How current is the sponsorship information?</summary><p>VisaPilot combines official sponsor-register information with evidence in individual vacancy adverts and shows uncertainty where direct confirmation is unavailable.</p></details>
+        <details><summary>Are my CV and documents private?</summary><p>Your documents are linked to your account. VisaPilot does not send an application or share your documents with an employer without your action.</p></details>
+      </div>
+    </section>
+  </main>
+  <footer class="vp-public-footer">VisaPilot provides job intelligence, not immigration advice or a guarantee of sponsorship, employment or a visa decision.<br><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="mailto:support@visapilot-ai.com">Support</a></footer>
 </div>
 <div id="candidateAppShell" style="display:none">
 
