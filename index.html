@@ -1697,7 +1697,7 @@ function renderHome(){
 async function loadJobs(){
  $("jobStatus").textContent="Loading live jobs…";
  try{
-  JOBS=await req(S+"/rest/v1/jobs?select=id,title,location,description,salary_text,salary_min,salary_max,application_url,source_url,employer_id,discovery_source,external_job_id,discovered_at,last_seen_at,employers(name)&status=eq.active&limit=1000",{headers:ph()});
+  JOBS=await req(S+"/rest/v1/jobs?select=id,title,location,description,salary_text,salary_min,salary_max,application_url,source_url,employer_id,discovery_source,source_kind,external_job_id,discovered_at,last_seen_at,source_published_at,employers(name)&status=eq.active&limit=1000",{headers:ph()});
   renderJobs();
  }catch(e){$("jobStatus").textContent=e.message}
 }
@@ -1855,7 +1855,7 @@ async function reloadSavedApplications(openJobId=null){
    if(ids.length){
      const inList="("+ids.map(x=>String(x)).join(",")+")";
      const fetched=await safe(
-       S+"/rest/v1/jobs?select=id,title,location,description,salary_text,salary_min,salary_max,application_url,source_url,employer_id,discovery_source,last_seen_at,employers(name)&id=in."+inList,
+       S+"/rest/v1/jobs?select=id,title,location,description,salary_text,salary_min,salary_max,application_url,source_url,employer_id,discovery_source,source_kind,last_seen_at,source_published_at,employers(name)&id=in."+inList,
        {headers:ph()}
      );
      jobs=Array.isArray(fetched)?fetched:[];
@@ -2181,7 +2181,7 @@ async function loadCandidateJobPage(append=true,btn=null){
  if(btn){btn.disabled=true;btn.textContent="Loading more jobs…"}
  try{
   const url=new URL(S+"/rest/v1/jobs");
-  url.searchParams.set("select","id,title,location,description,salary_text,salary_min,salary_max,application_url,source_url,employer_id,discovery_source,external_job_id,discovered_at,last_seen_at,employers(name)");
+  url.searchParams.set("select","id,title,location,description,salary_text,salary_min,salary_max,application_url,source_url,employer_id,discovery_source,source_kind,external_job_id,discovered_at,last_seen_at,source_published_at,employers(name)");
   url.searchParams.set("status","eq.active");
   const query=safePostgrestSearch(LIVE_JOB_QUERY);
   const location=safePostgrestSearch(LIVE_JOB_LOCATION);
@@ -2223,6 +2223,7 @@ function renderCandidateLiveJobs(rows){
        <div>
          <h3 style="margin:0 0 5px">${esc(j.title||"Job")}</h3>
          <div class="muted">${esc(j.employers?.name||j.company||"Employer")} · ${esc(j.location||"UK")}</div>
+         ${j.source_kind==="official_employer_career_site"||String(j.discovery_source||"").startsWith("direct_")?'<span class="badge good" style="margin-top:7px">Official employer careers page</span>':""}
        </div>
        ${j.created?`<span class="badge">${esc(new Date(j.created).toLocaleDateString())}</span>`:""}
      </div>
