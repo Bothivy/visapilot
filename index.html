@@ -283,7 +283,7 @@ body{background:radial-gradient(circle at 82% 0%,#ede7ff 0,transparent 28%),line
     <input id="appSearch" style="margin-top:10px" placeholder="Search applications..." oninput="renderApplications()">
     <div id="appLoadStatus" class="small" style="margin-top:8px"></div>
   </div>
-  <div class="panel"><b>Prepare your application in VisaPilot</b><div class="small">Build and review the complete application here. Where direct submission is available, VisaPilot can send it after your final confirmation. For other employers, VisaPilot keeps everything ready and clearly shows the final application step.</div></div>
+  <div class="panel"><b>Prepare your application in VisaPilot</b><div class="small">Build and review the complete application here. Where an employer supports secure direct submission, VisaPilot can send it after your final confirmation. If the employer requires its own account, VisaPilot prepares a reusable application pack so you can transfer your details and documents with less repetition.</div></div>
   <div id="appResults" class="cards"></div>
 </section>
 
@@ -2906,7 +2906,65 @@ async function showReadiness(savedId){
  if(!r){box.innerHTML='<div class="submitwarn">Could not calculate readiness.</div>';return}
  box.innerHTML=`<div class="${r.ready?"submitok":"submitwarn"}"><div class="row"><div><b>${r.ready?"Ready to submit":"Application not ready yet"}</b><div class="small">${r.ready?"All required checks have passed.":"Complete the missing required items below."}</div></div><div class="readyscore">${r.score}%</div></div></div>
  <div class="readybar">${r.checks.map(c=>`<div class="readyitem ${c.ok?"ok":"miss"}"><b>${c.ok?"✓":"○"} ${esc(c.label)}</b><div class="small">${esc(c.help)}</div>${!c.required?'<div class="small">Advisory</div>':""}</div>`).join("")}</div>
- <div class="toolbar"><button class="btn ${r.ready?"":"locked"}" ${r.ready?"":'disabled'} onclick="finalSubmissionReview('${savedId}')">Continue to final submission</button></div>`;
+ <div class="toolbar"><button class="btn ${r.ready?"":"locked"}" ${r.ready?"":'disabled'} onclick="finalSubmissionReview('${savedId}')">Review submission options</button></div>`;
+}
+function applicationHandoffText(savedId){
+ const draft=applicationDraftFor(savedId)||{};
+ const answers=Array.isArray(draft.answers_json)?draft.answers_json:[];
+ const sponsorship=draft.sponsorship_required===true||draft.sponsorship_required==="yes"?"Yes":draft.sponsorship_required===false||draft.sponsorship_required==="no"?"No":"Not specified";
+ const lines=[
+  "VISAPILOT APPLICATION PACK",
+  "",
+  `Full name: ${draft.full_name||""}`,
+  `Email: ${draft.email||USER?.email||""}`,
+  `Phone: ${draft.phone||""}`,
+  `Current location: ${draft.current_location||""}`,
+  `Requires sponsorship: ${sponsorship}`,
+  `Availability / notice period: ${draft.notice_period||""}`
+ ];
+ if(draft.supporting_statement)lines.push("","APPLICATION STATEMENT",draft.supporting_statement);
+ const completed=answers.filter(x=>String(x?.question||"").trim()&&String(x?.answer||"").trim());
+ if(completed.length){
+  lines.push("","EMPLOYER QUESTIONS AND ANSWERS");
+  completed.forEach((x,i)=>lines.push("",`${i+1}. ${x.question}`,String(x.answer)));
+ }
+ const liveFields=answers.flatMap(x=>x?.source==="greenhouse_live"&&x?.fields&&typeof x.fields==="object"?Object.entries(x.fields):[]).filter(([question,answer])=>String(question).trim()&&String(Array.isArray(answer)?answer.join(", "):answer||"").trim());
+ if(liveFields.length){
+  lines.push("","LIVE EMPLOYER FORM ANSWERS");
+  liveFields.forEach(([question,answer],i)=>lines.push("",`${i+1}. ${question}`,Array.isArray(answer)?answer.join(", "):String(answer)));
+ }
+ return lines.join("\n").trim();
+}
+async function copyApplicationHandoff(savedId){
+ const status=$("handoff_status_"+savedId);
+ try{
+  await navigator.clipboard.writeText(applicationHandoffText(savedId));
+  if(status)status.textContent="Application details and answers copied. Paste them into the employer form as needed.";
+ }catch{
+  if(status)status.textContent="Your browser blocked copying. Please allow clipboard access and try again.";
+ }
+}
+async function downloadHandoffFile(savedId,kind){
+ const draft=applicationDraftFor(savedId)||{};
+ const isCv=kind==="cv";
+ const bucket=isCv?draft.selected_cv_bucket:draft.selected_cover_letter_bucket;
+ const path=isCv?draft.selected_cv_path:draft.selected_cover_letter_path;
+ const filename=isCv?draft.selected_cv_filename:draft.selected_cover_letter_filename;
+ const status=$("handoff_status_"+savedId);
+ try{
+  if(!path)throw new Error(isCv?"No CV has been selected.":"No cover letter has been selected.");
+  await downloadPrivateDocument(bucket,path,filename||(isCv?"VisaPilot-CV":"VisaPilot-cover-letter"));
+  if(status)status.textContent=(isCv?"CV":"Cover letter")+" downloaded and ready to upload.";
+ }catch(error){if(status)status.textContent=error.message}
+}
+function openEmployerWithApplicationPack(savedId){
+ const s=SAVED.find(x=>String(x.id)===String(savedId));
+ const destination=safeExternalUrl(s?.jobs?.application_url||s?.jobs?.source_url);
+ const status=$("handoff_status_"+savedId);
+ if(!destination){if(status)status.textContent="The employer application address is unavailable.";return}
+ copyApplicationHandoff(savedId);
+ window.open(destination,"_blank","noopener,noreferrer");
+ if(status)status.textContent="Application details copied and the employer website opened in a new tab.";
 }
 async function finalSubmissionReview(savedId){
  const s=SAVED.find(x=>String(x.id)===String(savedId));if(!s||!USER)return;
@@ -2917,6 +2975,7 @@ async function finalSubmissionReview(savedId){
  try{
    const drafts=await req(S+"/rest/v1/native_application_drafts?select=*&saved_job_id=eq."+savedId+"&user_id=eq."+USER.id,{headers:ah()});
    const draft=drafts?.[0];
+   if(draft)rememberApplicationDraft(savedId,draft);
    const ats=await req(S+"/rest/v1/job_ats_integrations?select=*&job_id=eq."+s.job_id+"&enabled=eq.true",{headers:ah()});
    const issues=[];
    if(!draft)issues.push("Application draft has not been saved");
@@ -2933,8 +2992,26 @@ async function finalSubmissionReview(savedId){
      <div id="direct_status_${savedId}" class="small"></div>`;
    }else{
      const employerUrl=safeExternalUrl(s?.jobs?.application_url||s?.jobs?.source_url);
-     box.innerHTML=`<div class="submitok"><b>Your application is ready.</b><div class="small">Your details, answers and documents are prepared. Continue on the employer’s website to complete the application.</div></div>
-     ${employerUrl?`<div class="toolbar" style="margin-top:10px"><a class="btn" href="${esc(employerUrl)}" target="_blank" rel="noopener noreferrer">Continue to employer application</a></div>`:""}`;
+     box.innerHTML=`<div class="submitok"><b>Your reusable application pack is ready.</b><div class="small">This employer does not provide VisaPilot with a secure direct-submission connection. Use the prepared pack below to avoid retyping your information from scratch.</div></div>
+     <div class="card" style="margin-top:10px">
+       <b>1. Copy your prepared application</b>
+       <div class="small">Copies your contact details, sponsorship requirement, availability, application statement and saved employer answers together.</div>
+       <div class="toolbar" style="margin-top:8px"><button class="btn btn2" type="button" onclick="copyApplicationHandoff('${savedId}')">Copy all details and answers</button></div>
+     </div>
+     <div class="card">
+       <b>2. Keep your selected documents ready</b>
+       <div class="small">Download the same documents you reviewed in VisaPilot, then upload them when the employer asks.</div>
+       <div class="toolbar" style="margin-top:8px">
+         <button class="btn btn2" type="button" onclick="downloadHandoffFile('${savedId}','cv')">Download selected CV</button>
+         ${draft?.selected_cover_letter_path?`<button class="btn btn2" type="button" onclick="downloadHandoffFile('${savedId}','letter')">Download cover letter</button>`:""}
+       </div>
+     </div>
+     <div class="card">
+       <b>3. Complete the employer’s required account step</b>
+       <div class="small">Some employers require candidates to create or sign into their own recruitment account. VisaPilot cannot safely bypass their login, identity checks, declarations or consent screens.</div>
+       ${employerUrl?`<div class="toolbar" style="margin-top:8px"><button class="btn" type="button" onclick="openEmployerWithApplicationPack('${savedId}')">Copy details and open employer website</button></div>`:""}
+     </div>
+     <div id="handoff_status_${savedId}" class="small" style="margin-top:8px"></div>`;
    }
  }catch(e){box.innerHTML=`<div class="submitwarn"><b>Could not complete final review.</b><div class="small">${esc(e.message)}</div></div>`}
 }
