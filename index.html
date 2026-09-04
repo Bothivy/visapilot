@@ -1,4 +1,5 @@
 <!doctype html>
+<!-- VisaPilot application-autofill build 2026-09-04: delivery-route UI removed -->
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -350,7 +351,7 @@ body{background:radial-gradient(circle at 82% 0%,#ede7ff 0,transparent 28%),line
     <h2 style="margin-top:0">Your CV</h2>
     <div class="small">Upload your current CV. VisaPilot will use it to support job matching and application preparation.</div>
     <div class="toolbar" style="margin-top:14px">
-      <input id="profileCvFile" type="file" accept=".pdf,.doc,.docx,.txt,.rtf" style="max-width:520px">
+      <input id="profileCvFile" type="file" accept=".pdf,.docx,.txt,.rtf" style="max-width:520px">
       <button class="btn btn2" type="button" onclick="uploadProfileCv(this)">Upload CV</button>
     </div>
     <div id="profileCvStatus" class="small" style="margin-top:8px"></div>
@@ -455,7 +456,7 @@ body{background:radial-gradient(circle at 82% 0%,#ede7ff 0,transparent 28%),line
 <script>
 const S="https://cjdgqbmjsqwruooexzid.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY="sb_publishable_J5Tn260dr5mYdU0RtW4HnA_jjFeAQh5";
-let TOKEN=null,USER=null,PROFILE=null,BILLING=null,BILLING_SYNC=null,SAVED=[],CVS=[],TAILORED=[],LETTERS=[],ANSWERS=[],INTERVIEW=[],ANALYSES=[],JOBS=[],LIVE_JOB_RESULTS=[],LIVE_JOB_VISIBLE=20,LIVE_JOB_OFFSET=0,LIVE_JOB_HAS_MORE=false,LIVE_JOB_TOTAL=0,LIVE_JOB_QUERY="",LIVE_JOB_LOCATION="",SPONSORS=[],CLASSES=[],SIGNALS=[],ACTIVITY=[],SUBMISSIONS=[],FOLLOWUPS=[],DIGEST=null,JOB_PRIORITY=[],SPONSOR_INTEL=[],APP_INTEL=[],AGENT_PREFS=null,AGENT_RECS=[],OUTCOME_INSIGHTS=[],CONVERSION_SUMMARY=null,ADAPTIVE_PRIORITY=[],ADAPTIVE_AGENT_RUN=null,ACTION_QUEUE=[],WORKFLOW_STATE=[],WORKFLOW_DEADLINES=[],ALERT_PREFS=null,DEADLINE_ALERTS=[],COMMAND_CENTRE=[],INTERVIEW_INTEL=[],OFFER_INTEL=[],SYSTEM_HEALTH=null;
+let TOKEN=null,USER=null,PROFILE=null,BILLING=null,BILLING_SYNC=null,SAVED=[],CVS=[],TAILORED=[],LETTERS=[],ANSWERS=[],INTERVIEW=[],ANALYSES=[],DRAFTS=[],JOBS=[],LIVE_JOB_RESULTS=[],LIVE_JOB_VISIBLE=20,LIVE_JOB_OFFSET=0,LIVE_JOB_HAS_MORE=false,LIVE_JOB_TOTAL=0,LIVE_JOB_QUERY="",LIVE_JOB_LOCATION="",SPONSORS=[],CLASSES=[],SIGNALS=[],ACTIVITY=[],SUBMISSIONS=[],FOLLOWUPS=[],DIGEST=null,JOB_PRIORITY=[],SPONSOR_INTEL=[],APP_INTEL=[],AGENT_PREFS=null,AGENT_RECS=[],OUTCOME_INSIGHTS=[],CONVERSION_SUMMARY=null,ADAPTIVE_PRIORITY=[],ADAPTIVE_AGENT_RUN=null,ACTION_QUEUE=[],WORKFLOW_STATE=[],WORKFLOW_DEADLINES=[],ALERT_PREFS=null,DEADLINE_ALERTS=[],COMMAND_CENTRE=[],INTERVIEW_INTEL=[],OFFER_INTEL=[],SYSTEM_HEALTH=null,CV_EXTRACTION_ATTEMPTED=false;
 const $=id=>document.getElementById(id);
 function applyAdminMode(){
  const params=new URLSearchParams(location.search);
@@ -520,7 +521,7 @@ async function syncBillingFromStripe(){
  }
 }
 async function signIn(){try{const b=await req(S+"/auth/v1/token?grant_type=password",{method:"POST",headers:{apikey:key(),"Content-Type":"application/json"},body:JSON.stringify({email:$("email").value.trim(),password:$("password").value})});setSession(b);showSignedIn();await syncBillingFromStripe();await loadAll()}catch(e){$("err").textContent=e.message}}
-function signOut(){clearSession();PROFILE=null;BILLING=null;SAVED=[];CVS=[];TAILORED=[];LETTERS=[];ANSWERS=[];INTERVIEW=[];ANALYSES=[];JOBS=[];AGENT_RECS=[];APP_INTEL=[];INTERVIEW_INTEL=[];OFFER_INTEL=[]}
+function signOut(){clearSession();PROFILE=null;BILLING=null;SAVED=[];CVS=[];TAILORED=[];LETTERS=[];ANSWERS=[];INTERVIEW=[];ANALYSES=[];DRAFTS=[];JOBS=[];AGENT_RECS=[];APP_INTEL=[];INTERVIEW_INTEL=[];OFFER_INTEL=[];CV_EXTRACTION_ATTEMPTED=false}
 function showAuth(){$("authPanel").scrollIntoView({behavior:"smooth"})}
 
 async function startStripeCheckout(planKey,btn){
@@ -678,7 +679,7 @@ async function loadAll(){
  if(!USER)return;
  const uid=USER.id;
  $("authStatus").textContent="Loading your workspace…";
- const [p,billing,sj,cvs,tail,letters,answers,interview,analyses,sponsors,classes,signals,activity,submissions,followups,digest]=await Promise.all([
+ const [p,billing,sj,cvs,tail,letters,answers,interview,analyses,drafts,sponsors,classes,signals,activity,submissions,followups,digest]=await Promise.all([
   safe(S+"/rest/v1/candidate_profiles?select=*&user_id=eq."+uid,{headers:ah()}),
   safe(S+"/rest/v1/billing_subscriptions?select=*&user_id=eq."+uid+"&limit=1",{headers:ah()}),
   safe(S+"/rest/v1/saved_jobs?select=id,job_id,status,notes,applied_at,interview_at,offer_at,follow_up_at,last_activity_at,jobs(id,title,location,description,application_url,source_url,employer_id,employers(name))&user_id=eq."+uid+"&order=updated_at.desc",{headers:ah()}),
@@ -688,6 +689,7 @@ async function loadAll(){
   safe(S+"/rest/v1/application_answer_sets?select=id,job_id,question,answer,answer_type,created_at&user_id=eq."+uid,{headers:ah()}),
   safe(S+"/rest/v1/interview_prep_sets?select=id,job_id,question,question_type,created_at&user_id=eq."+uid,{headers:ah()}),
   safe(S+"/rest/v1/cv_job_analyses?select=id,job_id,match_score,matched_keywords,missing_keywords,created_at&user_id=eq."+uid,{headers:ah()}),
+  safe(S+"/rest/v1/native_application_drafts?select=*&user_id=eq."+uid,{headers:ah()}),
   safe(S+"/rest/v1/employer_sponsorship_scores?select=*",{headers:ph()}),
   safe(S+"/rest/v1/job_role_classifications?select=*&confidence=gte.0.95",{headers:ph()}),
   safe(S+"/rest/v1/employer_sponsorship_signals?select=*&order=observed_at.desc",{headers:ph()}),
@@ -701,6 +703,7 @@ async function loadAll(){
  SAVED=Array.isArray(sj)?sj:[];CVS=Array.isArray(cvs)?cvs:[];TAILORED=Array.isArray(tail)?tail:[];
  LETTERS=Array.isArray(letters)?letters:[];ANSWERS=Array.isArray(answers)?answers:[];
  INTERVIEW=Array.isArray(interview)?interview:[];ANALYSES=Array.isArray(analyses)?analyses:[];
+ DRAFTS=Array.isArray(drafts)?drafts:[];
  SPONSORS=Array.isArray(sponsors)?sponsors:[];CLASSES=Array.isArray(classes)?classes:[];
  SIGNALS=Array.isArray(signals)?signals:[];ACTIVITY=Array.isArray(activity)?activity:[];
  SUBMISSIONS=Array.isArray(submissions)?submissions:[];FOLLOWUPS=Array.isArray(followups)?followups:[];
@@ -1106,7 +1109,7 @@ async function repairWorkflowCoverage(btn){
        }
      }else if(draft?.application_status==="ready_to_submit"){
        current_step="submit_application";
-       step_reason="The application has passed final review and is ready for an authorised submission route.";
+       step_reason="The application has passed final review and is ready for the candidate to continue.";
      }else if(ai?.decision==="apply_now" && hasTailored && hasLetter && hasAnswers){
        current_step="final_review";
        step_reason=`Application Intelligence recommends Apply now (${Number(ai?.readiness_score||0)}/100 readiness).`;
@@ -2313,6 +2316,20 @@ window.saveCandidateLiveJob=async function(btn){
  }
 };
 
+async function extractLatestCvText(force=false){
+ const cv=(Array.isArray(CVS)?CVS:[])[0]||null;
+ if(!cv?.id||!cv?.storage_bucket||!cv?.storage_path)return false;
+ if(String(cv.cv_text||"").trim().length>=80)return true;
+ if(CV_EXTRACTION_ATTEMPTED&&!force)return false;
+ CV_EXTRACTION_ATTEMPTED=true;
+ const result=await req(S+"/functions/v1/generate-cover-letter",{
+  method:"POST",headers:fh(),body:JSON.stringify({action:"extract_cv_text"})
+ });
+ if(!String(result?.cv_text||"").trim())throw new Error("VisaPilot could not find readable text in this CV.");
+ cv.cv_text=result.cv_text;
+ return true;
+}
+
 async function uploadProfileCv(btn){
  const file=$("profileCvFile")?.files?.[0], st=$("profileCvStatus");
  if(!file){st.textContent="Choose a CV file first.";return}
@@ -2335,7 +2352,15 @@ async function uploadProfileCv(btn){
      })
    });
    Object.assign(cv,{cv_name:file.name,original_filename:u.filename,storage_bucket:u.bucket,storage_path:u.path});
-   st.textContent="CV uploaded successfully.";
+   cv.cv_text="";
+   CV_EXTRACTION_ATTEMPTED=false;
+   st.textContent="CV uploaded. Reading your details…";
+   try{
+    await extractLatestCvText(true);
+    st.textContent="CV uploaded and your application details are ready to reuse.";
+   }catch(extractError){
+    st.textContent="CV uploaded, but its text could not be read: "+extractError.message;
+   }
    renderProfileCv();
  }catch(e){st.textContent="CV upload failed: "+e.message}
  finally{if(btn){btn.disabled=false;btn.textContent=old||"Upload CV"}}
@@ -2541,10 +2566,19 @@ function applicationReadiness(s){
    canApply:steps.every(x=>x.done)
  };
 }
-function openApplicationWorkspace(id){
+async function openApplicationWorkspace(id){
  OPEN_APP=SAVED.find(x=>String(x.id)===String(id))||null;
  renderApplications();
  setTimeout(()=>document.getElementById("workspace_"+id)?.scrollIntoView({behavior:"smooth",block:"center"}),50);
+ const cv=(Array.isArray(CVS)?CVS:[])[0]||null;
+ if(cv?.storage_path&&String(cv?.cv_text||"").trim().length<80&&!CV_EXTRACTION_ATTEMPTED){
+  try{
+   const extracted=await extractLatestCvText();
+   if(extracted&&String(OPEN_APP?.id)===String(id))renderApplications();
+  }catch(error){
+   alert("Your application workspace opened, but VisaPilot could not read the contact details in your CV. "+error.message);
+  }
+ }
 }
 function closeApplicationWorkspace(){OPEN_APP=null;renderApplications()}
 function switchAppTab(savedId,tab){
@@ -2670,7 +2704,7 @@ function ghInput(savedId,qi,fi,f){
 async function loadGreenhouseQuestions(savedId){
  const s=SAVED.find(x=>String(x.id)===String(savedId)),box=$("gh_live_"+savedId);if(!s||!box)return;
  const d=greenhouseIdentity(s.jobs||{});
- if(!d){box.innerHTML='<div class="next"><b>No Greenhouse form detected.</b> VisaPilot will keep this application prepared while another delivery route is identified.</div>';return}
+ if(!d){box.innerHTML='<div class="next"><b>No embedded employer form is available.</b> Your application details and documents remain prepared in VisaPilot. Use the employer application link when you are ready.</div>';return}
  if(!d.board_token){box.innerHTML='<div class="next"><b>Greenhouse job detected.</b> The job ID is visible, but this URL does not expose the employer board token needed to retrieve the live form.</div>';return}
  box.innerHTML='<div class="small">Loading employer questions…</div>';
  try{
@@ -2678,7 +2712,8 @@ async function loadGreenhouseQuestions(savedId){
   if(!r.ok)throw new Error("Greenhouse returned HTTP "+r.status);
   const data=await r.json();
   const qs=[...(data.questions||[]),...(data.location_questions||[]),...(data.compliance||[])];
-  box.innerHTML=`<div class="next"><b>Live Greenhouse form loaded.</b> ${qs.length} employer question${qs.length===1?"":"s"} found.</div>${qs.map((q,qi)=>`<div class="card"><label>${esc(q.label||"Employer question")}${q.required?" *":""}</label>${(q.fields||[]).map((f,fi)=>ghInput(savedId,qi,fi,f)).join("")}</div>`).join("")}<button class="btn btn2" onclick="saveGreenhouseAnswers('${savedId}')">Save employer answers</button><div id="ghsave_${savedId}" class="small"></div>`;
+  box.innerHTML=`<div class="next"><b>Employer form loaded and prefilled.</b> ${qs.length} employer question${qs.length===1?"":"s"} found. VisaPilot has reused available profile and CV details; review anything that may have changed.</div>${qs.map((q,qi)=>`<div class="card"><label>${esc(q.label||"Employer question")}${q.required?" *":""}</label>${(q.fields||[]).map((f,fi)=>ghInput(savedId,qi,fi,f)).join("")}</div>`).join("")}<button class="btn btn2" onclick="saveGreenhouseAnswers('${savedId}')">Save employer answers</button><div id="ghsave_${savedId}" class="small"></div>`;
+  prefillEmployerFields(savedId);
  }catch(e){box.innerHTML=`<div class="next"><b>Could not load the live form.</b> ${esc(e.message)}</div>`}
 }
 async function saveGreenhouseAnswers(savedId){
@@ -2842,16 +2877,16 @@ async function prepareSubmission(savedId){
    };
    if(ex?.[0]?.id)await req(S+"/rest/v1/native_application_drafts?id=eq."+ex[0].id,{method:"PATCH",headers:ah(),body:JSON.stringify(body)});
    else await req(S+"/rest/v1/native_application_drafts",{method:"POST",headers:ah(),body:JSON.stringify({user_id:USER.id,saved_job_id:savedId,job_id:s.job_id,application_status:"draft",...body})});
+   rememberApplicationDraft(savedId,body);
    $("submit_ready_"+savedId).innerHTML='<div class="submitok"><b>Files selected and saved.</b><div class="small">Now load/review the employer questions and complete the final submission check.</div></div>';
  }catch(e){$("submit_ready_"+savedId).innerHTML=`<div class="submitwarn"><b>Could not save file selection.</b><div class="small">${esc(e.message)}</div></div>`}
 }
 async function submissionReadiness(savedId){
  const s=SAVED.find(x=>String(x.id)===String(savedId));if(!s||!USER)return null;
- const j=s.jobs||{};let draft=null,ats=[];
+ const j=s.jobs||{};let draft=null;
  try{
   const ds=await req(S+"/rest/v1/native_application_drafts?select=*&saved_job_id=eq."+savedId+"&user_id=eq."+USER.id,{headers:ah()});
   draft=ds?.[0]||null;
-  ats=await req(S+"/rest/v1/job_ats_integrations?select=*&job_id=eq."+s.job_id+"&enabled=eq.true",{headers:ah()});
  }catch{}
  const gh=greenhouseIdentity(j);
  const checks=[
@@ -2859,7 +2894,6 @@ async function submissionReadiness(savedId){
   {label:"CV attachment",ok:!!draft?.selected_cv_path,required:true,help:"A real stored CV is selected."},
   {label:"Application reviewed",ok:draft?.application_status==="ready_to_submit",required:true,help:"Application confirmed accurate."},
   {label:"Employer form",ok:gh?!!(draft?.answers_json||[]).find(x=>x.source==="greenhouse_live"):true,required:!!gh,help:gh?"Live Greenhouse answers saved.":"No Greenhouse live form detected."},
-  {label:"Delivery route",ok:ats.length>0,required:true,help:"Authorised ATS route configured."},
   {label:"Sponsorship evidence",ok:true,required:false,help:"Evidence remains advisory, not a sponsorship guarantee."}
  ];
  const required=checks.filter(x=>x.required),passed=required.filter(x=>x.ok).length;
@@ -2877,7 +2911,7 @@ async function showReadiness(savedId){
 async function finalSubmissionReview(savedId){
  const s=SAVED.find(x=>String(x.id)===String(savedId));if(!s||!USER)return;
  const box=$("final_review_"+savedId);
- box.innerHTML='<div class="small">Checking application readiness and authorised delivery route…</div>';
+ box.innerHTML='<div class="small">Checking your application details and documents…</div>';
  const gate=await submissionReadiness(savedId);
  if(!gate?.ready){box.innerHTML='<div class="submitwarn"><b>Submission remains locked.</b><div class="small">Complete all required readiness items first.</div></div>';return}
  try{
@@ -2888,15 +2922,20 @@ async function finalSubmissionReview(savedId){
    if(!draft)issues.push("Application draft has not been saved");
    if(!draft?.selected_cv_path)issues.push("No CV file selected");
    if(draft?.application_status!=="ready_to_submit")issues.push("Application has not been marked Ready to submit");
-   if(!ats?.length)issues.push("No authorised direct-submission route is configured");
    if(issues.length){
      box.innerHTML=`<div class="submitwarn"><b>Not ready to submit yet.</b><div class="small">${issues.map(x=>"• "+esc(x)).join("<br>")}</div></div>`;
      return;
    }
-   box.innerHTML=`<div class="submitok"><b>Ready for final submission review.</b><div class="small">VisaPilot found the completed application, selected CV, and an enabled ATS delivery route.</div></div>
-   <label style="display:block;margin-top:10px"><input id="final_confirm_${savedId}" type="checkbox" style="width:auto"> I have reviewed the employer questions, my answers and the selected files, and I want VisaPilot to submit this application now.</label>
-   <div class="toolbar" style="margin-top:10px"><button class="btn" onclick="submitDirect('${savedId}')">Submit application</button></div>
-   <div id="direct_status_${savedId}" class="small"></div>`;
+   if(ats?.length){
+     box.innerHTML=`<div class="submitok"><b>Ready for final submission review.</b><div class="small">Your details, answers and selected documents are complete.</div></div>
+     <label style="display:block;margin-top:10px"><input id="final_confirm_${savedId}" type="checkbox" style="width:auto"> I have reviewed the employer questions, my answers and the selected files, and I want VisaPilot to submit this application now.</label>
+     <div class="toolbar" style="margin-top:10px"><button class="btn" onclick="submitDirect('${savedId}')">Submit application</button></div>
+     <div id="direct_status_${savedId}" class="small"></div>`;
+   }else{
+     const employerUrl=safeExternalUrl(s?.jobs?.application_url||s?.jobs?.source_url);
+     box.innerHTML=`<div class="submitok"><b>Your application is ready.</b><div class="small">Your details, answers and documents are prepared. Continue on the employer’s website to complete the application.</div></div>
+     ${employerUrl?`<div class="toolbar" style="margin-top:10px"><a class="btn" href="${esc(employerUrl)}" target="_blank" rel="noopener noreferrer">Continue to employer application</a></div>`:""}`;
+   }
  }catch(e){box.innerHTML=`<div class="submitwarn"><b>Could not complete final review.</b><div class="small">${esc(e.message)}</div></div>`}
 }
 async function submitDirect(savedId){
@@ -2952,27 +2991,13 @@ async function saveNativeApplication(savedId){
      S+(existing?.[0]?.id?"/rest/v1/native_application_drafts?id=eq."+existing[0].id:"/rest/v1/native_application_drafts"),
      {method:existing?.[0]?.id?"PATCH":"POST",headers:ah(),body:JSON.stringify(body)}
    );
+   rememberApplicationDraft(savedId,body);
    $("native_status_"+savedId).textContent="Application completed and saved inside VisaPilot.";
  }catch(e){
    $("native_status_"+savedId).textContent="Could not save application: "+e.message;
  }
 }
 
-async function checkSubmissionRoute(savedId){
- const s=SAVED.find(x=>String(x.id)===String(savedId));if(!s||!USER)return;
- const box=$("route_status_"+savedId);
- box.innerHTML='<div class="small">Checking how this application can be submitted…</div>';
- try{
-   const ats=await req(S+"/rest/v1/job_ats_integrations?select=*&job_id=eq."+s.job_id+"&enabled=eq.true",{headers:ah()});
-   if(ats?.length){
-     box.innerHTML='<div class="next"><b>VisaPilot can submit this application directly.</b><div class="small">Complete the employer questions, review everything carefully and give final confirmation before anything is sent.</div></div>';
-   } else {
-     box.innerHTML='<div class="next"><b>Your application is safely prepared.</b><div class="small">VisaPilot cannot send directly to this employer yet. Your CV, cover letter and answers remain saved here. When every preparation step is complete, use <b>Apply now</b> in the Summary tab to finish the submission on the employer’s application page.</div></div>';
-   }
- }catch(e){
-   box.innerHTML='<div class="next"><b>Your application remains saved.</b><div class="small">VisaPilot could not confirm the employer’s submission method right now. Nothing has been lost or sent. Try again later or use Apply now after completing the preparation steps.</div></div>';
- }
-}
 function submissionsFor(savedId){
  const rows=Array.isArray(SUBMISSIONS)?SUBMISSIONS:[];
  return rows.filter(x=>String(x?.saved_job_id)===String(savedId)).sort((a,b)=>new Date(b?.created_at||0)-new Date(a?.created_at||0));
@@ -3180,6 +3205,70 @@ function safeLetterOptions(jobId){
    return Array.isArray(v)?v:[];
  }catch{return[]}
 }
+function applicationDraftFor(savedId){
+ const rows=Array.isArray(DRAFTS)?DRAFTS:[];
+ return rows.find(x=>String(x?.saved_job_id)===String(savedId))||null;
+}
+function cvContactDetails(){
+ const cv=(Array.isArray(CVS)?CVS:[]).find(x=>String(x?.cv_text||"").trim())||null;
+ const text=String(cv?.cv_text||"").replace(/\r/g,"");
+ const lines=text.split("\n").map(x=>x.replace(/^[•\-*]\s*/,"").trim()).filter(Boolean);
+ const email=text.match(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/i)?.[0]||"";
+ const phone=text.match(/(?:\+44\s?(?:\(0\)\s?)?|0)(?:\d[\s().-]?){9,11}\d/)?.[0]?.replace(/\s+/g," ").trim()||"";
+ const postcode=text.match(/\b(?:GIR\s?0AA|(?:[A-PR-UWYZ][A-HK-Y]?\d\d?|[A-PR-UWYZ]\d[A-HJKPSTUW]|[A-PR-UWYZ][A-HK-Y]\d[ABEHMNPRV-Y])\s?\d[ABD-HJLNP-UW-Z]{2})\b/i)?.[0]||"";
+ const labelledLocation=text.match(/(?:current\s+location|location|address)\s*[:\-]\s*(.{3,120}?)(?=\s+(?:phone|mobile|telephone|e-?mail|profile|summary|experience|skills)\s*[:\-]|$)/i)?.[1]?.trim()||"";
+ const lineName=lines.slice(0,12).find(line=>
+   /^[A-Za-zÀ-ÖØ-öø-ÿ'’.-]+(?:\s+[A-Za-zÀ-ÖØ-öø-ÿ'’.-]+){1,4}$/.test(line) &&
+   !/curriculum vitae|resume|profile|summary|experience|education|contact|professional/i.test(line)
+ )||"";
+ const header=text.slice(0,180).replace(email," ").replace(phone," ").replace(/curriculum vitae|résumé|resume|cv/ig," ").trim();
+ const headerName=header.match(/^([A-ZÀ-ÖØ-Þ][A-Za-zÀ-ÖØ-öø-ÿ'’.-]+(?:\s+[A-ZÀ-ÖØ-Þ][A-Za-zÀ-ÖØ-öø-ÿ'’.-]+){1,3})\b/)?.[1]||"";
+ return{full_name:lineName||headerName,email,phone,current_location:labelledLocation||postcode};
+}
+function candidateApplicationPrefill(savedId){
+ const draft=applicationDraftFor(savedId)||{};
+ const cv=cvContactDetails();
+ const metadata=USER?.user_metadata||{};
+ const fullName=draft.full_name||PROFILE?.full_name||metadata.full_name||metadata.name||cv.full_name||"";
+ return{
+   full_name:fullName,
+   first_name:String(fullName).trim().split(/\s+/)[0]||"",
+   last_name:String(fullName).trim().split(/\s+/).slice(1).join(" ")||"",
+   email:draft.email||USER?.email||cv.email||"",
+   phone:draft.phone||PROFILE?.phone||PROFILE?.phone_number||cv.phone||"",
+   current_location:draft.current_location||PROFILE?.current_location||PROFILE?.location||PROFILE?.address||cv.current_location||PROFILE?.preferred_location||"",
+   sponsorship_required:draft.sponsorship_required??PROFILE?.needs_sponsorship??null,
+   notice_period:draft.notice_period||PROFILE?.notice_period||"",
+   supporting_statement:draft.supporting_statement||""
+ };
+}
+function rememberApplicationDraft(savedId,draft){
+ const index=DRAFTS.findIndex(x=>String(x?.saved_job_id)===String(savedId));
+ if(index>=0)DRAFTS[index]={...DRAFTS[index],...draft};
+ else DRAFTS.unshift({...draft,saved_job_id:savedId});
+}
+function prefillEmployerFields(savedId){
+ const details=candidateApplicationPrefill(savedId);
+ document.querySelectorAll(`#gh_live_${savedId} [data-gh-name]`).forEach(el=>{
+   if(el.type==="file"||String(el.value||"").trim())return;
+   const name=String(el.dataset.ghName||"").toLowerCase();
+   let value="";
+   if(/first.?name|given.?name/.test(name))value=details.first_name;
+   else if(/last.?name|surname|family.?name/.test(name))value=details.last_name;
+   else if(/full.?name|candidate.?name/.test(name))value=details.full_name;
+   else if(/e-?mail/.test(name))value=details.email;
+   else if(/phone|mobile|telephone/.test(name))value=details.phone;
+   else if(/location|address|city|town|postcode|postal/.test(name))value=details.current_location;
+   else if(/notice|availability|start.?date/.test(name))value=details.notice_period;
+   else if(/sponsor|visa|right.?to.?work/.test(name)&&details.sponsorship_required!==null)value=details.sponsorship_required?"yes":"no";
+   if(!value)return;
+   if(el.tagName==="SELECT"){
+     const wanted=String(value).toLowerCase();
+     const option=[...el.options].find(o=>String(o.value).toLowerCase()===wanted||String(o.textContent).trim().toLowerCase()===wanted);
+     if(option)el.value=option.value;
+   }else el.value=value;
+ });
+}
 function applicationWorkspaceHtml(s){
  const r=applicationReadiness(s);
  const j=s?.jobs||{};
@@ -3205,6 +3294,7 @@ function applicationWorkspaceHtml(s){
  const cv=cvs.find(c=>String(c?.id)===String(tailored[0]?.cv_id))||cvs[0]||null;
  const cvOptions=safeCvOptions(s?.job_id);
  const letterOptions=safeLetterOptions(s?.job_id);
+ const prefill=candidateApplicationPrefill(s?.id);
 
  return `<div id="workspace_${s.id}" class="workspace">
    <div class="row">
@@ -3222,7 +3312,6 @@ function applicationWorkspaceHtml(s){
     <button class="tab" data-app="${s.id}" data-tab="answers" onclick="switchAppTab('${s.id}','answers')">Answers</button>
     <button class="tab" data-app="${s.id}" data-tab="track" onclick="switchAppTab('${s.id}','track')">Track</button>
     <button class="tab" data-app="${s.id}" data-tab="direct" onclick="switchAppTab('${s.id}','direct')">Apply</button>
-    <button class="tab" data-app="${s.id}" data-tab="delivery" onclick="switchAppTab('${s.id}','delivery')">Delivery</button>
     <button class="tab" data-app="${s.id}" data-tab="followup" onclick="switchAppTab('${s.id}','followup')">Follow-up</button>
    </div>
 
@@ -3271,7 +3360,7 @@ function applicationWorkspaceHtml(s){
       <div class="row">
         <div>
           <b>Complete application in VisaPilot</b>
-          <div class="small">Prepare the actual application here before any submission happens.</div>
+          <div class="small">VisaPilot reuses details already saved in your profile and CV. Review and correct only what has changed.</div>
         </div>
         <span class="badge purple">VisaPilot application</span>
       </div>
@@ -3279,31 +3368,31 @@ function applicationWorkspaceHtml(s){
       <div class="grid2" style="margin-top:10px">
         <div>
           <label>Full name</label>
-          <input id="apply_name_${s.id}" value="${esc(PROFILE?.full_name||"")}">
+          <input id="apply_name_${s.id}" autocomplete="name" value="${esc(prefill.full_name)}">
         </div>
         <div>
           <label>Email</label>
-          <input id="apply_email_${s.id}" value="${esc(USER?.email||"")}">
+          <input id="apply_email_${s.id}" type="email" autocomplete="email" value="${esc(prefill.email)}">
         </div>
         <div>
           <label>Phone</label>
-          <input id="apply_phone_${s.id}" placeholder="Enter your phone number">
+          <input id="apply_phone_${s.id}" autocomplete="tel" value="${esc(prefill.phone)}" placeholder="Add only if it is not shown in your CV">
         </div>
         <div>
           <label>Current location</label>
-          <input id="apply_location_${s.id}" value="${esc(PROFILE?.preferred_location||"")}">
+          <input id="apply_location_${s.id}" autocomplete="address-level2" value="${esc(prefill.current_location)}">
         </div>
         <div>
           <label>Do you require sponsorship?</label>
           <select id="apply_sponsor_${s.id}">
             <option value="">Select</option>
-            <option value="yes" ${PROFILE?.needs_sponsorship===true?"selected":""}>Yes</option>
-            <option value="no" ${PROFILE?.needs_sponsorship===false?"selected":""}>No</option>
+            <option value="yes" ${prefill.sponsorship_required===true?"selected":""}>Yes</option>
+            <option value="no" ${prefill.sponsorship_required===false?"selected":""}>No</option>
           </select>
         </div>
         <div>
           <label>Availability / notice period</label>
-          <input id="apply_notice_${s.id}" value="${esc(PROFILE?.notice_period||"")}">
+          <input id="apply_notice_${s.id}" value="${esc(prefill.notice_period)}">
         </div>
       </div>
 
@@ -3319,7 +3408,7 @@ function applicationWorkspaceHtml(s){
       </div>
 
       <h3>Application statement</h3>
-      <textarea id="apply_statement_${s.id}" placeholder="Add any final application statement or supporting information.">${letters.length?esc(letters[0].cover_letter_text||""):""}</textarea>
+      <textarea id="apply_statement_${s.id}" placeholder="Add any final application statement or supporting information.">${esc(prefill.supporting_statement||(letters.length?letters[0].cover_letter_text||"":""))}</textarea>
 
       <h3>Files to send</h3>
       <div class="reviewgrid">
@@ -3348,7 +3437,7 @@ function applicationWorkspaceHtml(s){
       <div id="gh_live_${s.id}"></div>
 
       <h3>Application readiness</h3>
-      <div class="small">VisaPilot checks every required component before direct submission can be unlocked.</div>
+      <div class="small">VisaPilot checks that your details, answers and selected documents are ready.</div>
       <div class="toolbar" style="margin-top:8px"><button class="btn btn2" onclick="showReadiness('${s.id}')">Check readiness</button></div>
       <div id="readiness_${s.id}"></div>
       <h3>Final submission review</h3>
@@ -3368,19 +3457,10 @@ function applicationWorkspaceHtml(s){
 
       <div class="toolbar" style="margin-top:10px">
         <button class="btn" onclick="saveNativeApplication('${s.id}')">Save completed application</button>
-        <button class="btn btn2" onclick="checkSubmissionRoute('${s.id}')">Check how to submit</button>
       </div>
 
       <div id="native_status_${s.id}" class="small" style="margin-top:8px"></div>
-      <div id="route_status_${s.id}" style="margin-top:10px"></div>
     </div>
-   </div>
-   <div class="tabpane" data-pane-app="${s.id}" data-pane="delivery">
-     <div class="row">
-       <div><b>Submission receipt & delivery status</b><div class="small">This shows what VisaPilot actually delivered to the employer ATS.</div></div>
-       <button class="btn btn2" onclick="refreshSubmissionHistory('${s.id}')">Refresh status</button>
-     </div>
-     <div style="margin-top:10px">${safeWorkspaceSection(()=>deliveryHtml(s),'<div class="small">No submission delivery history yet.</div>')}</div>
    </div>
    <div class="tabpane" data-pane-app="${s.id}" data-pane="followup">
      <div class="row"><div><b>Follow-up & employer responses</b><div class="small">Keep the post-application journey organised inside VisaPilot.</div></div></div>
