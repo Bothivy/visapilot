@@ -27,6 +27,30 @@
   window.gtag("js", new Date());
   window.gtag("config", TAG_ID);
 
+  window.visaPilotTrackRegistration = function (registrationId) {
+    if (!registrationId) return false;
+    var conversionKey = "visapilot_registration_conversion_" + String(registrationId);
+    try {
+      if (window.localStorage.getItem(conversionKey) === "sent") return false;
+    } catch (_) {
+      // Continue without persistent deduplication when storage is unavailable.
+    }
+
+    window.gtag("event", "conversion", {
+      send_to: "AW-18442609599/1DlVCMrtovQcEL_Hj9pE",
+      value: 1.0,
+      currency: "GBP",
+      transaction_id: String(registrationId)
+    });
+
+    try {
+      window.localStorage.setItem(conversionKey, "sent");
+    } catch (_) {
+      // The conversion has still been queued for this page.
+    }
+    return true;
+  };
+
   var googleScript = document.createElement("script");
   googleScript.async = true;
   googleScript.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(TAG_ID);

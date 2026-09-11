@@ -4161,6 +4161,11 @@ async function submitCandidateAuth(){
        headers:{"apikey":key(),"Content-Type":"application/json"},
        body:JSON.stringify({email,password})
      });
+     const identities=r?.user?.identities;
+     const genuinelyNewAccount=Boolean(r?.user?.id)&&(!Array.isArray(identities)||identities.length>0);
+     if(genuinelyNewAccount&&typeof window.visaPilotTrackRegistration==="function"){
+       window.visaPilotTrackRegistration(r.user.id);
+     }
      if(r?.access_token){
        setSession(r);
        await enterCandidateApp(true);
