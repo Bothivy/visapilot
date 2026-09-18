@@ -1833,6 +1833,28 @@ async function refreshSponsorScore(jobId,btn){
  }catch(e){alert("Could not refresh sponsorship evidence: "+e.message)}
  finally{btn.disabled=false;btn.textContent=old}
 }
+async function submitSponsorFeedback(jobId,verdict,btn){
+ if(!USER)return;
+ const old=btn?.textContent;
+ let reasonCode=null,comment=null;
+ if(verdict==="inaccurate"){
+   const detail=prompt("What looked wrong? You can mention the employer, vacancy wording, expiry, agency, or what happened when you applied.");
+   if(detail===null)return;
+   comment=detail.trim();
+   reasonCode="other";
+ }
+ if(btn){btn.disabled=true;btn.textContent="Sending…"}
+ try{
+   await req(S+"/rest/v1/rpc/submit_sponsorship_feedback",{
+     method:"POST",headers:ah(),body:JSON.stringify({
+       p_job_id:jobId,p_verdict:verdict,p_reason_code:reasonCode,p_comment:comment
+     })
+   });
+   const box=$("sfeedback_"+jobId);
+   if(box)box.innerHTML='<span class="done">Thanks — your feedback will improve this assessment.</span>';
+ }catch(e){alert("Could not send feedback: "+e.message)}
+ finally{if(btn){btn.disabled=false;btn.textContent=old}}
+}
 function intelLabel(x){
  if(x.status==="confirmed")return["Sponsorship confirmed for this role","good"];
  if(x.status==="employer_sponsors")return["Employer sponsors — role needs confirmation","blue"];
@@ -2549,7 +2571,13 @@ function renderJobs(){
       ${reasons.length?reasons.slice(0,6).map(s=>`<div class="signal">✓ ${esc(s)}</div>`).join(""):'<div class="signal">○ No strong sponsorship signal confirmed yet.</div>'}
       ${cautions.slice(0,5).map(s=>`<div class="signal">○ ${esc(s)}</div>`).join("")}
       <div class="signal">${esc(explanation)}</div>
-      <div class="small" style="margin-top:8px"><b>Evidence score ${o.evidenceScore}/100 · This is evidence, not a guarantee of sponsorship.</b></div>
+      <div class="small" style="margin-top:8px"><b>Evidence score ${o.evidenceScore}/100 · This is evidence, not a guarantee of sponsorship.</b>${p?.as_of_at||p?.scored_at?`<br>Assessment as of ${esc(new Date(p.as_of_at||p.scored_at).toLocaleDateString("en-GB"))}.`:'<br>Assessment date is not yet available.'}</div>
+      <div id="sfeedback_${j.id}" class="toolbar" style="margin-top:10px" aria-label="Sponsorship assessment feedback">
+        <span class="small" style="align-self:center"><b>Does this look right?</b></span>
+        <button class="btn btn2" type="button" onclick="submitSponsorFeedback('${j.id}','accurate',this)">Yes</button>
+        <button class="btn btn2" type="button" onclick="submitSponsorFeedback('${j.id}','inaccurate',this)">No</button>
+        <button class="btn btn2" type="button" onclick="submitSponsorFeedback('${j.id}','unsure',this)">Not sure</button>
+      </div>
     </div>
    </div>`;
  }).join("")||`<div class="empty">
