@@ -38,6 +38,7 @@ input,select,textarea{width:100%;padding:10px;border:1px solid #ddd9e8;border-ra
 <style>
 .job-evidence{margin:12px 0;padding:12px;border:1px solid #ddd3fb;border-radius:11px;background:#faf8ff}.job-evidence-title{font-weight:900;margin-bottom:5px}.job-description{margin:11px 0;border:1px solid var(--line);border-radius:11px;background:#fff;overflow:hidden}.job-description summary{cursor:pointer;padding:12px 14px;font-weight:900;color:var(--purple);background:#faf8ff}.job-description-body{white-space:pre-wrap;padding:14px;line-height:1.6;color:#40394f;max-height:560px;overflow:auto}.sponsor-result{margin-top:14px;padding:16px;border:1px solid var(--line);border-radius:13px;background:#fbf9ff}.sponsor-result h3{margin:0 0 8px}.sponsor-check-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:12px}@media(max-width:760px){.sponsor-check-grid{grid-template-columns:1fr}}
 .jobs-split{display:grid;grid-template-columns:minmax(320px,420px) minmax(0,1fr);gap:18px;align-items:start}.jobs-list,.job-detail{background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:0 12px 34px rgba(56,35,110,.06)}.jobs-list{padding:13px;max-height:calc(100vh - 230px);overflow:auto;position:sticky;top:18px}.jobs-list-head{display:flex;justify-content:space-between;align-items:center;padding:7px 8px 14px}.job-list-item{width:100%;text-align:left;border:1px solid var(--line);background:#fff;border-radius:15px;padding:16px;margin:0 0 10px;cursor:pointer;color:var(--ink);transition:.18s}.job-list-item:hover{border-color:#bda9f5;transform:translateY(-1px)}.job-list-item.active{background:#f7f3ff;border:2px solid #8b63f2;box-shadow:0 8px 22px rgba(108,60,233,.10)}.job-list-employer{font-size:13px;color:var(--m);margin-bottom:6px}.job-list-title{font-size:18px;line-height:1.25;font-weight:900}.job-list-meta{font-size:13px;color:var(--m);margin-top:6px}.job-list-status{display:inline-block;margin-top:11px;border-radius:999px;padding:7px 10px;font-size:12px;font-weight:800}.job-detail{padding:30px;min-height:580px}.job-detail-kicker{font-size:12px;font-weight:900;letter-spacing:1px;color:var(--purple);text-transform:uppercase}.job-detail h2{font-size:30px;line-height:1.15;margin:8px 0}.job-detail-meta{font-size:15px;color:var(--m)}.job-detail-evidence{margin:22px 0;padding:18px;border-radius:16px}.job-detail-evidence.good{background:#edf9f3}.job-detail-evidence.blue{background:#eef3ff}.job-detail-evidence.purple{background:#f6f2ff}.job-detail-evidence.bad{background:#fff0ef}.job-detail-evidence b{display:block;font-size:16px;margin-bottom:6px}.job-detail-copy{white-space:pre-wrap;font-size:15px;line-height:1.7;color:#474052;max-height:430px;overflow:auto;padding-right:8px}.job-detail-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}.job-empty-detail{display:grid;place-items:center;text-align:center;min-height:560px;color:var(--m);padding:40px}.jobs-more{padding:10px 4px;text-align:center}@media(max-width:940px){.jobs-split{grid-template-columns:1fr}.jobs-list{position:relative;top:auto;max-height:none}.job-detail{min-height:auto}.job-detail-copy{max-height:none}}
+.applications-split{display:grid;grid-template-columns:minmax(300px,380px) minmax(0,1fr);gap:18px;align-items:start}.application-list,.application-focus{background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:0 12px 34px rgba(56,35,110,.06)}.application-list{padding:13px;position:sticky;top:18px;max-height:calc(100vh - 210px);overflow:auto}.application-list-head{padding:7px 8px 13px}.application-list-head b{display:block;font-size:16px}.application-list-item{display:block;width:100%;text-align:left;border:1px solid var(--line);background:#fff;border-radius:15px;padding:16px;margin:0 0 10px;color:var(--ink);cursor:pointer;transition:.18s}.application-list-item:hover{border-color:#bda9f5;transform:translateY(-1px)}.application-list-item.active{border:2px solid #8b63f2;background:#f8f5ff;box-shadow:0 8px 22px rgba(108,60,233,.10)}.application-list-top{display:flex;justify-content:space-between;gap:9px;align-items:flex-start}.application-list-title{font-size:16px;font-weight:900;line-height:1.3}.application-list-employer{font-size:12px;color:var(--m);margin-top:4px}.application-stage{flex:none;font-size:10px;font-weight:900;color:var(--purple);background:var(--purple2);border-radius:999px;padding:5px 8px}.application-progress{height:7px;background:#ece8f4;border-radius:999px;overflow:hidden;margin:13px 0 7px}.application-progress span{display:block;height:100%;background:linear-gradient(90deg,#7445ee,#9c7aff);border-radius:inherit}.application-progress-copy{display:flex;justify-content:space-between;gap:8px;font-size:11px;color:var(--m)}.application-next{margin-top:11px;padding-top:10px;border-top:1px solid #eee9f5;font-size:12px;line-height:1.45;color:#4f4760}.application-next b{color:var(--ink)}.application-focus{padding:28px;min-height:620px}.application-focus .workspace{margin:0;border:0;padding:0}.application-focus-header{padding-bottom:20px;border-bottom:1px solid var(--line);margin-bottom:18px}.application-focus-header h2{font-size:28px;line-height:1.2;margin:7px 0}.application-focus-meta{font-size:13px;color:var(--m)}.application-focus-next{display:flex;justify-content:space-between;gap:18px;align-items:center;margin-top:16px;padding:14px 16px;background:#f7f3ff;border-radius:13px;border:1px solid #e4dafa}.application-focus-next span{display:block;font-size:10px;font-weight:900;letter-spacing:.7px;text-transform:uppercase;color:var(--purple);margin-bottom:4px}.application-focus-next b{font-size:14px}.application-focus .tabs{overflow-x:auto;flex-wrap:nowrap;padding-bottom:4px}.application-focus .tab{white-space:nowrap;padding:8px 12px}.application-empty-focus{display:grid;place-items:center;min-height:560px;padding:40px;text-align:center;color:var(--m)}@media(max-width:940px){.applications-split{grid-template-columns:1fr}.application-list{position:relative;top:auto;max-height:none}.application-focus{min-height:auto;padding:20px}.application-focus-next{align-items:flex-start;flex-direction:column}}
 /* Build 109 — personalised candidate experience */
 :root{--bg:#f7f5ff;--ink:#201a35;--m:#716b83;--line:#e9e4f4;--purple:#6c3ce9;--purple2:#eee8ff;--green:#087b56;--amber:#b45b08;--red:#b42318;--blue:#2456d8;--shadow:0 16px 44px rgba(56,35,110,.09)}
 body{background:radial-gradient(circle at 82% 0%,#ede7ff 0,transparent 28%),linear-gradient(180deg,#faf9ff 0%,#f6f4fb 100%)}
@@ -308,12 +309,12 @@ body{background:radial-gradient(circle at 82% 0%,#ede7ff 0,transparent 28%),line
 
 <section id="applications" class="section">
   <div class="panel">
-    <div class="small"><b>Application workspace</b> · Jobs saved from Find Jobs appear here automatically. Your workspace is loaded from your saved VisaPilot data. Prepare the application pack, submit externally with Apply now, then track progress through Applied, Interview and Offer.</div>
-    <input id="appSearch" style="margin-top:10px" placeholder="Search applications..." oninput="renderApplications()">
+    <h2 style="margin:0 0 5px">Your applications</h2>
+    <div class="small">Choose a role to continue where you left off.</div>
+    <input id="appSearch" style="margin-top:12px" placeholder="Search by role, employer or stage" oninput="renderApplications()">
     <div id="appLoadStatus" class="small" style="margin-top:8px"></div>
   </div>
-  <div class="panel"><b>Prepare your application in VisaPilot</b><div class="small">Build and review the complete application here. Where an employer supports secure direct submission, VisaPilot can send it after your final confirmation. If the employer requires its own account, VisaPilot prepares a reusable application pack so you can transfer your details and documents with less repetition.</div></div>
-  <div id="appResults" class="cards"></div>
+  <div id="appResults"></div>
 </section>
 
 <section id="intelligence" class="section">
@@ -2765,7 +2766,9 @@ function applicationReadiness(s){
 async function openApplicationWorkspace(id){
  OPEN_APP=SAVED.find(x=>String(x.id)===String(id))||null;
  renderApplications();
- setTimeout(()=>document.getElementById("workspace_"+id)?.scrollIntoView({behavior:"smooth",block:"center"}),50);
+ if(window.matchMedia("(max-width: 940px)").matches){
+  setTimeout(()=>document.getElementById("workspace_"+id)?.scrollIntoView({behavior:"smooth",block:"start"}),50);
+ }
  const cv=(Array.isArray(CVS)?CVS:[])[0]||null;
  if(cv?.storage_path&&String(cv?.cv_text||"").trim().length<80&&!CV_EXTRACTION_ATTEMPTED){
   try{
@@ -3569,10 +3572,19 @@ function applicationWorkspaceHtml(s){
  const letterOptions=safeLetterOptions(s?.job_id);
  const prefill=candidateApplicationPrefill(s?.id);
 
- return `<div id="workspace_${s.id}" class="workspace">
-   <div class="row">
-    <div><b>Application workspace</b><div class="small">Follow the steps below to prepare and submit a strong application.</div></div>
-    <button class="btn btn2" onclick="closeApplicationWorkspace()">Close</button>
+ const suggestedNext=canApply
+   ?"Review your application before submitting"
+   :safeWorkspaceSection(()=>nextAction(s),"Continue preparing your application");
+
+ return `<div id="workspace_${s.id}" class="workspace app-focus-workspace">
+   <div class="application-focus-header">
+    <div class="job-detail-kicker">${esc(stage(s?.status||"Saved"))} application</div>
+    <h2>${esc(j?.title||"Saved job")}</h2>
+    <div class="application-focus-meta">${esc(j?.employers?.name||"Employer")} · ${completedCount} of ${totalCount} steps ready</div>
+    <div class="application-focus-next">
+      <div><span>Recommended next step</span><b>${esc(suggestedNext)}</b></div>
+      <div class="badge ${canApply?"good":"purple"}">${pct}% ready</div>
+    </div>
    </div>
 
    ${safeWorkspaceSection(()=>applicationIntelHtml(s,canAnalyse),'<div class="card"><b>Application intelligence</b><div class="small">VisaPilot will generate application analysis as you prepare this vacancy.</div></div>')}
@@ -3767,75 +3779,50 @@ function renderApplications(){
    return;
  }
 
- const cards=[];
+ if(!OPEN_APP||!rows.some(s=>String(s?.id)===String(OPEN_APP?.id))){
+   OPEN_APP=rows[0];
+ }
+ const selected=rows.find(s=>String(s?.id)===String(OPEN_APP?.id))||rows[0];
+ OPEN_APP=selected;
 
- for(const s of rows){
+ const items=rows.map(s=>{
    try{
      const j=s?.jobs||{};
-     const app=safeExternalUrl(j?.application_url||j?.source_url);
      const r=applicationReadiness(s);
-     const steps=Array.isArray(r?.steps)?r.steps:[];
      const pct=Number(r?.pct||0);
      const ready=!!r?.canApply;
-     const ai=typeof appIntelFor==="function"?appIntelFor(s?.job_id):null;
-
-     let decisionBadge="";
-     if(ai){
-       const dl=decisionLabel(ai?.decision);
-       const label=Array.isArray(dl)?dl[0]:"Application insight";
-       const cls=Array.isArray(dl)?dl[1]:"";
-       decisionBadge=`<span class="badge ${esc(cls||"")}">${esc(label||"Application insight")}</span>`;
-     }
-
-     const stepHtml=steps.map(x=>`<div class="step"><span>${x?.done?"✓":"○"} ${esc(x?.name||"Application step")}</span><span class="${x?.done?"done":"todo"}">${x?.done?"Ready":esc(x?.action||"Continue")}</span></div>`).join("");
-
-     cards.push(`<div class="card">
-       <div class="row">
+     const suggested=ready
+       ?"Review before submitting"
+       :(typeof nextAction==="function"?nextAction(s):"Continue your application");
+     const active=String(selected?.id)===String(s?.id);
+     return `<button type="button" class="application-list-item ${active?"active":""}" onclick="openApplicationWorkspace('${esc(s?.id||"")}')" aria-pressed="${active?"true":"false"}">
+       <div class="application-list-top">
          <div>
-           <b style="font-size:17px">${esc(j?.title||"Saved job")}</b>
-           <div class="small">${esc(j?.employers?.name||"Employer")} · ${esc(stage(s?.status||"Saved"))}</div>
-           <span class="badge purple">${esc(stage(s?.status||"Saved"))}</span>
-           ${stage(s?.status)==="Offer"?`<span class="badge good">Offer review available</span>`:""}
-           ${stage(s?.status)==="Interview"?`<span class="badge good">Interview prep available</span>`:""}
-           <span class="badge ${ready?"good":""}">${pct}% application ready</span>
-           ${decisionBadge}
-           ${r?.a?.analysis?`<span class="badge">${r.a.analysis?.match_score??"—"}% CV match</span>`:""}
+           <div class="application-list-title">${esc(j?.title||"Saved job")}</div>
+           <div class="application-list-employer">${esc(j?.employers?.name||"Employer")}</div>
          </div>
-         <div class="toolbar">
-           <button class="btn btn2" onclick="openApplicationWorkspace('${esc(s?.id||"")}')">${OPEN_APP?.id===s?.id?"Workspace open":"Open workspace"}</button>
-         </div>
+         <span class="application-stage">${esc(stage(s?.status||"Saved"))}</span>
        </div>
-
-       <div class="prep">
-         <b>Your application pack</b>
-         ${stepHtml}
-         <div class="next"><b>${ready?"Ready for final review":"Recommended next step"}:</b>
-           ${ready
-             ?"Your core application pack is prepared. Review your application before submission."
-             :esc(typeof nextAction==="function"?nextAction(s):"Continue preparing your application")}
-         </div>
-       </div>
-
-       ${OPEN_APP?.id===s?.id?safeApplicationWorkspaceHtml(s):""}
-     </div>`);
+       <div class="application-progress"><span style="width:${Math.max(0,Math.min(100,pct))}%"></span></div>
+       <div class="application-progress-copy"><span>${Number(r?.completedCount||0)} of ${Number(r?.totalCount||5)} steps ready</span><b>${pct}%</b></div>
+       <div class="application-next"><b>Next:</b> ${esc(suggested)}</div>
+     </button>`;
    }catch(e){
-     console.error("Application card render failed",s?.id,e);
+     console.error("Application list item render failed",s?.id,e);
      const j=s?.jobs||{};
-     cards.push(`<div class="card">
-       <b style="font-size:17px">${esc(j?.title||"Saved job")}</b>
-       <div class="small">${esc(j?.employers?.name||"Employer")} · ${esc(stage(s?.status||"Saved"))}</div>
-       <div class="submitwarn" style="margin-top:10px">
-         <b>This application is saved.</b>
-         <div class="small">Some preparation details are still loading, but the application has not been lost.</div>
-       </div>
-       <div class="toolbar" style="margin-top:10px">
-         <button class="btn btn2" onclick="openApplicationWorkspace('${esc(s?.id||"")}')">Open workspace</button>
-       </div>
-     </div>`);
+     return `<button type="button" class="application-list-item" onclick="openApplicationWorkspace('${esc(s?.id||"")}')"><div class="application-list-title">${esc(j?.title||"Saved job")}</div><div class="application-list-employer">${esc(j?.employers?.name||"Employer")}</div><div class="application-next">Open this saved application</div></button>`;
    }
- }
+ }).join("");
 
- $("appResults").innerHTML=cards.join("");
+ $("appResults").innerHTML=`<div class="applications-split">
+   <aside class="application-list" aria-label="Saved applications">
+     <div class="application-list-head"><b>Applications</b><span class="small">${rows.length} showing</span></div>
+     ${items}
+   </aside>
+   <main class="application-focus" aria-label="Selected application workspace">
+     ${selected?safeApplicationWorkspaceHtml(selected):'<div class="application-empty-focus">Choose an application to continue.</div>'}
+   </main>
+ </div>`;
 }
 function renderDocuments(){
  $("cvAssets").innerHTML=CVS.length?CVS.map(c=>{
