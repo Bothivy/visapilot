@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  var TAG_ID = "AW-18442609599";
+  var TAG_ID = "AW-18472957342";
   var STORAGE_KEY = "visapilot_google_consent";
   var savedChoice = null;
 
@@ -36,10 +36,11 @@
       // Continue without persistent deduplication when storage is unavailable.
     }
 
-    window.gtag("event", "conversion", {
-      send_to: "AW-18442609599/1DlVCMrtovQcEL_Hj9pE",
-      value: 1.0,
-      currency: "GBP",
+    // Keep the registration event available for analytics without sending it
+    // to the previous Google Ads account. Add the new account's conversion
+    // destination here after Google Ads supplies its AW-.../label value.
+    window.gtag("event", "sign_up", {
+      method: "email",
       transaction_id: String(registrationId)
     });
 
