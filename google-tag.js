@@ -1,7 +1,9 @@
 (function () {
   "use strict";
 
-  var TAG_ID = "AW-18472957342";
+  var GOOGLE_TAG_ID = "GT-TWR832XP";
+  var ADS_ID = "AW-18472957342";
+  var ANALYTICS_ID = "G-ZMHX4R07JS";
   var STORAGE_KEY = "visapilot_google_consent";
   var savedChoice = null;
 
@@ -25,7 +27,21 @@
     wait_for_update: 500
   });
   window.gtag("js", new Date());
-  window.gtag("config", TAG_ID);
+  window.gtag("config", ADS_ID);
+  window.gtag("config", ANALYTICS_ID, { send_page_view: true });
+
+  window.visaPilotTrackEvent = function (eventName, parameters) {
+    if (!/^[a-z][a-z0-9_]{0,39}$/.test(String(eventName || ""))) return false;
+
+    var eventParameters =
+      parameters && typeof parameters === "object"
+        ? Object.assign({}, parameters)
+        : {};
+
+    eventParameters.send_to = ANALYTICS_ID;
+    window.gtag("event", eventName, eventParameters);
+    return true;
+  };
 
   window.visaPilotTrackRegistration = function (registrationId) {
     if (!registrationId) return false;
@@ -36,10 +52,8 @@
       // Continue without persistent deduplication when storage is unavailable.
     }
 
-    // Keep the registration event available for analytics without sending it
-    // to the previous Google Ads account. Add the new account's conversion
-    // destination here after Google Ads supplies its AW-.../label value.
     window.gtag("event", "sign_up", {
+      send_to: ANALYTICS_ID,
       method: "email",
       transaction_id: String(registrationId)
     });
@@ -54,7 +68,7 @@
 
   var googleScript = document.createElement("script");
   googleScript.async = true;
-  googleScript.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(TAG_ID);
+  googleScript.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(GOOGLE_TAG_ID);
   document.head.appendChild(googleScript);
 
   function saveChoice(choice) {
@@ -82,7 +96,7 @@
     banner.setAttribute("aria-label", "Cookie choices");
     banner.innerHTML =
       '<div class="vp-consent__copy"><strong>Your privacy, your choice</strong>' +
-      '<span>We use optional Google advertising measurement to understand whether our campaigns are helpful. You can accept or reject it. <a href="privacy.html">Privacy notice</a></span></div>' +
+      '<span>We use optional Google Analytics and advertising measurement to understand visits, completed registrations, and whether our campaigns are helpful. You can accept or reject it. <a href="privacy.html">Privacy notice</a></span></div>' +
       '<div class="vp-consent__actions"><button type="button" data-consent="reject">Reject optional</button><button type="button" class="vp-consent__accept" data-consent="accept">Accept optional</button></div>';
 
     var settings = document.createElement("button");
